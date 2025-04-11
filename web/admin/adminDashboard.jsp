@@ -1,8 +1,9 @@
 <%-- 
-    Document   : index
-    Created on : 11 Apr 2025, 10:20:03 PM
-    Author     : Galaxy Brain
+    Document   : adminDashboard
+    Created on : Apr 11, 2025, 8:01:49 AM
+    Author     : yq
 --%>
+<%@ page import="controller.admin.AdminLoginFunction" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
