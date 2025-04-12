@@ -4,6 +4,7 @@
 
 <%
     String title = "Genre Management | Galaxy BookShelf";
+    String heading = "Genre Listing";
 %>
 
 <head>
@@ -31,7 +32,7 @@
 </style>
 
 <body>
-    <h1>Genre Listing</h1>
+    <h1><%= heading %></h1>
 
     <table>
         <tr>
@@ -40,17 +41,12 @@
             <th>Genre Name</th>
             <th colspan="2">Actions</th>
         </tr>
+        
+        <%-- Display data --%>
         <tr>
             <td>1</td>
             <td>1</td>
             <td>Adventure Book</td>
-            <td><a href="#" class="btn btn-success-light"><i class="fas fa-edit"></i> Edit</a></td>
-            <td><a href="#" class="btn btn-alert-light"><i class="fas fa-trash-alt"></i> Delete</a></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>2</td>
-            <td>Science Fiction Book</td>
             <td><a href="#" class="btn btn-success-light"><i class="fas fa-edit"></i> Edit</a></td>
             <td><a href="#" class="btn btn-alert-light"><i class="fas fa-trash-alt"></i> Delete</a></td>
         </tr>
