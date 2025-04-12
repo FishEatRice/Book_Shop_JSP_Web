@@ -46,7 +46,7 @@ public class AdminLoginFunction extends HttpServlet {
             if(checkAcc.equals("admin"))
             response.sendRedirect("/galaxy_bookshelf/admin/adminDashboard.jsp");
             else {
-                // Otherwise, it's a normal staff user, redirect to staff dashboard
+                // staff
                 response.sendRedirect("/galaxy_bookshelf/staff/staffDashboard.jsp");
             }
 
@@ -68,7 +68,7 @@ public class AdminLoginFunction extends HttpServlet {
            try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     // Check if this is the admin account
-                    if ("A1".equals(staff.getStaffId())) {
+                    if ("A1".equals(staff.getStaffId())) { //a1 is admin id
                         return "admin";
                     } else {
                         return "staff"; // it's a regular staff
