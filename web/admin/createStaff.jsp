@@ -1,6 +1,6 @@
 <%-- 
-    Document   : registerMember
-    Created on : Apr 11, 2025, 8:03:37 AM
+    Document   : createStaff
+    Created on : Apr 11, 2025, 10:28:51 PM
     Author     : yq
 --%>
 
@@ -8,7 +8,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Register Member</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Create Staff Page</title>
         <script type="text/javascript">
             // JavaScript 函数，用来验证密码一致性
             function validatePassword() {
@@ -26,25 +27,19 @@
     </head>
     <body>
 
+        <h3>Create staff Now</h3>
+        <form method="post" action="../crudStaff" onsubmit="return validatePassword(); ">
 
 
-        <h3>Register Now</h3>
-        <form method="post" action="../crudCustomer" onsubmit="return validatePassword(); ">
-                    
+            <p><label>First Name :</label>
+                <input type="text" name="firstName" size="40" /></p>
+            <p><label>Last Name  :</label>
+                <input type="text" name="lastName" size="40" /></p>
 
-            <p><label>Name :</label>
-                <input type="text" name="name" size="40" /></p>
-            <p><label>Email :</label>
-                <input type="text" name="email" size="40" /></p>
-            <p><label>Password :</label>
-                <input type="password" name="password" size="60" /></p>
-            <p><label>Double Confirm Password:</label>
-                <input type="password" name="confirmPassword" size="60" /></p>
 
-            <p><input type="submit" value="Submit" />
+            <p>Create<input type="submit" value="Submit" /><br>
                 <input type="reset" value="Reset" /></p>
             a
         </form>
-
     </body>
 </html>

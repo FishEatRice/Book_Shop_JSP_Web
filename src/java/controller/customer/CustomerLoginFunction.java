@@ -8,6 +8,8 @@ package controller.customer;
  *
  * @author yq
  */
+import model.customer.Customer;
+
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -27,16 +29,17 @@ public class CustomerLoginFunction extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
 
-        // Retrieve form parameters
-        String customerId = request.getParameter("customer_id");
-        String customerPassword = request.getParameter("customer_password");
+          Customer customer = new Customer();
+          
+        customer.setCustomerEmail(request.getParameter("customer_email"));
+        customer.setCustomerPassword(request.getParameter("customer_password"));
         
                 // Debugging
-        System.out.println("Received customerId: " + customerId);
-        System.out.println("Received customerPassword: " + customerPassword);
+        System.out.println("Received customerEmail: " + customer.getCustomerEmail());
+        System.out.println("Received customerPassword: " + customer.getCustomerPassword());
 
         // Validate login
-        if (isValidLogin(customerId, customerPassword)) {
+        if (isValidLogin(customer)) {
             // Successful
             response.sendRedirect("/galaxy_bookshelf/customer/customerDashboard.jsp");
         } else {
@@ -48,14 +51,14 @@ public class CustomerLoginFunction extends HttpServlet {
 
     }
     
-     private boolean isValidLogin(String customerId, String customerPassword) {
-        String query = "SELECT * FROM GALAXY.STAFF WHERE CUSTOMER_ID = ? AND CUSTOMER_PASSWORD = ?";
+     private boolean isValidLogin(Customer customer)  {
+        String query = "SELECT * FROM GALAXY.CUSTOMER WHERE CUSTOMER_EMAIL = ? AND CUSTOMER_PASSWORD = ?";
 
         try (Connection conn = DriverManager.getConnection(Host,User,password);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, customerId);
-            stmt.setString(2, customerPassword);
+            stmt.setString(1, customer.getCustomerEmail());
+            stmt.setString(2, customer.getCustomerPassword());
 
             try (ResultSet rs = stmt.executeQuery()) {
                 return rs.next();

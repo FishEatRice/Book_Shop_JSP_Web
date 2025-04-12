@@ -1,9 +1,8 @@
 <%-- 
-    Document   : adminDashboard
-    Created on : Apr 11, 2025, 8:01:49 AM
+    Document   : succes
+    Created on : Apr 11, 2025, 8:43:09 PM
     Author     : yq
 --%>
-<%@ page import="controller.admin.AdminLoginFunction" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,7 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h3>admin</h3>
-       <a href="../admin/createStaff.jsp"> Create Staff</a>
+        <h1>can World!</h1>
     </body>
 </html>

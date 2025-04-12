@@ -8,7 +8,7 @@ package controller.admin;
  *
  * @author yq
  */
-
+import model.staff.Staff;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -19,57 +19,65 @@ import jakarta.servlet.annotation.WebServlet;
 
 @WebServlet("/AdminLoginFunction")
 
-public class AdminLoginFunction extends HttpServlet{
-    
+public class AdminLoginFunction extends HttpServlet {
+
     private static final String Host = "jdbc:derby://localhost:1527/db_galaxy_bookshelf";
     private static String User = "GALAXY";
     private static String password = "GALAXY";
-    
-    
-     @Override
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
 
         // Retrieve form parameters
-        String staffId = request.getParameter("staff_id");
-        String staffPassword = request.getParameter("staff_password");
+        Staff staff = new Staff();
 
         // Debugging
-        System.out.println("Received staffId: " + staffId);
-        System.out.println("Received staffPassword: " + staffPassword);
-
+        staff.setStaffId(request.getParameter("staff_id"));
+        staff.setStaffPassword(request.getParameter("staff_password"));
+        
+        
+        String checkAcc = isValidLogin(staff);
+        
         // Validate login
-        if (isValidLogin(staffId, staffPassword)) {
-            // Successful
-            response.sendRedirect("/galaxy_bookshelf/admin/adminDashboard.jsp");
+        if (checkAcc!= null) {
             
+            // Successful
+            if(checkAcc.equals("admin"))
+            response.sendRedirect("/galaxy_bookshelf/admin/adminDashboard.jsp");
+            else {
+                // Otherwise, it's a normal staff user, redirect to staff dashboard
+                response.sendRedirect("/galaxy_bookshelf/staff/staffDashboard.jsp");
+            }
+
         } else {
             // Failed
             response.sendRedirect("/galaxy_bookshelf/admin/loginError.jsp");
         }
-        
-        
 
     }
 
-    private boolean isValidLogin(String staffId, String staffPassword) {
+    private String isValidLogin(Staff staff) {
         String query = "SELECT * FROM GALAXY.STAFF WHERE STAFF_ID = ? AND STAFF_PASSWORD = ?";
 
-        try (Connection conn = DriverManager.getConnection(Host,User,password);
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(Host, User, password); PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, staffId);
-            stmt.setString(2, staffPassword);
+            stmt.setString(1, staff.getStaffId());
+            stmt.setString(2, staff.getStaffPassword());
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                return rs.next();
+           try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Check if this is the admin account
+                    if ("A1".equals(staff.getStaffId())) {
+                        return "admin";
+                    } else {
+                        return "staff"; // it's a regular staff
+                    }
+                }
             }
         } catch (SQLException e) {
             System.err.println("Database connection error: " + e.getMessage());
-            return false;
         }
+        return null; // No matching staff
     }
-    
 }
-    
-

@@ -13,8 +13,8 @@
 <body>
     <h2>Login</h2>
     <form action="../CustomerLoginFunction" method="POST">
-        <label for="customer_id">Member ID:</label>
-        <input type="text" id="customer_id" name="customer_id" required/><br><br>
+        <label for="customer_id">Member Email:</label>
+        <input type="text" id="customer_email" name="customer_email" required/><br><br>
 
         <label for="customer_password">Password:</label>
         <input type="password" id="staff_password" name="customer_password" required/><br><br>
