@@ -4,11 +4,6 @@
     Author     : ON YUEN SHERN
 --%>
 
-<!-- Set Title Icon -->
-<head>
-    <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
-</head>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
@@ -31,7 +26,7 @@
         <!-- NULL / Guest -->
         <li><a href="/galaxy_bookshelf/index.jsp">Home</a></li>
 
-        <li><a href="/galaxy_bookshelf/">Product</a></li>
+        <li><a href="/galaxy_bookshelf/web/product/add_to_cart.jsp">Product</a></li>
 
         <li><a href="/galaxy_bookshelf/">About Us</a></li>
 

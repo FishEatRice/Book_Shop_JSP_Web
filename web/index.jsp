@@ -9,6 +9,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Set Title Icon -->
+        <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
 
         <title>Galaxy | Main</title>
     </head>
