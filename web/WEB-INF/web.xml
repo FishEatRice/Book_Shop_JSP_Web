@@ -4,9 +4,17 @@
         <servlet-name>getProductMaxQuantity</servlet-name>
         <servlet-class>controller.cart.getProductMaxQuantity</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>add_to_cart_process</servlet-name>
+        <servlet-class>controller.cart.add_to_cart_process</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>getProductMaxQuantity</servlet-name>
         <url-pattern>/web/product/add_to_cart.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>add_to_cart_process</servlet-name>
+        <url-pattern>/add_to_cart_process</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

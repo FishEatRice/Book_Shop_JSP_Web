@@ -5,6 +5,10 @@ import jakarta.servlet.http.*;
 import java.io.*;
 import java.sql.*;
 
+/**
+ *
+ * @author ON YUEN SHERN
+ */
 public class getProductMaxQuantity extends HttpServlet {
 
     @Override
