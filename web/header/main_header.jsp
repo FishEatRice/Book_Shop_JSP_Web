@@ -18,7 +18,7 @@
     }
     
     //Demo CheckAcc 
-    //CheckAcc = "staff";
+    //CheckAcc = "customer";
 %>
 
 <nav>
@@ -42,7 +42,7 @@
         <% if ("customer".equals(CheckAcc)) { %>
 
         <!-- Customer -->
-        <li><a href="/galaxy_bookshelf/">Cart</a></li>
+        <li><a href="/galaxy_bookshelf/cart/customer_cart.jsp">Cart</a></li>
 
         <% } else if ("admin".equals(CheckAcc)) { %>
 

@@ -23,7 +23,7 @@
         <!-- C1 = customer -->
         <form method="post" action="<%= request.getContextPath() %>/add_to_cart_process" >
 
-            <p>
+            <p>，
                 <label>Ali Peter</label>
                 <label> | </label>
                 <label>Max Quantity : <%= request.getAttribute("quantity") %></label>

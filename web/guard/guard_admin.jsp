@@ -7,9 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
-    String CheckAcc = (String) session.getAttribute("CheckAcc");
+    String AccountType = (String) session.getAttribute("CheckAcc");
     
-    if (!"admin".equals(CheckAcc)) {
+    if (!"admin".equals(AccountType)) {
 %>
 
 <script>
