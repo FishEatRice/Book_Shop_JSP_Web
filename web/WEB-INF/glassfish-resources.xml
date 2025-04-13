@@ -10,5 +10,5 @@
         <property name="URL" value="jdbc:derby://localhost:1527/db_galaxy_bookshelf"/>
         <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="java:app/db_galaxy_bookshelf" object-type="user" pool-name="derby_net_db_galaxy_bookshelf_GALAXYPool"/>
+    <jdbc-resource enabled="true" jndi-name="java:app/jdbc/db_galaxy_bookshelf" object-type="user" pool-name="derby_net_db_galaxy_bookshelf_GALAXYPool"/>
 </resources>
