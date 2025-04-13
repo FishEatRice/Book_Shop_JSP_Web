@@ -4,7 +4,7 @@
 
 <%
     String title = "Add Genre | Galaxy BookShelf";
-    String heading = "Genre Listing";
+    String heading = "Add Genre";
 %>
 
     <head>
