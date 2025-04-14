@@ -19,7 +19,6 @@
 </head>
 
 <style>
-
     table {
         width: 100%;
         border-collapse: collapse;
@@ -37,7 +36,13 @@
     <h1><%= heading %></h1>
 
     <!-- Add Genre Button -->
-    <a href="add_genre.jsp" class="btn btn-primary-light"><i class="fas fa-plus"></i> Add Genre</a> <br><br>
+    <a href="add_genre.jsp" class="btn btn-primary-light"><i class="fas fa-plus"></i> Add Genre</a>
+
+    <!-- Search Feature -->
+    <form action="<%= request.getContextPath() %>/web/genre/search" method="get">
+        <input type="text" name="query" value="<%= request.getParameter("query") == null ? "" : request.getParameter("query") %>">
+        <button type="submit"><i class="fa fa-search"></i> Search</button>
+    </form>
 
     <table>
         <tr>
@@ -46,39 +51,46 @@
             <th>Genre Name</th>
             <th colspan="2">Actions</th>
         </tr>
-        
+
         <!-- Display data -->
         <%
             int count = 1; // Initialize count variable
             List<Genre> genre_dataList = (List<Genre>) request.getAttribute("genreData");
-            if (genre_dataList != null) {
+            if (genre_dataList != null  && !genre_dataList.isEmpty()) {
                 for (Genre genre : genre_dataList) {
         %>
-                    <tr>
-                        <td><%= count++ %></td>
-                        <td><%= genre.getGenreId() %></td>
-                        <td><%= genre.getGenreName() %></td>
-                        <td><a href="edit_genre.jsp?id=<%= genre.getGenreId() %>" class="btn btn-success-light"><i class="fas fa-edit"></i> Edit</a></td>
-                        <td>
-                        <a href="#" onclick="if(confirm('Are you sure you want to delete this genre ? ')) 
-                        { window.location.href='<%= request.getContextPath() %>/web/genre/delete?id=<%= genre.getGenreId() %>'; }" 
-                            class="btn btn-alert-light">
-                            <i class="fas fa-trash-alt"></i> Delete
-                            </a>
-                        </td>
-</td>
-                    </tr>   
+
+        <tr>
+            <td><%= count++ %></td>
+            <td><%= genre.getGenreId() %></td>
+            <td><%= genre.getGenreName() %></td>
+            <td><a href="edit_genre.jsp?id=<%= genre.getGenreId() %>" class="btn btn-success-light"><i
+                        class="fas fa-edit"></i> Edit</a></td>
+            <td>
+                <a href="#"
+                    onclick="if(confirm('Are you sure you want to delete this genre ? ')) 
+                        { window.location.href='<%= request.getContextPath() %>/web/genre/delete?id=<%= genre.getGenreId() %>'; }"
+                    class="btn btn-alert-light">
+                    <i class="fas fa-trash-alt"></i> Delete
+                </a>
+            </td>
+        </tr>
+
         <%
                 }
             } else {
         %>
-                <tr>
-                    <td colspan="5">No genres found.</td>
-                </tr>
+        
+        <!-- Display message if not found -->
+        <tr>
+            <td colspan="5" class="alert-alert-warning">No genres found.</td>
+        </tr>
+
         <%
             }
         %>
-    
+    </table>
+
 </body>
 
 </html>

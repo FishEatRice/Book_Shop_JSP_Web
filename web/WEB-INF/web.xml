@@ -16,6 +16,10 @@
         <servlet-name>deleteGenre</servlet-name>
         <servlet-class>controller.genre.deleteGenre</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>searchGenre</servlet-name>
+        <servlet-class>controller.genre.searchGenre</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>genreListing</servlet-name>
         <url-pattern>/web/genre/list_genre.jsp</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>deleteGenre</servlet-name>
         <url-pattern>/web/genre/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>searchGenre</servlet-name>
+        <url-pattern>/web/genre/search</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
