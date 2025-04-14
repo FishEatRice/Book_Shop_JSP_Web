@@ -24,7 +24,7 @@ public class genreListing extends HttpServlet {
             throws ServletException, IOException {
         
         EntityManager em = emf.createEntityManager();
-        List<Genre> genre_dataList = em.createNamedQuery("Genre.findAll", Genre.class).getResultList();
+        List<Genre> genre_dataList = em.createNamedQuery("Genre.findAllByOrder", Genre.class).getResultList();
         em.close();
 
         request.setAttribute("genreData", genre_dataList);

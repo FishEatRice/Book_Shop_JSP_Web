@@ -15,6 +15,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Genre.findAll", query = "SELECT g FROM Genre g"),
     @NamedQuery(name = "Genre.findByGenreId", query = "SELECT g FROM Genre g WHERE LOWER(g.genreId) LIKE LOWER(:genreId)"), //display data (no-case sensitive)
     @NamedQuery(name = "Genre.findByGenreName", query = "SELECT g FROM Genre g WHERE LOWER(g.genreName) LIKE LOWER(:genreName)"),}) //display data (no-case sensitive)
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "Genre.findAllByOrder", query = "SELECT * FROM Genre ORDER BY CAST(SUBSTR(Genre_ID, 2) AS INT)", resultClass = Genre.class), }) 
+
 public class Genre implements Serializable {
 
     private static final long serialVersionUID = 1L;
