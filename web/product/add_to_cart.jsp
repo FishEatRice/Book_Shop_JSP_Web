@@ -16,7 +16,7 @@
     <body>
         <%@ include file="/header/main_header.jsp" %>
 
-        // Cart Responds
+        <!-- Cart Responds -->
         <%@ include file="/cart/cart_responds.jsp" %>
 
         <h1>Add To Cart Demo</h1>
