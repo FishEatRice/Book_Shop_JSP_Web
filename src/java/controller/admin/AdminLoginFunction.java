@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.sql.*;
 import jakarta.servlet.annotation.WebServlet;
 
-@WebServlet("/AdminLoginFunction")
+
 
 public class AdminLoginFunction extends HttpServlet {
 

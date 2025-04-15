@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.sql.*;
 import jakarta.servlet.annotation.WebServlet;
 
-@WebServlet("/crudCustomer")
+
 
 public class crudCustomer extends HttpServlet {
 

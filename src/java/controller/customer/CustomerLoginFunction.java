@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.sql.*;
 import jakarta.servlet.annotation.WebServlet;
 
-@WebServlet("/CustomerLoginFunction")
+
 public class CustomerLoginFunction extends HttpServlet {
 
     private static final String Host = "jdbc:derby://localhost:1527/db_galaxy_bookshelf";

@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="5.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd">
+    
+    <!-- Welcome File List -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    
+    <!-- Servlet configurations -->
+    <servlet>
+        <servlet-name>AdminLoginFunction</servlet-name>
+        <servlet-class>controller.admin.AdminLoginFunction</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminLoginFunction</servlet-name>
+        <url-pattern>/AdminLoginFunction</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>crudStaff</servlet-name>
+        <servlet-class>controller.admin.crudStaff</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>crudStaff</servlet-name>
+        <url-pattern>/crudStaff</url-pattern>
+    </servlet-mapping>  
+    
+    <servlet>
+        <servlet-name>CustomerLoginFunction</servlet-name>
+        <servlet-class>controller.admin.CustomerLoginFunction</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CustomerLoginFunction</servlet-name>
+        <url-pattern>/CustomerLoginFunction</url-pattern>
+    </servlet-mapping>       
+
+    <servlet>
+        <servlet-name>crudCustomer</servlet-name>
+        <servlet-class>controller.admin.crudCustomer</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>crudCustomer</servlet-name>
+        <url-pattern>/crudCustomer</url-pattern>
+    </servlet-mapping>  
+
 </web-app>
