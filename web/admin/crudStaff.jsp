@@ -1,6 +1,6 @@
 <%-- 
-    Document   : staffDashboard
-    Created on : Apr 12, 2025, 12:46:58 AM
+    Document   : crudStaff
+    Created on : Apr 12, 2025, 1:21:01 AM
     Author     : yq
 --%>
 
@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <a href="../staff/customerManagementList.jsp"> Customer Management</a>
+        <a href="../admin/createStaff.jsp"> Create Staff</a> <br>
+        <a href="../admin/controlStaff.jsp"> Control staff</a>
     </body>
 </html>

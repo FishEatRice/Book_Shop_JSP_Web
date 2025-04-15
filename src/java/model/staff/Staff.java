@@ -8,27 +8,52 @@ package model.staff;
  *
  * @author yq
  */
-public class Staff {
-  private String staffId;        // 私有字段
-    private String staffPassword;  // 私有字段
 
-    // Getter 方法
+
+public class Staff {
+    private String staffId;
+    private String staffPassword;
+    private String firstName;
+    private String lastName;
+    private int position;
+
     public String getStaffId() {
         return staffId;
     }
 
-    // Setter 方法
     public void setStaffId(String staffId) {
         this.staffId = staffId;
     }
 
-    // Getter 方法
     public String getStaffPassword() {
         return staffPassword;
     }
 
-    // Setter 方法
     public void setStaffPassword(String staffPassword) {
         this.staffPassword = staffPassword;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

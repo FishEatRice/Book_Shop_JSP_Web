@@ -8,6 +8,8 @@ package controller.customer;
  *
  * @author yq
  */
+import java.util.ArrayList;
+
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -27,29 +29,31 @@ public class crudCustomer extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+         String action = request.getParameter("action");
 
         String customerName = request.getParameter("name");
         String customerEmail = request.getParameter("email");
         String customerPassword = request.getParameter("password");
+        
+        
 
-        
-        
-         
         boolean success = CreateCustomer(customerName, customerEmail, customerPassword);
-        
+
         if (success) {
             response.sendRedirect("/galaxy_bookshelf/customer/succes.jsp"); // 注册成功
         } else {
             response.sendRedirect("/galaxy_bookshelf/customer/error.jsp"); // 注册失败
         }
     }
-
     
+
+
 
     private boolean CreateCustomer(String customerName, String customerPassword, String customerEmail) {
         String queryID = "SELECT MAX(CUSTOMER_ID) FROM GALAXY.CUSTOMER";
         String query = "INSERT INTO GALAXY.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME, CUSTOMER_PASSWORD, CUSTOMER_EMAIL) VALUES (?,?, ?, ?)";
-        
+
         try (Connection conn = DriverManager.getConnection(Host, User, password)) {
 
             Statement stmt = conn.createStatement();
@@ -77,6 +81,70 @@ public class crudCustomer extends HttpServlet {
             System.err.println("Database connection error: " + e.getMessage());
             return false;
         }
+    }
+
+    // 加在 crudCustomer 类中（外层）
+    public static class Customer {
+
+        public String id, name, password, email, firstName, lastName, contactNo;
+        public String addressJalan, addressState, addressCity, addressCode;
+        public String profile, questionId, questionAnswer, request;
+
+        public Customer(String id, String name, String password, String email,
+                String firstName, String lastName, String contactNo,
+                String addressJalan, String addressState, String addressCity, String addressCode,
+                String profile, String questionId, String questionAnswer, String request) {
+            this.id = id;
+            this.name = name;
+            this.password = password;
+            this.email = email;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.contactNo = contactNo;
+            this.addressJalan = addressJalan;
+            this.addressState = addressState;
+            this.addressCity = addressCity;
+            this.addressCode = addressCode;
+            this.profile = profile;
+            this.questionId = questionId;
+            this.questionAnswer = questionAnswer;
+            this.request = request;
+        }
+    }
+
+    public static ArrayList<Customer> getAllCustomer() {
+        ArrayList<Customer> customers = new ArrayList<>();
+
+        String query = "SELECT * FROM GALAXY.CUSTOMER";
+
+        try (Connection conn = DriverManager.getConnection(Host, User, password); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                Customer c = new Customer(
+                        rs.getString("CUSTOMER_ID"),
+                        rs.getString("CUSTOMER_NAME"),
+                        rs.getString("CUSTOMER_PASSWORD"),
+                        rs.getString("CUSTOMER_EMAIL"),
+                        rs.getString("CUSTOMER_FIRSTNAME"),
+                        rs.getString("CUSTOMER_LASTNAME"),
+                        rs.getString("CUSTOMER_CONTACTNO"),
+                        rs.getString("CUSTOMER_ADDRESS_JALAN"),
+                        rs.getString("CUSTOMER_ADDRESS_STATE"),
+                        rs.getString("CUSTOMER_ADDRESS_CITY"),
+                        rs.getString("CUSTOMER_ADDRESS_CODE"),
+                        rs.getString("CUSTOMER_PROFILE"),
+                        rs.getString("CUSTOMER_QUESTION_ID"),
+                        rs.getString("CUSTOMER_QUESTION_ANSWER"),
+                        rs.getString("CUSTOMER_REQUEST")
+                );
+                customers.add(c);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error retrieving customer data: " + e.getMessage());
+        }
+
+        return customers;
     }
 
 }
