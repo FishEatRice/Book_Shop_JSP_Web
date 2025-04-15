@@ -34,6 +34,18 @@
             </p>
         </form>
 
+        <form method="post" action="<%= request.getContextPath() %>/add_to_cart_process" >
+
+            <p>，
+                <label>The Golden End</label>
+                <label> | </label>
+                <label>Max Quantity : <%= request.getAttribute("quantity") %></label>
+                <label> | </label>
+                <input type="hidden" name="product_id" value="P2" />
+                <input type="number" name="quantity" value="1" min="1" max=<%= request.getAttribute("quantity") %> />
+                <input type="submit" value="Add To Cart" />
+            </p>
+        </form>
 
     </body>
 </html>

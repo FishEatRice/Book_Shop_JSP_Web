@@ -12,6 +12,10 @@
         <servlet-name>customer_cart_list</servlet-name>
         <servlet-class>controller.cart.customer_cart_list</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>JsonToJpeg</servlet-name>
+        <servlet-class>controller.json.JsonToJpeg</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>getProductMaxQuantity</servlet-name>
         <url-pattern>/web/product/add_to_cart.jsp</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>customer_cart_list</servlet-name>
         <url-pattern>/web/customer/list_cart.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JsonToJpeg</servlet-name>
+        <url-pattern>/JsonToJpeg</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

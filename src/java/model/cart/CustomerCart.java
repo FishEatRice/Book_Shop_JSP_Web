@@ -14,13 +14,17 @@ public class CustomerCart {
     private final String cartId;
     private final String productId;
     private final String productName;
+    private final String productPic;
+    private final double productPrice;
     private final int quantityInCart;
     private final int quantityInStock;
 
-    public CustomerCart(String cartId, String productId, String productName, int quantityInCart, int quantityInStock) {
+    public CustomerCart(String cartId, String productId, String productName, double productPrice, String productPic, int quantityInCart, int quantityInStock) {
         this.cartId = cartId;
         this.productId = productId;
         this.productName = productName;
+        this.productPrice = productPrice;
+        this.productPic = productPic;
         this.quantityInCart = quantityInCart;
         this.quantityInStock = quantityInStock;
     }
@@ -38,6 +42,16 @@ public class CustomerCart {
     // Get Method
     public String getProductName() {
         return productName;
+    }
+    
+// Get Method
+    public double getProductPrice() {
+        return productPrice;
+    }
+    
+    // Get Method
+    public String getProductPic() {
+        return productPic;
     }
 
     // Get Method

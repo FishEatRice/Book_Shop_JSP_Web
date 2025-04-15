@@ -5,62 +5,44 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, model.cart.CustomerCart" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- Set Title Icon -->
         <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
-        <title>Galaxy | Cart List</title>
+        <title>Galaxy | Cart</title>
     </head>
     <body>
         <%@ include file="/header/main_header.jsp" %>
+        
+        <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-        <form action="" method="post">
-            <table border="1" cellpadding="8">
+        <h2>Your Cart</h2>
+
+        <table border="1">
+            <tr>
+                <th></th>
+                <th>Product</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Actions</th>
+            </tr>
+
+            <c:forEach var="item" items="${Cart_Item}">
                 <tr>
-                    <th>No.</th>
-                    <th>Select</th>
-                    <th>Product Name</th>
-                    <th>Quantity in Cart</th>
-                    <th>Quantity in Stock</th>
-                    <th>Action</th>
+                    <td></td>
+                    <td><img src="${item.productPic}" alt="${item.productName}" width="100" /> ${item.productName}</td>
+                    <td>RM <fmt:formatNumber value="${item.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" /></td>
+                    <td>${item.quantityInCart}</td>
+                    <td>RM <fmt:formatNumber value="${item.productPrice * item.quantityInCart}" type="number" minFractionDigits="2" maxFractionDigits="2" /></td>
+                    <td></td>
                 </tr>
-                <%
-                    List<CustomerCart> CustomerCarts = (List<CustomerCart>) request.getAttribute("Cart_Item");
-                    int no = 1;
-                    
-                    // If Having Items
-                    if (CustomerCarts != null && !CustomerCarts.isEmpty()) {
-                    
-                        for (CustomerCart item : CustomerCarts) {
-                %>
-                <tr>
-                    <td><%= no++ %></td>
-                    <td><input type="checkbox" name="selectedProducts" value="<%= item.getProductId() %>" /></td>
-                    <td><%= item.getProductName() %></td>
-                    <td><%= item.getQuantityInCart() %></td>
-                    <td><%= item.getQuantityInStock() %></td>
-                    <td>
-                        <a href="#">Edit</a> |
-                        <a href="#">Remove</a>
-                    </td>
-                </tr>
-                <%
-                        }
-                    } else {
-                        // No Items
-                %>
-                <tr>
-                    <td colspan="6" style="text-align:center;">No products in the cart.</td>
-                </tr>
-                <%
-                    }
-                %>
-            </table>
-            <br />
-            <input type="submit" value="Proceed with Selected Items">
-        </form>
+            </c:forEach>
+
+        </table>
+
     </body>
 </html>
