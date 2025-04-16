@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller.admin;
 
 /**
@@ -16,8 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.*;
 import jakarta.servlet.annotation.WebServlet;
-
-
+import jakarta.servlet.http.HttpSession;
 
 public class AdminLoginFunction extends HttpServlet {
 
@@ -29,23 +24,28 @@ public class AdminLoginFunction extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
 
+// 假设验证通过后获取用户角色（示例代码）
+        String role = ""; // 或 "staff"
+        HttpSession session = request.getSession();
+        session.setAttribute("userRole", role);
         // Retrieve form parameters
         Staff staff = new Staff();
 
         // Debugging
         staff.setStaffId(request.getParameter("staff_id"));
         staff.setStaffPassword(request.getParameter("staff_password"));
-        
-        
+
         String checkAcc = isValidLogin(staff);
-        
+
         // Validate login
-        if (checkAcc!= null) {
+        if (checkAcc != null) {
             
+            session.setAttribute("staffId", staff.getStaffId()); // 只存员工ID
+
             // Successful
-            if(checkAcc.equals("admin"))
-            response.sendRedirect("/galaxy_bookshelf/admin/adminDashboard.jsp");
-            else {
+            if (checkAcc.equals("admin")) {
+                response.sendRedirect("/galaxy_bookshelf/admin/adminDashboard.jsp");
+            } else {
                 // staff
                 response.sendRedirect("/galaxy_bookshelf/staff/staffDashboard.jsp");
             }
@@ -65,7 +65,7 @@ public class AdminLoginFunction extends HttpServlet {
             stmt.setString(1, staff.getStaffId());
             stmt.setString(2, staff.getStaffPassword());
 
-           try (ResultSet rs = stmt.executeQuery()) {
+            try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     // Check if this is the admin account
                     if ("A1".equals(staff.getStaffId())) { //a1 is admin id

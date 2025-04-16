@@ -48,10 +48,15 @@
                         <input type="hidden" name="staffId" value="<%= s.getStaffId() %>" />
                         <input type="submit" value="Edit" />
                     </form>
+                    <form action="../crudStaff" method="post" style="display:inline;">
+                        <input type="hidden" name="action" value="delete" />
+                        <input type="hidden" name="id" value="<%= s.getStaffId() %>" />
+                        <input type="submit" value="Delete" onclick="return confirm('Are you sure to delete this staff?');" />
+                    </form>
                 </td>
 
 
-                <td><a href="#">Delete</a></td>
+
             </tr>
             <%
              }

@@ -4,14 +4,24 @@
     Author     : yq
 --%>
 
+<%
+    String staffId = (String) session.getAttribute("staffId");
+%>
+
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
         <title>JSP Page</title>
     </head>
     <body>
-        <a href="../staff/customerManagementList.jsp"> Customer Management</a>
+        <p>Welcome, Staff ID: <%= staffId %></p>
+        <h3>Welcome</h3>
+        <a href="../header/SessionLogout.jsp">Logout</a> <br>
+        <a href="../staff/customerManagementList.jsp"> Customer Management</a><br>
+        <a href="../staff/accountDetails.jsp">Account Details</a><br>
     </body>
 </html>
