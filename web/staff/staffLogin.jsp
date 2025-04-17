@@ -7,19 +7,16 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-// 获取 staffId 的值（需强制转换为 String）
-String staffId = (String) session.getAttribute("staffId");
-
+String staffId = (String) session.getAttribute("account_status");
 if (staffId != null) {
-    // 先检查是否是管理员（假设 A1 是管理员标识）
     if ("A1".equals(staffId)) {
         response.sendRedirect(request.getContextPath() + "/admin/adminDashboard.jsp");
     } else {
-        // 其他员工跳转到员工仪表盘
         response.sendRedirect(request.getContextPath() + "/staff/staffDashboard.jsp");
     }
 }
 %>
+
 
 
 <!DOCTYPE html>

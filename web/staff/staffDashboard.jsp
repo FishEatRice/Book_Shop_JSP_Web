@@ -5,8 +5,15 @@
 --%>
 
 <%
-    String staffId = (String) session.getAttribute("staffId");
+String staffId = (String) session.getAttribute("account_status");
+String role = (String) session.getAttribute("userRole");
+
+if (staffId == null || !"staff".equals(role)) {
+    response.sendRedirect(request.getContextPath() + "/staff/staffLogin.jsp");
+}
+session.setAttribute("userRole", "staff");
 %>
+
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -22,6 +29,6 @@
         <h3>Welcome</h3>
         <a href="../header/SessionLogout.jsp">Logout</a> <br>
         <a href="../staff/customerManagementList.jsp"> Customer Management</a><br>
-        <a href="../staff/accountDetails.jsp">Account Details</a><br>
+        <a href="../staff/staffProfileDetails.jsp">Account Details</a><br>
     </body>
 </html>

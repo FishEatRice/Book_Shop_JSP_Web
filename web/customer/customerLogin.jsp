@@ -5,6 +5,24 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+// 获取 staffId 的值（需强制转换为 String）
+String customer_email = (String) session.getAttribute("customer_email");
+ System.out.println("customer_email = " + customer_email);
+ session.setAttribute("user_type", "customer");
+
+
+if (customer_email != null) {
+    // 先检查是否是管理员（假设 A1 是管理员标识）
+    response.sendRedirect("/galaxy_bookshelf/customer/customerDashboard.jsp");
+}
+
+String CheckAcc = (String) session.getAttribute("account_status");
+if (CheckAcc != null) {
+    // 先检查是否是管理员（假设 A1 是管理员标识）
+    response.sendRedirect("/galaxy_bookshelf/index.jsp");
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +35,7 @@
         <input type="text" id="customer_email" name="customer_email" required/><br><br>
 
         <label for="customer_password">Password:</label>
-        <input type="password" id="staff_password" name="customer_password" required/><br><br>
+        <input type="password" id="customer_password" name="customer_password" required/><br><br>
 
         <button type="submit">Login</button>
     </form>

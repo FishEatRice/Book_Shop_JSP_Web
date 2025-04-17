@@ -39,17 +39,14 @@ public class AdminLoginFunction extends HttpServlet {
 
         // Validate login
         if (checkAcc != null) {
-            
-            session.setAttribute("staffId", staff.getStaffId()); // 只存员工ID
+            session.setAttribute("account_status", staff.getStaffId()); // 存ID
+            session.setAttribute("userRole", checkAcc); // 存角色：admin 或 staff
 
-            // Successful
-            if (checkAcc.equals("admin")) {
+            if ("admin".equals(checkAcc)) {
                 response.sendRedirect("/galaxy_bookshelf/admin/adminDashboard.jsp");
             } else {
-                // staff
                 response.sendRedirect("/galaxy_bookshelf/staff/staffDashboard.jsp");
             }
-
         } else {
             // Failed
             response.sendRedirect("/galaxy_bookshelf/admin/loginError.jsp");

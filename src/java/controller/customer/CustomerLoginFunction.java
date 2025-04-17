@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller.customer;
 
-/**
- *
- * @author yq
- */
 import model.customer.Customer;
 
 import java.io.IOException;
@@ -17,58 +9,71 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.*;
 import jakarta.servlet.annotation.WebServlet;
-
+import jakarta.servlet.http.HttpSession;
 
 public class CustomerLoginFunction extends HttpServlet {
 
     private static final String Host = "jdbc:derby://localhost:1527/db_galaxy_bookshelf";
-    private static String User = "GALAXY";
-    private static String password = "GALAXY";
-    
+    private static final String User = "GALAXY";
+    private static final String passwor = "GALAXY";
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
 
-          Customer customer = new Customer();
-          
-        customer.setCustomerEmail(request.getParameter("customer_email"));
-        customer.setCustomerPassword(request.getParameter("customer_password"));
-        
-                // Debugging
-        System.out.println("Received customerEmail: " + customer.getCustomerEmail());
-        System.out.println("Received customerPassword: " + customer.getCustomerPassword());
+        // 从表单获取参数
+        String email = request.getParameter("customer_email");
+        String pwd = request.getParameter("customer_password");
 
-        // Validate login
-        if (isValidLogin(customer)) {
-            // Successful
-            response.sendRedirect("/galaxy_bookshelf/customer/customerDashboard.jsp");
-        } else {
-            // Failed
-            response.sendRedirect("#");
+
+ HttpSession session = request.getSession();
+
+        // 如果之前已经登录为 staff 或 admin，就不允许登录 customer
+        String existingStatus = (String) session.getAttribute("account_status");
+        String existingRole = (String) session.getAttribute("userRole");
+
+        if (existingStatus != null && !"customer".equals(existingRole)) {
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            return;
         }
         
-        
-
+         Customer customer = getCustomerIfValid(email, pwd);
+        if (customer != null) {
+            session.setAttribute("account_status", email);
+            session.setAttribute("userRole", "customer");
+            session.setAttribute("customer_email", customer.getCustomerEmail());
+            session.setAttribute("customer_id", customer.getCustomerId());
+            response.sendRedirect(request.getContextPath() + "/customer/customerDashboard.jsp");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/customer/customerLoginError.jsp");
+        }
     }
+
+
+       
     
-     private boolean isValidLogin(Customer customer)  {
-        String query = "SELECT * FROM GALAXY.CUSTOMER WHERE CUSTOMER_EMAIL = ? AND CUSTOMER_PASSWORD = ?";
 
-        try (Connection conn = DriverManager.getConnection(Host,User,password);
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+    private Customer getCustomerIfValid(String email, String password) {
+        String sql = "SELECT * FROM GALAXY.CUSTOMER WHERE CUSTOMER_EMAIL = ? AND CUSTOMER_PASSWORD = ?";
 
-            stmt.setString(1, customer.getCustomerEmail());
-            stmt.setString(2, customer.getCustomerPassword());
+        try (Connection conn = DriverManager.getConnection(Host, User, passwor);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            stmt.setString(2, password);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                return rs.next();
+                if (rs.next()) {
+                    Customer c = new Customer();
+                    c.setCustomerId(rs.getString("CUSTOMER_ID"));
+                    c.setCustomerEmail(rs.getString("CUSTOMER_EMAIL"));
+                    return c;
+                }
             }
         } catch (SQLException e) {
-            System.err.println("Database connection error: " + e.getMessage());
-            return false;
+            e.printStackTrace();
         }
+        return null;
     }
 
-
 }
-
