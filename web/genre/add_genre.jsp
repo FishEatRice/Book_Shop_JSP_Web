@@ -15,7 +15,15 @@
     <body>
         <h1><%= heading %></h1>
 
-        <form action="#" method="post">
+        <%-- Display error Message --%>
+        <% String error = (String) request.getAttribute("error"); %>
+            <% if (error != null) { %>
+                <div class="alert alert-danger">
+                    <%= error %>
+                </div> <br>
+        <% } %>
+
+        <form action="<%= request.getContextPath() %>/web/genre/add_genre.jsp" method="post">
             <label for="genre_name">Genre Name:</label>
             <input type="text" id="genre_name" name="genre_name" required>
             <br><br>

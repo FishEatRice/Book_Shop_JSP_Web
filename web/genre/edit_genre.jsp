@@ -19,7 +19,15 @@
 <body>
     <h1><%= heading %></h1>
 
-    <form action="#" method="post">
+    <%-- Display error Message --%>
+    <% String error = (String) request.getAttribute("error"); %>
+        <% if (error != null) { %>
+            <div class="alert alert-danger">
+                <%= error %>
+            </div> <br>
+    <% } %>
+
+    <form action="<%= request.getContextPath() %>/web/genre/edit_genre.jsp" method="post">
         <label for="genre_id">Genre ID:</label>
         <input type="text" value="<%= genre_data.getGenreId() %>" disabled>
         <input type="hidden" name="genre_id" value="<%= genre_data.getGenreId() %>">
