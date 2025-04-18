@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
-    String CheckAcc = (String) session.getAttribute("CheckAcc");
+    String CheckAcc = (String) session.getAttribute("account_status");
     if (CheckAcc == null) {
         CheckAcc = "guest";
         

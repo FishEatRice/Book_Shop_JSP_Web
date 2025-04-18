@@ -12,8 +12,7 @@ import java.sql.*;
 public class getProductMaxQuantity extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String productId = "P1";
 
