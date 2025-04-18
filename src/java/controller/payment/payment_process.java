@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+// payment_process.java (Now using unique payment_id per row to prevent PK violation)
 package controller.payment;
 
 import jakarta.servlet.*;
@@ -10,109 +7,109 @@ import java.io.*;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.*;
 
-/**
- *
- * @author ON YUEN SHERN
- */
 public class payment_process extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String cart_id = request.getParameter("cart_id");
-        String payType = request.getParameter("payType");
-
-        String customer_id = "C1"; // demo
-
-        // 0: NULL
-        // 1: Packaging
-        // 2: Shipping
-        // 3: Delivery
-        // 4: Success
-        // 5: Refund
+        String[] cartIds = request.getParameter("cart_ids").split(",");
+        String payType = Optional.ofNullable(request.getParameter("payType")).orElse("CARD");
+        String customer_id = "C1"; // Demo only
         int shippingStatus = 1;
 
-        int cart_quantity = 0;
-        String product_id = "";
-        String product_name = "";
-
-        double price = 0.0;
-        int StockQuantity = 0;
-
-        int StockAfter = 0;
-
-        // Get Time
         LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Kuala_Lumpur"));
-
-        String formattedDateTime = now.format(java.time.format.DateTimeFormatter.ofPattern("ddMMyyyyHHmmss"));
-        String payment_id = customer_id + "P" + formattedDateTime;
+        String basePaymentId = customer_id + "P" + now.format(java.time.format.DateTimeFormatter.ofPattern("ddMMyyyyHHmmss"));
 
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db_galaxy_bookshelf", "GALAXY", "GALAXY");
 
-            // Get Product id & Quantity In Cart
-            String cartQuery = "SELECT product_id, quantity FROM galaxy.cart WHERE cart_id = ?";
-            PreparedStatement cartStmt = conn.prepareStatement(cartQuery);
-            cartStmt.setString(1, cart_id);
-            ResultSet cartRs = cartStmt.executeQuery();
+            System.out.println("[DEBUG] Cart IDs: " + Arrays.toString(cartIds));
 
-            if (cartRs.next()) {
-                cart_quantity = cartRs.getInt("quantity");
-                product_id = cartRs.getString("product_id");
+            String placeholders = String.join(",", Collections.nCopies(cartIds.length, "?"));
+            String cartQuery = "SELECT c.cart_id, c.product_id, c.quantity AS cart_qty, p.product_name, p.product_price, p.quantity AS stock_qty FROM galaxy.cart c JOIN galaxy.product p ON c.product_id = p.product_id WHERE c.cart_id IN (" + placeholders + ")";
+
+            PreparedStatement stmt = conn.prepareStatement(cartQuery);
+            for (int i = 0; i < cartIds.length; i++) {
+                stmt.setString(i + 1, cartIds[i]);
             }
-            cartRs.close();
-            cartStmt.close();
 
-            // Get Product_Price & StockQuantity
-            String productQuery = "SELECT product_name, product_price, quantity FROM galaxy.product WHERE product_id = ?";
-            PreparedStatement productStmt = conn.prepareStatement(productQuery);
-            productStmt.setString(1, product_id);
-            ResultSet productRs = productStmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
+            int rowCount = 1;
+            boolean foundItem = false;
 
-            if (productRs.next()) {
-                product_name = productRs.getString("product_name");
-                price = productRs.getDouble("product_price");
-                StockQuantity = productRs.getInt("quantity");
+            while (rs.next()) {
+                foundItem = true;
+                String cart_id = rs.getString("cart_id");
+                String product_id = rs.getString("product_id");
+                String product_name = rs.getString("product_name");
+                int cart_quantity = rs.getInt("cart_qty");
+                double price = rs.getDouble("product_price");
+                int stock = rs.getInt("stock_qty");
+                int stock_after = stock - cart_quantity;
+
+                String payment_id = basePaymentId + "-" + rowCount;
+                rowCount++;
+
+                System.out.println("[DEBUG] Product: " + product_id + " | " + product_name + " | Qty: " + cart_quantity);
+
+                // Insert payment record
+                PreparedStatement payStmt = conn.prepareStatement("INSERT INTO galaxy.payment (payment_id, customer_id, product_id, product_name, quantity, pay_datetime, pay_type_id, shipping_status, pay_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                payStmt.setString(1, payment_id);
+                payStmt.setString(2, customer_id);
+                payStmt.setString(3, product_id);
+                payStmt.setString(4, product_name);
+                payStmt.setInt(5, cart_quantity);
+                payStmt.setTimestamp(6, Timestamp.valueOf(now));
+                payStmt.setString(7, payType.toUpperCase());
+                payStmt.setInt(8, shippingStatus);
+                payStmt.setDouble(9, price);
+                payStmt.executeUpdate();
+                payStmt.close();
+
+                // Update stock
+                PreparedStatement updateStock = conn.prepareStatement("UPDATE galaxy.product SET quantity = ? WHERE product_id = ?");
+                updateStock.setInt(1, stock_after);
+                updateStock.setString(2, product_id);
+                updateStock.executeUpdate();
+                updateStock.close();
+
+                // Delete cart item
+                PreparedStatement delCart = conn.prepareStatement("DELETE FROM galaxy.cart WHERE cart_id = ?");
+                delCart.setString(1, cart_id);
+                delCart.executeUpdate();
+                delCart.close();
             }
-            productRs.close();
-            productStmt.close();
+            rs.close();
+            stmt.close();
 
-            // Remove Cart that already pay
-            String deleteCart = "DELETE FROM galaxy.cart WHERE customer_id = ? AND product_id = ?";
-            PreparedStatement deleteStmt = conn.prepareStatement(deleteCart);
-            deleteStmt.setString(1, customer_id);
-            deleteStmt.setString(2, product_id);
-            deleteStmt.executeUpdate();
-            deleteStmt.close();
+            // Always insert shipping fee
+            PreparedStatement fee_ps = conn.prepareStatement("SELECT FEE FROM GALAXY.SHIPPING_FEE SF JOIN GALAXY.SHIPPING_STATE SS ON SF.SHIPPING_ID = SS.SHIPPING_ID JOIN GALAXY.CUSTOMER CR ON SS.STATE_ID = CR.CUSTOMER_ADDRESS_STATE WHERE CR.CUSTOMER_ID = ?");
+            fee_ps.setString(1, customer_id);
+            ResultSet fee_rs = fee_ps.executeQuery();
+            if (fee_rs.next()) {
+                double shippingFee = fee_rs.getDouble("FEE");
+                String payment_id = basePaymentId + "-" + rowCount;
+                System.out.println("[DEBUG] Shipping Fee: RM " + shippingFee);
 
-            // Insert payment record
-            String PaymentSuccess = "INSERT INTO galaxy.payment (payment_id, customer_id, product_name, quantity, pay_datetime, pay_type_id, shipping_status, pay_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement PaymentSuccessStmt = conn.prepareStatement(PaymentSuccess);
-            PaymentSuccessStmt.setString(1, payment_id);
-            PaymentSuccessStmt.setString(2, customer_id);
-            PaymentSuccessStmt.setString(3, product_name);
-            PaymentSuccessStmt.setInt(4, cart_quantity);
-            PaymentSuccessStmt.setTimestamp(5, Timestamp.valueOf(now));
-            PaymentSuccessStmt.setString(6, payType.toUpperCase());
-            PaymentSuccessStmt.setInt(7, shippingStatus);
-            PaymentSuccessStmt.setDouble(8, price);
-
-            PaymentSuccessStmt.executeUpdate();
-            PaymentSuccessStmt.close();
-
-            // Stock after pay
-            StockAfter = StockQuantity - cart_quantity;
-
-            // Update Stock
-            String StockUpdate = "UPDATE galaxy.product SET quantity = ? WHERE product_id = ?";
-            PreparedStatement StockUpdateStmt = conn.prepareStatement(StockUpdate);
-            StockUpdateStmt.setInt(1, StockAfter);
-            StockUpdateStmt.setString(2, product_id);
-
-            StockUpdateStmt.executeUpdate();
-            StockUpdateStmt.close();
+                PreparedStatement shipInsert = conn.prepareStatement("INSERT INTO galaxy.payment (payment_id, customer_id, product_id, product_name, quantity, pay_datetime, pay_type_id, shipping_status, pay_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                shipInsert.setString(1, payment_id);
+                shipInsert.setString(2, customer_id);
+                shipInsert.setString(3, "Fee");
+                shipInsert.setString(4, "Shipping Fee");
+                shipInsert.setInt(5, 1);
+                shipInsert.setTimestamp(6, Timestamp.valueOf(now));
+                shipInsert.setString(7, payType.toUpperCase());
+                shipInsert.setInt(8, shippingStatus);
+                shipInsert.setDouble(9, shippingFee);
+                shipInsert.executeUpdate();
+                shipInsert.close();
+            } else {
+                System.out.println("[WARN] Shipping fee not found for customer " + customer_id);
+            }
+            fee_rs.close();
+            fee_ps.close();
 
             conn.close();
 
@@ -120,7 +117,6 @@ public class payment_process extends HttpServlet {
             e.printStackTrace();
         }
 
-        // Back 
         response.sendRedirect(request.getContextPath() + "/web/customer/list_cart.jsp");
     }
 }
