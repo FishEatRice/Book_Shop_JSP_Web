@@ -10,11 +10,17 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
+import javax.net.ssl.*;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 
 public class StripePaymentController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Close SSL Checker
+        disableSSLVerification();
+
         String cartIdsParam = request.getParameter("cart_ids");
         if (cartIdsParam == null || cartIdsParam.trim().isEmpty()) {
             System.err.println("ERROR: Missing cart_ids parameter.");
@@ -128,6 +134,36 @@ public class StripePaymentController extends HttpServlet {
         } catch (StripeException e) {
             e.printStackTrace();
             response.sendRedirect("/galaxy_bookshelf/payment/payment_error.jsp?reason=StripeException");
+        }
+    }
+
+    public static void disableSSLVerification() {
+        try {
+            TrustManager[] trustAllCerts;
+            trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    @Override
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return new X509Certificate[0];
+                    }
+
+                    @Override
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                    }
+
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                    }
+                }
+            };
+
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+            // Disable hostname verification too:
+            HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
