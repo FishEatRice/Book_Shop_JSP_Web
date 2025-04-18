@@ -28,8 +28,6 @@
 
         <li><a href="/galaxy_bookshelf/web/product/add_to_cart.jsp">Product</a></li>
 
-        <li><a href="/galaxy_bookshelf/">About Us</a></li>
-
         <% if ("guest".equals(CheckAcc)) { %>
 
         <!-- Not Yet Login -->
@@ -43,6 +41,8 @@
 
         <!-- Customer -->
         <li><a href="/galaxy_bookshelf/web/customer/list_cart.jsp">Cart</a></li>
+        
+        <li><a href="/galaxy_bookshelf/">Purchase</a></li>
 
         <% } else if ("admin".equals(CheckAcc)) { %>
 
