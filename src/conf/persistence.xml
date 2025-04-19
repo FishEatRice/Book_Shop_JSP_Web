@@ -3,6 +3,7 @@
   <persistence-unit name="galaxy_bookshelfPU" transaction-type="RESOURCE_LOCAL">
     <non-jta-data-source>java:app/jdbc/db_galaxy_bookshelf</non-jta-data-source>
     <class>model.genre.Genre</class>
+    <class>model.product.Product</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <!-- JDBC connection properties -->
