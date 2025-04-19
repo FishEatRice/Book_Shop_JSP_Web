@@ -20,6 +20,14 @@
         <servlet-name>searchGenre</servlet-name>
         <servlet-class>controller.genre.searchGenre</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>productCreate</servlet-name>
+        <servlet-class>controller.product.productCreate</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>productListing</servlet-name>
+        <servlet-class>controller.product.productListing</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>genreListing</servlet-name>
         <url-pattern>/web/genre/list_genre.jsp</url-pattern>
@@ -40,10 +48,17 @@
         <servlet-name>searchGenre</servlet-name>
         <url-pattern>/web/genre/search</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>productCreate</servlet-name>
+        <url-pattern>/web/product/addProduct.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>productListing</servlet-name>
+        <url-pattern>/web/product/product.jsp</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-
     <!-- Will be uncomment later -->
     <!-- <error-page>
         <error-code>404</error-code>

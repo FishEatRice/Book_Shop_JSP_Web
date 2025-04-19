@@ -17,6 +17,7 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import model.genre.Genre;
 
 /**
  *
@@ -52,9 +53,9 @@ public class Product implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @Column(name = "PRODUCT_PRICE")
-    private BigDecimal productPrice;
+    private double productPrice;
     @Column(name = "QUANTITY")
-    private Integer quantity;
+    private int quantity;
     @JoinColumn(name = "GENRE_ID", referencedColumnName = "GENRE_ID")
     @ManyToOne(optional = false)
     private Genre genreId;
@@ -66,7 +67,7 @@ public class Product implements Serializable {
         this.productId = productId;
     }
 
-    public Product(String productId, String productName, String productInformation, String productPicture, BigDecimal productPrice) {
+    public Product(String productId, String productName, String productInformation, String productPicture, double productPrice) {
         this.productId = productId;
         this.productName = productName;
         this.productInformation = productInformation;
@@ -106,19 +107,19 @@ public class Product implements Serializable {
         this.productPicture = productPicture;
     }
 
-    public BigDecimal getProductPrice() {
+    public double getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(BigDecimal productPrice) {
+    public void setProductPrice(double productPrice) {
         this.productPrice = productPrice;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
