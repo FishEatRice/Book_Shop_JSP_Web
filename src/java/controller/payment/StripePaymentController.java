@@ -134,6 +134,9 @@ public class StripePaymentController extends HttpServlet {
                 case "GRABPAY":
                     builder.addPaymentMethodType(SessionCreateParams.PaymentMethodType.GRABPAY);
                     break;
+                case "ALIPAY":
+                    builder.addPaymentMethodType(SessionCreateParams.PaymentMethodType.ALIPAY);
+                    break;
                 default:
                     builder.addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD);
                     break;

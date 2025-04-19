@@ -50,7 +50,10 @@ public class ConfirmPayment extends HttpServlet {
                 stmt.setString(1, cartId);
                 ResultSet rs = stmt.executeQuery();
 
+                boolean found = false;
+
                 while (rs.next()) {
+                    found = true;
                     String picJson = rs.getString("PRODUCT_PICTURE");
                     String imageData = "";
                     String imageType = "jpeg";
@@ -83,6 +86,11 @@ public class ConfirmPayment extends HttpServlet {
 
                     subtotal += cart.getProductPrice() * cart.getQuantityInCart();
                     selectedItems.add(cart);
+                }
+
+                if (!found) {
+                    response.sendRedirect("/galaxy_bookshelf/web/customer/list_cart.jsp");
+                    return;
                 }
             }
 

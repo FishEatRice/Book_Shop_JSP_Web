@@ -46,8 +46,7 @@
                                 RM <fmt:formatNumber value="${item.productPrice * item.quantityInCart}" type="number" minFractionDigits="2" maxFractionDigits="2" />
                             </td>
                             <td>
-                                <button type="button" onclick="DeleteCart('${item.cartId}')">Delete</button> |
-                                <button type="button" onclick="Pay('${item.cartId}')">Pay</button>
+                                <button type="button" onclick="DeleteCart('${item.cartId}')">Delete</button>
                             </td>
                         </tr>
                     </c:forEach>
@@ -75,11 +74,6 @@
                 if (confirm("Are you sure you want to delete this item?")) {
                     window.location.href = '/galaxy_bookshelf/delete_cart?cart_id=' + cartId;
                 }
-            }
-
-            function Pay(cartId) {
-                // Correct: use cart_ids even for single payment
-                window.location.href = '/galaxy_bookshelf/web/payment/process.jsp?cart_ids=' + cartId;
             }
 
             function PaySelected() {
