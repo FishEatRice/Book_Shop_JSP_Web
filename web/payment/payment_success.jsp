@@ -18,7 +18,13 @@
         <%@ include file="/header/main_header.jsp" %>
 
         <h3><i class="fa-regular fa-circle-check"></i> Payment Successfully</h3>
-        <p>Thank you for buying our product, hope you have a nice day and give us 5-stars rating. </p>
+        <p>
+            Thank you so much for your purchase!
+            <br>
+            If you're happy with your experience, we’d truly appreciate a 5-star review.
+            <br>
+            Have a wonderful day!
+        </p>
         <a href="#">Give us rating</a> | <a href="#">Check My Purchase</a>
 
 
