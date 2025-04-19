@@ -29,6 +29,12 @@ public class productCreate extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        //return view
+        
+        EntityManager em = emf.createEntityManager();
+        List<Genre> genreList = em.createQuery("SELECT g FROM Genre g", Genre.class).getResultList(); // SELECT * FROM genre (List all the Genre)
+        request.setAttribute("genreList", genreList); 
+        
         RequestDispatcher rd = request.getRequestDispatcher("/product/addProduct.jsp");
         rd.forward(request, response);
 

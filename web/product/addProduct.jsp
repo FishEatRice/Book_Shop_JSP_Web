@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +20,13 @@
             Name: <input type="text" name="name" required /><br/>
             Description: <input type="text" name="description" required /><br/>
             Image: <input type="file" name="image" required /><br/>
-            Genre: <input type="number" name="genre" required /><br/>
+            <label for="genreId">Genre:</label>
+            <select name="genreId" id="genreId" required>
+                <option value="">Select Genre</option>
+                    <c:forEach var="genre" items="${genreList}">
+                        <option value="${genre.genreId}">${genre.genreName}</option>
+                    </c:forEach>
+            </select><br><br>
             Price: <input type="number" min="0.00" step="0.01" name="price" required /><br/>
             Quantity: <input type="number" min="1" name="quantity" required /><br/>
             <button type="submit">Add</button>
