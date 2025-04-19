@@ -10,6 +10,7 @@ import jakarta.servlet.http.*;
 import java.sql.*;
 import java.util.*;
 import model.cart.CustomerCart;
+import model.payment.PayType;
 
 /**
  *
@@ -26,9 +27,12 @@ public class ConfirmPayment extends HttpServlet {
 
         String cartIdsParam = request.getParameter("cart_ids");
         if (cartIdsParam == null || cartIdsParam.isEmpty()) {
-            response.sendRedirect("/galaxy_bookshelf/cart/customer_cart.jsp");
+            response.sendRedirect("/galaxy_bookshelf/web/customer/list_cart.jsp");
             return;
         }
+
+        // Pay Type
+        List<PayType> payTypes = new ArrayList<>();
 
         String[] cartIdArray = cartIdsParam.split(",");
         List<String> cartIds = Arrays.asList(cartIdArray);
@@ -82,6 +86,19 @@ public class ConfirmPayment extends HttpServlet {
                 }
             }
 
+            // PayType
+            String pay_sql = "SELECT * FROM GALAXY.PAY_TYPE";
+            PreparedStatement pay_stmt = conn.prepareStatement(pay_sql);
+            ResultSet pay_rs = pay_stmt.executeQuery();
+            while (pay_rs.next()) {
+                String id = pay_rs.getString("PAY_TYPE_ID");
+                String name = pay_rs.getString("PAY_NAME");
+                payTypes.add(new PayType(id, name));
+            }
+
+            pay_rs.close();
+            pay_stmt.close();
+
             // Shipping fee
             PreparedStatement fee_ps = conn.prepareStatement("SELECT FEE FROM GALAXY.SHIPPING_FEE SF JOIN GALAXY.SHIPPING_STATE SS ON SF.SHIPPING_ID = SS.SHIPPING_ID JOIN GALAXY.CUSTOMER CR ON SS.STATE_ID = CR.CUSTOMER_ADDRESS_STATE WHERE CR.CUSTOMER_ID = ?");
             fee_ps.setString(1, customer_id);
@@ -98,11 +115,13 @@ public class ConfirmPayment extends HttpServlet {
 
         double total = subtotal + shipping_fee;
 
+        // For table
         request.setAttribute("SelectedItems", selectedItems);
         request.setAttribute("Subtotal", subtotal);
         request.setAttribute("ShippingFee", shipping_fee);
         request.setAttribute("Total", total);
         request.setAttribute("CartIDs", cartIdsParam);
+        request.setAttribute("PayTypes", payTypes);
 
         // Forward to JSP
         request.getRequestDispatcher("/payment/confirm_payment.jsp").forward(request, response);

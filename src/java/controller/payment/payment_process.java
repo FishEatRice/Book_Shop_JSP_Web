@@ -1,4 +1,3 @@
-// payment_process.java (Now using unique payment_id per row to prevent PK violation)
 package controller.payment;
 
 import jakarta.servlet.*;
@@ -84,7 +83,7 @@ public class payment_process extends HttpServlet {
             rs.close();
             stmt.close();
 
-            // Always insert shipping fee
+            // insert shipping fee
             PreparedStatement fee_ps = conn.prepareStatement("SELECT FEE FROM GALAXY.SHIPPING_FEE SF JOIN GALAXY.SHIPPING_STATE SS ON SF.SHIPPING_ID = SS.SHIPPING_ID JOIN GALAXY.CUSTOMER CR ON SS.STATE_ID = CR.CUSTOMER_ADDRESS_STATE WHERE CR.CUSTOMER_ID = ?");
             fee_ps.setString(1, customer_id);
             ResultSet fee_rs = fee_ps.executeQuery();
@@ -117,6 +116,8 @@ public class payment_process extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect(request.getContextPath() + "/web/customer/list_cart.jsp");
+        // Direct go, user cannot go back
+        request.getSession().invalidate();
+        response.sendRedirect("/galaxy_bookshelf/payment/payment_success.jsp");
     }
 }

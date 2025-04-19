@@ -55,7 +55,17 @@
 
         <form action="/galaxy_bookshelf/web/payment/process.jsp" method="get">
             <input type="hidden" name="cart_ids" value="${CartIDs}" />
-            <input type="hidden" name="pay_type" value="CARD" />
+            <p>Select Payment Method:</p>
+            <c:forEach var="pay" items="${PayTypes}">
+                <label>
+                    <input type="radio" name="pay_type" value="${pay.id}" required />
+                    ${pay.name}
+                    <br>
+                </label>
+            </c:forEach>
+
+            <br>
+
             <button type="submit">Confirm & Pay</button>
         </form>
     </body>

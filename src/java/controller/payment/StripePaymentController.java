@@ -23,21 +23,24 @@ public class StripePaymentController extends HttpServlet {
 
         String cartIdsParam = request.getParameter("cart_ids");
         if (cartIdsParam == null || cartIdsParam.trim().isEmpty()) {
-            System.err.println("ERROR: Missing cart_ids parameter.");
             response.sendRedirect("/galaxy_bookshelf/payment/payment_error.jsp?reason=MissingCartIDs");
             return;
         }
 
-        String[] cartIds = cartIdsParam.split(",");
         String payType = request.getParameter("pay_type");
-        
+        if (payType == null || payType.trim().isEmpty()) {
+            response.sendRedirect("/galaxy_bookshelf/payment/payment_error.jsp?reason=MissingPayType");
+            return;
+        }
+
+        String[] cartIds = cartIdsParam.split(",");
+
         String customer_id = "C1"; // DEMO
 
         List<SessionCreateParams.LineItem> lineItems;
         lineItems = new ArrayList<>();
         double totalShippingFee = 0.0;
         boolean hasProducts = false;
-        
 
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -76,9 +79,13 @@ public class StripePaymentController extends HttpServlet {
             ps.close();
 
             if (!hasProducts) {
-                System.err.println("ERROR: No cart items found for given cart_ids.");
                 conn.close();
                 response.sendRedirect("/galaxy_bookshelf/payment/payment_error.jsp?reason=NoValidCartItems");
+                return;
+            }
+
+            if ("COD".equalsIgnoreCase(payType)) {
+                response.sendRedirect("/galaxy_bookshelf/web/payment/done_pay.jsp?cart_ids=" + String.join(",", cartIds) + "&payType=" + payType);
                 return;
             }
 
@@ -138,6 +145,7 @@ public class StripePaymentController extends HttpServlet {
             e.printStackTrace();
             response.sendRedirect("/galaxy_bookshelf/payment/payment_error.jsp?reason=StripeException");
         }
+
     }
 
     public static void disableSSLVerification() {
