@@ -5,7 +5,6 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="model.product.Product" %>
 <%@ page import="java.util.List" %>
 <%@page import="model.product.Product"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -19,7 +18,9 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body>
-        <h2>Product List - Role: </h2>
+
+        <!-- Product Table -->
+        <h1>Product Listing</h1>
 
         <!-- Search Form -->
         <form action="ProductController" method="get">
@@ -33,8 +34,7 @@
         <%
             int count = 1;
         %>
-        <!-- Product Table -->
-        <h1>Product Listing</h1>
+
 
     <%-- Notification Message --%>
 

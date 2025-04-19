@@ -29,7 +29,7 @@ public class productCreate extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        RequestDispatcher rd = request.getRequestDispatcher("/view/product_form.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/product/addProduct.jsp");
         rd.forward(request, response);
 
     }
