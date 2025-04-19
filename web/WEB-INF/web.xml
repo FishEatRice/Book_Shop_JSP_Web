@@ -32,6 +32,10 @@
         <servlet-name>payment_process</servlet-name>
         <servlet-class>controller.payment.payment_process</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConfirmPayment</servlet-name>
+        <servlet-class>controller.payment.ConfirmPayment</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>getProductMaxQuantity</servlet-name>
         <url-pattern>/web/product/add_to_cart.jsp</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>payment_process</servlet-name>
         <url-pattern>/web/payment/done_pay.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfirmPayment</servlet-name>
+        <url-pattern>/web/payment/confirm_payment.jsp</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

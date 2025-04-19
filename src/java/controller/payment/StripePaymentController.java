@@ -29,12 +29,15 @@ public class StripePaymentController extends HttpServlet {
         }
 
         String[] cartIds = cartIdsParam.split(",");
-        String payType = Optional.ofNullable(request.getParameter("payType")).orElse("CARD");
+        String payType = request.getParameter("pay_type");
+        
         String customer_id = "C1"; // DEMO
 
-        List<SessionCreateParams.LineItem> lineItems = new ArrayList<>();
+        List<SessionCreateParams.LineItem> lineItems;
+        lineItems = new ArrayList<>();
         double totalShippingFee = 0.0;
         boolean hasProducts = false;
+        
 
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");

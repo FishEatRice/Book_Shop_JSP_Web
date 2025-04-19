@@ -68,6 +68,19 @@ public class customer_cart_list extends HttpServlet {
             e.printStackTrace();
         }
 
+        double subtotal = 0.0;
+
+        for (CustomerCart cart : CustomerCart) {
+            subtotal += cart.getProductPrice() * cart.getQuantityInCart();
+        }
+
+        double shippingFee = 3.0;
+        double total = subtotal + shippingFee;
+
+        request.setAttribute("Cart_Item", CustomerCart);
+        request.setAttribute("Subtotal", subtotal);
+        request.setAttribute("ShippingFee", shippingFee);
+        request.setAttribute("Total", total);
         request.setAttribute("Cart_Item", CustomerCart);
 
         request.getRequestDispatcher("/cart/customer_cart.jsp").forward(request, response);
