@@ -41,6 +41,14 @@ public class updateGenre extends HttpServlet {
 
                 tx.begin();
 
+                //Validation
+                if (newGenreName.isEmpty()) {
+                    request.setAttribute("error", "Genre name cannot be empty.");
+                    request.setAttribute("genreData", newGenreName); 
+                    request.getRequestDispatcher("/genre/add_genre.jsp").forward(request, response);
+                    return;
+                }
+
                 // Check if the admin update the same genre name
                 Genre currentGenre = em.find(Genre.class, genreId);
 

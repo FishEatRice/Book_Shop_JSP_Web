@@ -38,6 +38,14 @@ public class addGerne extends HttpServlet {
             tx.begin(); 
             
             String genreName = request.getParameter("genre_name").trim();
+
+            //Validation
+            if (genreName.isEmpty()) {
+                request.setAttribute("error", "Genre name cannot be empty.");
+                request.setAttribute("genreData", genreName); 
+                request.getRequestDispatcher("/genre/add_genre.jsp").forward(request, response);
+                return;
+            }
             
             List<Genre> existingGenres = em.createNamedQuery(
                     "Genre.findByGenreName", Genre.class)
