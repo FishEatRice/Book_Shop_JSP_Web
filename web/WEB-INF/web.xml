@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="5.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd">
     <servlet>
+        <servlet-name>genreListing</servlet-name>
+        <servlet-class>controller.genre.genreListing</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addGerne</servlet-name>
+        <servlet-class>controller.genre.addGerne</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateGenre</servlet-name>
+        <servlet-class>controller.genre.updateGenre</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteGenre</servlet-name>
+        <servlet-class>controller.genre.deleteGenre</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>searchGenre</servlet-name>
+        <servlet-class>controller.genre.searchGenre</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>productCreate</servlet-name>
+        <servlet-class>controller.product.productCreate</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>productListing</servlet-name>
+        <servlet-class>controller.product.productListing</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>genreListing</servlet-name>
+        <url-pattern>/web/genre/list_genre.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addGerne</servlet-name>
+        <url-pattern>/web/genre/add_genre.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateGenre</servlet-name>
+        <url-pattern>/web/genre/edit_genre.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteGenre</servlet-name>
+        <url-pattern>/web/genre/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>searchGenre</servlet-name>
+        <url-pattern>/web/genre/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>productCreate</servlet-name>
+        <url-pattern>/web/product/addProduct.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>productListing</servlet-name>
+        <url-pattern>/web/product/product.jsp</url-pattern>
+=======
         <servlet-name>getProductMaxQuantity</servlet-name>
         <servlet-class>controller.cart.getProductMaxQuantity</servlet-class>
     </servlet>
@@ -83,4 +138,17 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    <!-- Will be uncomment later -->
+    <!-- <error-page>
+        <error-code>404</error-code>
+        <location>/error/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>401</error-code>
+        <location>/error/401.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error/500.jsp</location>
+    </error-page> -->
 </web-app>

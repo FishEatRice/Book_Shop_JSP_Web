@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="galaxy_bookshelfPU" transaction-type="RESOURCE_LOCAL">
+    <non-jta-data-source>java:app/jdbc/db_galaxy_bookshelf</non-jta-data-source>
+    <class>model.genre.Genre</class>
+    <class>model.product.Product</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <!-- JDBC connection properties -->
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/db_galaxy_bookshelf"/>
+      <property name="javax.persistence.jdbc.user" value="GALAXY"/>
+      <property name="javax.persistence.jdbc.password" value="GALAXY"/>
+      
+      <property name="eclipselink.logging.level" value="FINE"/>
+      <property name="eclipselink.ddl-generation" value="create-tables"/>
+      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+    </properties>
+  </persistence-unit>
+</persistence>
