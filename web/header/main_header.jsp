@@ -18,7 +18,7 @@
     }
     
     //Demo CheckAcc 
-    CheckAcc = "customer";
+    CheckAcc = "admin";
 %>
 
 <nav>
@@ -41,13 +41,14 @@
 
         <!-- Customer -->
         <li><a href="/galaxy_bookshelf/web/customer/list_cart.jsp">Cart</a></li>
-        
+
         <li><a href="/galaxy_bookshelf/">Purchase</a></li>
 
         <% } else if ("admin".equals(CheckAcc)) { %>
 
         <!-- Admin -->
         <li><a href="/galaxy_bookshelf/">Staff Management</a></li>
+
 
         <% } %>
 
@@ -59,6 +60,8 @@
         <li><a href="/galaxy_bookshelf/">Inventory</a></li>
 
         <li><a href="/galaxy_bookshelf/">Review</a></li>
+
+        <li><a href="/galaxy_bookshelf/web/discount/discount_manager.jsp">Discount</a></li>
 
         <li><a href="/galaxy_bookshelf/">Customer Password</a></li>
 

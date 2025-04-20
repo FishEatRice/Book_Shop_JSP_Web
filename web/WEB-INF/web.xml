@@ -36,6 +36,10 @@
         <servlet-name>ConfirmPayment</servlet-name>
         <servlet-class>controller.payment.ConfirmPayment</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>discount_manager</servlet-name>
+        <servlet-class>controller.discount.discount_manager</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>getProductMaxQuantity</servlet-name>
         <url-pattern>/web/product/add_to_cart.jsp</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>ConfirmPayment</servlet-name>
         <url-pattern>/web/payment/confirm_payment.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>discount_manager</servlet-name>
+        <url-pattern>/web/discount/discount_manager.jsp</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
