@@ -17,7 +17,7 @@
         <!-- Add New Product -->
         <h1>Add Product</h1>
 
-        <form action="<%= request.getContextPath() %>/web/product/addProduct.jsp" method="get">
+        <form action="<%= request.getContextPath() %>/web/product/addProduct.jsp" method="post">
             Name: <input type="text" name="name" required /><br/><br>
             
             <label for="editor">Description:</label> <br><br>
