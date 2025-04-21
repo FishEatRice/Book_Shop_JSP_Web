@@ -55,6 +55,8 @@
     <servlet-mapping>
         <servlet-name>productListing</servlet-name>
         <url-pattern>/web/product/product.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>getProductMaxQuantity</servlet-name>
         <servlet-class>controller.cart.getProductMaxQuantity</servlet-class>
     </servlet>
