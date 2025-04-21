@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="5.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd">
+    <!-- Genre-related Servlets -->
     <servlet>
         <servlet-name>genreListing</servlet-name>
         <servlet-class>controller.genre.genreListing</servlet-class>
@@ -20,13 +21,66 @@
         <servlet-name>searchGenre</servlet-name>
         <servlet-class>controller.genre.searchGenre</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>productCreate</servlet-name>
-        <servlet-class>controller.product.productCreate</servlet-class>
-    </servlet>
+    <!-- Product-related Servlets -->
     <servlet>
         <servlet-name>productListing</servlet-name>
         <servlet-class>controller.product.productListing</servlet-class>
+    </servlet>
+    <!-- Cart-related Servlets -->
+    <servlet>
+        <servlet-name>getProductMaxQuantity</servlet-name>
+        <servlet-class>controller.cart.getProductMaxQuantity</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>add_to_cart_process</servlet-name>
+        <servlet-class>controller.cart.add_to_cart_process</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>customer_cart_list</servlet-name>
+        <servlet-class>controller.cart.customer_cart_list</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>delete_cart</servlet-name>
+        <servlet-class>controller.cart.delete_cart</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartQuantityChangeProcess</servlet-name>
+        <servlet-class>controller.cart.CartQuantityChangeProcess</servlet-class>
+    </servlet>
+    <!-- Payment-related Servlets -->
+    <servlet>
+        <servlet-name>StripePaymentController</servlet-name>
+        <servlet-class>controller.payment.StripePaymentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>payment_process</servlet-name>
+        <servlet-class>controller.payment.payment_process</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConfirmPayment</servlet-name>
+        <servlet-class>controller.payment.ConfirmPayment</servlet-class>
+    </servlet>
+    <!-- Discount-related Servlets -->
+    <servlet>
+        <servlet-name>discount_manager</servlet-name>
+        <servlet-class>controller.discount.discount_manager</servlet-class>
+    </servlet>
+    <!-- Servlet Mappings -->
+    <servlet>
+        <servlet-name>add_new_discount_product</servlet-name>
+        <servlet-class>controller.discount.add_discount_product</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateDiscountProcess</servlet-name>
+        <servlet-class>controller.discount.CreateDiscountProcess</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>discountSwitch</servlet-name>
+        <servlet-class>controller.discount.discountSwitch</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteDiscount</servlet-name>
+        <servlet-class>controller.discount.DeleteDiscount</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>genreListing</servlet-name>
@@ -49,52 +103,9 @@
         <url-pattern>/web/genre/search</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>productCreate</servlet-name>
-        <url-pattern>/web/product/addProduct.jsp</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>productListing</servlet-name>
         <url-pattern>/web/product/product.jsp</url-pattern>
-=======
-        <servlet-name>getProductMaxQuantity</servlet-name>
-        <servlet-class>controller.cart.getProductMaxQuantity</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>add_to_cart_process</servlet-name>
-        <servlet-class>controller.cart.add_to_cart_process</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>customer_cart_list</servlet-name>
-        <servlet-class>controller.cart.customer_cart_list</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>JsonToJpeg</servlet-name>
-        <servlet-class>controller.json.JsonToJpeg</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>delete_cart</servlet-name>
-        <servlet-class>controller.cart.delete_cart</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CartQuantityChangeProcess</servlet-name>
-        <servlet-class>controller.cart.CartQuantityChangeProcess</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>StripePaymentController</servlet-name>
-        <servlet-class>controller.payment.StripePaymentController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>payment_process</servlet-name>
-        <servlet-class>controller.payment.payment_process</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ConfirmPayment</servlet-name>
-        <servlet-class>controller.payment.ConfirmPayment</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>discount_manager</servlet-name>
-        <servlet-class>controller.discount.discount_manager</servlet-class>
-    </servlet>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>getProductMaxQuantity</servlet-name>
         <url-pattern>/web/product/add_to_cart.jsp</url-pattern>
@@ -106,10 +117,6 @@
     <servlet-mapping>
         <servlet-name>customer_cart_list</servlet-name>
         <url-pattern>/web/customer/list_cart.jsp</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>JsonToJpeg</servlet-name>
-        <url-pattern>/JsonToJpeg</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>delete_cart</servlet-name>
@@ -135,20 +142,23 @@
         <servlet-name>discount_manager</servlet-name>
         <url-pattern>/web/discount/discount_manager.jsp</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>add_new_discount_product</servlet-name>
+        <url-pattern>/web/discount/add_discount_product.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateDiscountProcess</servlet-name>
+        <url-pattern>/CreateDiscountProcess</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>discountSwitch</servlet-name>
+        <url-pattern>/discountSwitch</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteDiscount</servlet-name>
+        <url-pattern>/DeleteDiscount</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    <!-- Will be uncomment later -->
-    <!-- <error-page>
-        <error-code>404</error-code>
-        <location>/error/404.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>401</error-code>
-        <location>/error/401.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>500</error-code>
-        <location>/error/500.jsp</location>
-    </error-page> -->
 </web-app>

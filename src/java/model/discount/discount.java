@@ -2,7 +2,7 @@ package model.discount;
 
 import java.sql.Timestamp;
 
-public class discount {
+public class Discount {
 
     private final String discount_id;
     private final String product_id;
@@ -13,7 +13,7 @@ public class discount {
     private final Timestamp expired_datetime;
     private final boolean discount_switch;
 
-    public discount(String discount_id, String product_id, double productPrice, double discount_price, Timestamp expired_datetime, boolean discount_switch, String productName, String productPic) {
+    public Discount(String discount_id, String product_id, double productPrice, double discount_price, Timestamp expired_datetime, boolean discount_switch, String productName, String productPic) {
         this.discount_id = discount_id;
         this.product_id = product_id;
         this.productPrice = productPrice;

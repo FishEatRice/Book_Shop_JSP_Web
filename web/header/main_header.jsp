@@ -26,7 +26,7 @@
         <!-- NULL / Guest -->
         <li><a href="/galaxy_bookshelf/index.jsp">Home</a></li>
 
-        <li><a href="/galaxy_bookshelf/web/product/add_to_cart.jsp">Product</a></li>
+        <li><a href="/galaxy_bookshelf/web/product/product.jsp">Product</a></li>
 
         <% if ("guest".equals(CheckAcc)) { %>
 
@@ -57,7 +57,7 @@
         <!-- Staff / Admin -->
         <li><a href="/galaxy_bookshelf/">Shipping</a></li>
 
-        <li><a href="/galaxy_bookshelf/">Inventory</a></li>
+        <li><a href="/galaxy_bookshelf/web/product/product.jsp">Product Manager</a></li>
 
         <li><a href="/galaxy_bookshelf/">Review</a></li>
 
