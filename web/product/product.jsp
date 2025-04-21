@@ -104,18 +104,27 @@
                 <td>${product.quantity}</td>
                 
                 <td>
-                    <c:choose>
-                        <c:when test="${product.quantity < 10}">
-                            <span style="color: red;">
+                    <c:choose> <%-- if --%>
+                        <c:when test="${product.quantity <= 9}">
+                            <span style="color: red;" title="Low stock">
                                 <i class="fa fa-exclamation-triangle"></i>
                             </span>
                         </c:when>
+
+                        <%-- else if --%>
+                        <c:when test="${product.quantity <= 19}">
+                            <span style="color: yellow;" title="Moderate stock">
+                                <i class="fa fa-exclamation-triangle"></i>
+                            </span>
+                        </c:when>
+
+                        <%-- else --%>
                         <c:otherwise>
-                            <span style="color: green;">
+                            <span style="color: green;" title="In stock">
                                 <i class="fa fa-check-circle"></i>
                             </span>
                         </c:otherwise>
-                    </c:choose>
+                    </c:choose>             
                 </td>
 
                 <td><a href="editProduct.jsp?id=${product.productId}" class="btn btn-success-light"><i class="fas fa-edit"></i> Edit</a></td>
