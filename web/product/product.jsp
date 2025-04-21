@@ -9,6 +9,7 @@
 <%@page import="model.product.Product"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <html>
     <head>
@@ -99,7 +100,7 @@
                 </td>
 
                 <td>${product.genreId.genreName}</td>
-                <td>${product.productPrice}</td>
+                <td><fmt:formatNumber value="${product.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" /></td>
                 <td>${product.quantity}</td>
                 
                 <td>
