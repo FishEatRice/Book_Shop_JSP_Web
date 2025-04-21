@@ -22,13 +22,6 @@
         <!-- Product Table -->
         <h1>Product Listing</h1>
 
-        <!-- Search Form -->
-        <form action="ProductController" method="get">
-            <input type="text" name="keyword" placeholder="Search by name" />
-            <input type="hidden" name="action" value="search" />
-            <button type="submit">Search</button>
-        </form>
-
         <%
             int count = 1;
         %>
@@ -61,6 +54,12 @@
     %>
 
     <a href="<%= request.getContextPath() %>/web/product/addProduct.jsp" class="btn btn-primary-light"><i class="fas fa-plus"></i> Add Product</a>
+
+    <!-- Search Form -->
+    <form action="<%= request.getContextPath() %>/web/product/search" method="get">
+        <input type="text" name="query" value="<%= request.getParameter("query") == null ? "" : request.getParameter("query") %>">
+        <button type="submit"><i class="fa fa-search"></i> Search</button>
+    </form>
 
     <table border="1" cellpadding="5">
         <tr>
@@ -133,6 +132,7 @@
         </c:forEach>
     </c:if>
     
+    <%-- If product is empty or result not found --%>
     <c:if test="${empty productData}">
         <tr>
             <td colspan="9">No products found.</td>

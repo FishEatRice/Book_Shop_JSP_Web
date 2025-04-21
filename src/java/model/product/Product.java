@@ -28,8 +28,8 @@ import model.genre.Genre;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
-    @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId"),
-    @NamedQuery(name = "Product.findByProductName", query = "SELECT p FROM Product p WHERE p.productName = :productName"),
+    @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE LOWER(p.productId) LIKE LOWER(:productId)"),
+    @NamedQuery(name = "Product.findByProductName", query = "SELECT p FROM Product p WHERE LOWER(p.productName) LIKE LOWER(:productName)"),
     @NamedQuery(name = "Product.findByProductPrice", query = "SELECT p FROM Product p WHERE p.productPrice = :productPrice"),
     @NamedQuery(name = "Product.findByQuantity", query = "SELECT p FROM Product p WHERE p.quantity = :quantity")})
 public class Product implements Serializable {

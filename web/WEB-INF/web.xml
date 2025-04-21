@@ -32,6 +32,10 @@
         <servlet-name>productDelete</servlet-name>
         <servlet-class>controller.product.productDelete</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>productSearch</servlet-name>
+        <servlet-class>controller.product.productSearch</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>genreListing</servlet-name>
         <url-pattern>/web/genre/list_genre.jsp</url-pattern>
@@ -143,6 +147,10 @@
     <servlet-mapping>
         <servlet-name>productDelete</servlet-name>
         <url-pattern>/web/product/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>productSearch</servlet-name>
+        <url-pattern>/web/product/search</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
