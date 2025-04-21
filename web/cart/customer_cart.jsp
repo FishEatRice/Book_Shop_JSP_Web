@@ -60,9 +60,18 @@
                                     <button type="submit">Update</button>
                                 </form>
                             </td>
+
                             <td>
-                                RM <fmt:formatNumber value="${item.productPrice * item.quantityInCart}" type="number" minFractionDigits="2" maxFractionDigits="2" />
+                                <c:choose>
+                                    <c:when test="${item.discountPrice > 0}">
+                                        <fmt:formatNumber value="${item.discountPrice * item.quantityInCart}" type="number" minFractionDigits="2" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <fmt:formatNumber value="${item.productPrice * item.quantityInCart}" type="number" minFractionDigits="2" />
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
+
                             <td>
                                 <button type="button" onclick="DeleteCart('${item.cartId}')">Delete</button>
                             </td>

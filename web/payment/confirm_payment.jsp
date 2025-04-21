@@ -9,6 +9,8 @@
     </head>
     <body>
         <%@ include file="/header/main_header.jsp" %>
+        
+        <a href="/galaxy_bookshelf/web/customer/list_cart.jsp" >Back to Cart</a>
 
         <h2>Confirm Your Items</h2>
 

@@ -61,7 +61,30 @@ public class StripePaymentController extends HttpServlet {
                 int quantity = rs.getInt("quantity");
                 double price = rs.getDouble("product_price");
 
-                long unitAmount = Math.round(price * 100);
+                // Check if there's discount
+                double discount_price = 0.0;
+                String discountSQL = "SELECT DISCOUNT_PRICE FROM GALAXY.DISCOUNT WHERE PRODUCT_ID = (SELECT PRODUCT_ID FROM GALAXY.CART WHERE CART_ID = ?) AND DISCOUNT_SWITCH = 'true'";
+                PreparedStatement discountPS = conn.prepareStatement(discountSQL);
+                discountPS.setString(1, rs.getString("cart_id"));
+                ResultSet discountRS = discountPS.executeQuery();
+                if (discountRS.next()) {
+                    discount_price = discountRS.getDouble("DISCOUNT_PRICE");
+                }
+                discountRS.close();
+                discountPS.close();
+
+                String displayName;
+                long unitAmount;
+
+                if (discount_price > 0.0) {
+                    // Show Product Name - Original Price
+                    displayName = name + " - RM" + String.format("%.2f", price);
+                    unitAmount = Math.round(discount_price * 100);
+                } else {
+                    displayName = name;
+                    unitAmount = Math.round(price * 100);
+                }
+
                 lineItems.add(SessionCreateParams.LineItem.builder()
                         .setQuantity((long) quantity)
                         .setPriceData(
@@ -70,7 +93,7 @@ public class StripePaymentController extends HttpServlet {
                                         .setUnitAmount(unitAmount)
                                         .setProductData(
                                                 SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                                                        .setName(name)
+                                                        .setName(displayName)
                                                         .build()
                                         ).build()
                         ).build());

@@ -24,8 +24,6 @@ public class payment_process extends HttpServlet {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db_galaxy_bookshelf", "GALAXY", "GALAXY");
 
-            System.out.println("[DEBUG] Cart IDs: " + Arrays.toString(cartIds));
-
             String placeholders = String.join(",", Collections.nCopies(cartIds.length, "?"));
             String cartQuery = "SELECT c.cart_id, c.product_id, c.quantity AS cart_qty, p.product_name, p.product_price, p.quantity AS stock_qty FROM galaxy.cart c JOIN galaxy.product p ON c.product_id = p.product_id WHERE c.cart_id IN (" + placeholders + ")";
 
@@ -51,7 +49,16 @@ public class payment_process extends HttpServlet {
                 String payment_id = basePaymentId + "-" + rowCount;
                 rowCount++;
 
-                System.out.println("[DEBUG] Product: " + product_id + " | " + product_name + " | Qty: " + cart_quantity);
+                double discount_price = 0.0;
+
+                String CheckDiscountSQL = "SELECT DISCOUNT_PRICE FROM GALAXY.DISCOUNT WHERE PRODUCT_ID = ? AND DISCOUNT_SWITCH = 'true'";
+                PreparedStatement CheckDiscountSTML = conn.prepareStatement(CheckDiscountSQL);
+                CheckDiscountSTML.setString(1, product_id);
+                ResultSet CheckDiscountRS = CheckDiscountSTML.executeQuery();
+
+                while (CheckDiscountRS.next()) {
+                    discount_price = CheckDiscountRS.getDouble("DISCOUNT_PRICE");
+                }
 
                 // Insert payment record
                 PreparedStatement payStmt = conn.prepareStatement("INSERT INTO galaxy.payment (payment_id, customer_id, product_id, product_name, quantity, pay_datetime, pay_type_id, shipping_status, pay_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -63,7 +70,11 @@ public class payment_process extends HttpServlet {
                 payStmt.setTimestamp(6, Timestamp.valueOf(now));
                 payStmt.setString(7, payType.toUpperCase());
                 payStmt.setInt(8, shippingStatus);
-                payStmt.setDouble(9, price);
+                if (discount_price <= 0.0) {
+                    payStmt.setDouble(9, price);
+                } else {
+                    payStmt.setDouble(9, discount_price);
+                }
                 payStmt.executeUpdate();
                 payStmt.close();
 
@@ -90,7 +101,6 @@ public class payment_process extends HttpServlet {
             if (fee_rs.next()) {
                 double shippingFee = fee_rs.getDouble("FEE");
                 String payment_id = basePaymentId + "-" + rowCount;
-                System.out.println("[DEBUG] Shipping Fee: RM " + shippingFee);
 
                 PreparedStatement shipInsert = conn.prepareStatement("INSERT INTO galaxy.payment (payment_id, customer_id, product_id, product_name, quantity, pay_datetime, pay_type_id, shipping_status, pay_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 shipInsert.setString(1, payment_id);
@@ -104,9 +114,8 @@ public class payment_process extends HttpServlet {
                 shipInsert.setDouble(9, shippingFee);
                 shipInsert.executeUpdate();
                 shipInsert.close();
-            } else {
-                System.out.println("[WARN] Shipping fee not found for customer " + customer_id);
             }
+
             fee_rs.close();
             fee_ps.close();
 
