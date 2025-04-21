@@ -29,19 +29,38 @@
             <button type="submit">Search</button>
         </form>
 
-        
-
         <%
             int count = 1;
         %>
 
-
     <%-- Notification Message --%>
+    <%-- Display Success Message --%>
+    <% 
+        String success_msg = (String) session.getAttribute("success"); 
+        if (success_msg != null) {
+    %>
+        <div class="alert alert-success">
+            <%= success_msg %>
+        </div> <br>
+    <%
+        session.removeAttribute("success"); //clear after display
+        }
+    %>
 
+    <%-- Display Error Message --%>
+    <% 
+        String err_msg = (String) session.getAttribute("error");
+        if (err_msg != null) {
+    %>
+        <div class="alert alert-success">
+            <%= err_msg %>
+        </div> <br>
+    <%
+        session.removeAttribute("error"); //clear after display
+        }
+    %>
 
     <a href="<%= request.getContextPath() %>/web/product/addProduct.jsp" class="btn btn-primary-light"><i class="fas fa-plus"></i> Add Product</a>
-
-
 
     <table border="1" cellpadding="5">
         <tr>
@@ -100,7 +119,16 @@
                 </td>
 
                 <td><a href="editProduct.jsp?id=${product.productId}" class="btn btn-success-light"><i class="fas fa-edit"></i> Edit</a></td>
-                <td><a href="#" class="btn btn-alert-light"><i class="fas fa-trash-alt"></i> Delete</a></td>
+                
+                <td>
+                    <form action="${pageContext.request.contextPath}/web/product/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                        <input type="hidden" name="id" value="${product.productId}">
+                            <a href="#" class="btn btn-alert-light" onclick="if(confirm('Are you sure you want to delete this product?')) this.closest('form').submit();">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </a>
+                    </form>
+                </td>
+
             </tr>
         </c:forEach>
     </c:if>
