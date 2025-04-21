@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -21,41 +21,41 @@ import model.genre.Genre;
 
 /**
  *
- * @author JS
+ * @author ASUS
  */
 @Entity
 @Table(name = "PRODUCT")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
-    @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE LOWER(p.productId) LIKE LOWER(:productId)"),
-    @NamedQuery(name = "Product.findByProductName", query = "SELECT p FROM Product p WHERE LOWER(p.productName) LIKE LOWER(:productName)"),
+    @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId"),
+    @NamedQuery(name = "Product.findByProductName", query = "SELECT p FROM Product p WHERE p.productName = :productName"),
     @NamedQuery(name = "Product.findByProductPrice", query = "SELECT p FROM Product p WHERE p.productPrice = :productPrice"),
     @NamedQuery(name = "Product.findByQuantity", query = "SELECT p FROM Product p WHERE p.quantity = :quantity")})
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
+    // @Basic(optional = false)
     @Column(name = "PRODUCT_ID")
     private String productId;
-    @Basic(optional = false)
+    // @Basic(optional = false)
     @Column(name = "PRODUCT_NAME")
     private String productName;
-    @Basic(optional = false)
+    // @Basic(optional = false)
     @Lob
     @Column(name = "PRODUCT_INFORMATION")
     private String productInformation;
-    @Basic(optional = false)
+    // @Basic(optional = false)
     @Lob
     @Column(name = "PRODUCT_PICTURE")
     private String productPicture;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
+    // @Basic(optional = false)
     @Column(name = "PRODUCT_PRICE")
     private BigDecimal productPrice;
     @Column(name = "QUANTITY")
-    private int quantity;
+    private Integer quantity;
     @JoinColumn(name = "GENRE_ID", referencedColumnName = "GENRE_ID")
     @ManyToOne(optional = false)
     private Genre genreId;
@@ -115,11 +115,11 @@ public class Product implements Serializable {
         this.productPrice = productPrice;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -153,7 +153,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "model.product.Product[ productId=" + productId + " ]";
+        return "model.genre.Product[ productId=" + productId + " ]";
     }
     
 }

@@ -1,60 +1,74 @@
-<%-- 
-    Document   : addProduct
-    Created on : 19 Apr 2025, 14:14:18
-    Author     : JS
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
-        <title>Add Product Page</title>
-    </head>
-    <body>
-        <!-- Add New Product -->
-        <h1>Add Product</h1>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-        <form action="<%= request.getContextPath() %>/web/product/addProduct.jsp" method="post">
-            Name: <input type="text" name="name" required /><br/><br>
-            
-            <label for="editor">Description:</label> <br><br>
-            <div id="editor">
-                <textarea id="description" name="description" required></textarea>
-            </div><br><br>
-            
-            Image: <input type="file" name="image" required /><br/><br>
-            
-            <label for="genreId">Genre:</label>
-            <select name="genreId" id="genreId" required>
-                <option value="">Select Genre</option>
-                    <c:forEach var="genre" items="${genreList}">
-                        <option value="${genre.genreId}">${genre.genreName}</option>
-                    </c:forEach>
-            </select><br><br>
-            
-            Price: <input type="number" min="0.01" step="0.01" name="price" required /><br/><br>
-            
-            Quantity: <input type="number" min="1" name="quantity" required /><br/><br>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Add Product</title>
+</head>
 
-            <input type="submit" value="Add"/><br/><br>
-            <a href="product.jsp" class="btn btn-primary-light">Back to Product List</a>
-            
-            <%-- Editor JS --%>
-            <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-            <script>
+<h1>Add Product</h1>
 
-            var quill = new Quill('#editor', {
-                theme: 'snow'
-            });
+<body>
+    <%
+      String err_msg = (String) session.getAttribute("error");
+      if (err_msg != null) {
+    %>
+    <div class="alert alert-danger"><%= err_msg %></div><br>
+      <%
+      session.removeAttribute("error");
+      }
+    String successMsg = (String) session.getAttribute("success");
+    if (successMsg != null) {
+    %>
+    <div class="alert alert-success"><%= successMsg %></div><br>
+    <%
+      session.removeAttribute("success");
+    }
+  %>
 
-            document.querySelector('form')?.addEventListener('submit', function () {
-                document.querySelector('#productDescription').value = quill.root.innerHTML;
-            });
-            </script>
+    <form action="<%= request.getContextPath() %>/web/product/addProduct.jsp" method="post" enctype="multipart/form-data">
 
-        </form>
-    </body>
+        <label for="productName">Name:</label>
+        <input type="text" id="productName" name="productName"><br><br>
+
+        <label for="editor">Description:</label>
+        <div id="editor"></div>
+        <input type="hidden" name="productInformation" id="productInformation"><br><br>
+
+        <label for="productPicture">Picture:</label>
+        <input type="file" id="productPicture" name="productPicture" accept="image/jpeg"><br><br>
+
+        <label for="genreId">Genre:</label>
+        <select name="genreId" id="genreId">
+            <option value="">Select Genre</option>
+            <c:forEach var="genre" items="${genreList}">
+                <option value="${genre.genreId}">${genre.genreName}</option>
+            </c:forEach>
+        </select><br><br>
+
+        <label for="price">Price (RM):</label>
+        <input type="number" id="productPrice" name="productPrice" min="0" step="0.01"><br><br>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" min="1"><br><br>
+
+        <input type="submit" value="Add">
+    </form>
+
+    <!-- Quill JS -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.min.js"></script>
+    <script>
+        var quill = new Quill('#editor', {
+            theme: 'snow'
+        });
+
+        document.querySelector('form').addEventListener('submit', function() {
+            document.querySelector('#productInformation').value = quill.root.innerHTML;
+        });
+    </script>
+
+</body>
 </html>

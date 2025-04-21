@@ -6,21 +6,25 @@ package controller.product;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import model.genre.Genre;
 import model.product.Product;
 
-/**
- *
- * @author JS
- */
+
+@MultipartConfig(maxFileSize = 5 * 1024 * 1024) // 5MB limit
 public class productCreate extends HttpServlet {
 
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("galaxy_bookshelfPU");
@@ -29,57 +33,105 @@ public class productCreate extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //return view
-        
         EntityManager em = emf.createEntityManager();
         List<Genre> genreList = em.createQuery("SELECT g FROM Genre g", Genre.class).getResultList(); // SELECT * FROM genre (List all the Genre)
         request.setAttribute("genreList", genreList); 
-        
-        RequestDispatcher rd = request.getRequestDispatcher("/product/addProduct.jsp");
-        rd.forward(request, response);
 
+        request.getRequestDispatcher("/product/addProduct.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        EntityManager em = emf.createEntityManager();
-
-        try {
-            em.getTransaction().begin();
-            
-            List<String> newProductId = em.createQuery("SELECT p.PRODUCT_ID FROM PRODUCT p ORDER BY LENGTH(p.PRODUCT_ID) DESC, p.PRODUCT_ID DESC", String.class)
-                    .setMaxResults(1) //LIMIT 1
-                    .getResultList();
-                
-                String productId = newProductId.isEmpty() ? "P1" :
-                    "P" + (Integer.parseInt(newProductId.get(0).substring(1)) + 1);
-                
-            // Create new Product
-            Product p = new Product();
-            p.setProductName(request.getParameter("Product_Name"));
-            p.setProductInformation(request.getParameter("Product_Information"));
-            p.setProductPicture(request.getParameter("Product_Picture"));
-            String genreId = request.getParameter("GenreID");
-            p.setProductPrice(Double.parseDouble(request.getParameter("Product_Price")));
-            p.setQuantity(Integer.parseInt(request.getParameter("Quantity")));
-
-            em.persist(p);
-            em.getTransaction().commit();
-
-            request.setAttribute("message", "Product created successfully!");
-
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-            request.setAttribute("error", "Error creating product: " + e.getMessage());
-        } finally {
-            em.close();
-        }
-
-        // Forward to a page (like product list or confirmation)
-        RequestDispatcher rd = request.getRequestDispatcher("/productList");
-        rd.forward(request, response);
+                EntityManager em = emf.createEntityManager();
+                EntityTransaction tx = em.getTransaction();
+                HttpSession session = request.getSession();
+        
+                try {
+                    tx.begin();
+        
+                    String name = request.getParameter("productName").trim();
+                    String description = request.getParameter("productInformation").trim();
+                    String genreId = request.getParameter("genreId");
+                    String priceStr = request.getParameter("productPrice");
+                    String qtyStr = request.getParameter("quantity");
+        
+                    if (name.isEmpty() || description.isEmpty() || genreId == null || genreId.isEmpty()
+                            || priceStr == null || priceStr.isEmpty() || qtyStr == null || qtyStr.isEmpty()) {
+                        session.setAttribute("error", "All fields are required.");
+                        response.sendRedirect(request.getContextPath() + "/web/product/addProduct.jsp");
+                        return;
+                    }
+        
+                    BigDecimal price = new BigDecimal(priceStr);
+                    int qty = Integer.parseInt(qtyStr);
+        
+                    if (price.compareTo(BigDecimal.ZERO) <= 0 || qty <= 0) {
+                        session.setAttribute("error", "Price and quantity must be greater than 0.");
+                        response.sendRedirect(request.getContextPath() + "/web/product/addProduct.jsp");
+                        return;
+                    }
+        
+                    Genre genre = em.find(Genre.class, genreId);
+        
+                    if (genre == null) {
+                        session.setAttribute("error", "Selected genre not found.");
+                        response.sendRedirect(request.getContextPath() + "/web/product/addProduct.jsp");
+                        return;
+                    }
+        
+                    Part filePart = request.getPart("productPicture");
+                    if (filePart == null || filePart.getSize() == 0) {
+                        session.setAttribute("error", "Product picture is required.");
+                        response.sendRedirect(request.getContextPath() + "/web/product/addProduct.jsp");
+                        return;
+                    }
+        
+                    String contentType = filePart.getContentType();
+                    if (!"image/jpeg".equalsIgnoreCase(contentType) && !"image/jpg".equalsIgnoreCase(contentType)) {
+                        session.setAttribute("error", "Only JPEG images are allowed.");
+                        response.sendRedirect(request.getContextPath() + "/web/product/addProduct.jsp");
+                        return;
+                    }
+        
+                    byte[] imageBytes = filePart.getInputStream().readAllBytes();
+                    String fileName = filePart.getSubmittedFileName();
+                    String base64 = Base64.getEncoder().encodeToString(imageBytes);
+                    String imageJson = "{\"fileName\":\"" + fileName + "\",\"fileType\":\"" + contentType + "\",\"base64Image\":\"" + base64 + "\"}";
+        
+                    List<String> idList = em.createQuery(
+                            "SELECT p.productId FROM Product p ORDER BY LENGTH(p.productId) DESC, p.productId DESC", String.class)
+                            .setMaxResults(1)
+                            .getResultList();
+        
+                    String productId = idList.isEmpty() ? "P1" :
+                            "P" + (Integer.parseInt(idList.get(0).substring(1)) + 1);
+        
+                    Product product = new Product();
+                    product.setProductId(productId);
+                    product.setProductName(name);
+                    product.setProductInformation(description);
+                    product.setProductPicture(imageJson);
+                    product.setProductPrice(price);
+                    product.setQuantity(qty);
+                    product.setGenreId(genre);
+        
+                    em.persist(product);
+                    tx.commit();
+        
+                    session.setAttribute("success", "Product added successfully.");
+                    response.sendRedirect(request.getContextPath() + "/web/product/product.jsp");
+        
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (tx != null && tx.isActive()) {
+                        tx.rollback();
+                    }
+                    session.setAttribute("error", "Failed to add product. Please try again.");
+                    response.sendRedirect(request.getContextPath() + "/web/product/addProduct.jsp");
+                } finally {
+                    em.close();
+                }
     }
 
 }
