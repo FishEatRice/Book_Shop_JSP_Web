@@ -18,8 +18,9 @@ public class CustomerCart {
     private final double productPrice;
     private final int quantityInCart;
     private final int quantityInStock;
+    private final double discountPrice;
 
-    public CustomerCart(String cartId, String productId, String productName, double productPrice, String productPic, int quantityInCart, int quantityInStock) {
+    public CustomerCart(String cartId, String productId, String productName, double productPrice, String productPic, int quantityInCart, int quantityInStock, double discountPrice) {
         this.cartId = cartId;
         this.productId = productId;
         this.productName = productName;
@@ -27,6 +28,7 @@ public class CustomerCart {
         this.productPic = productPic;
         this.quantityInCart = quantityInCart;
         this.quantityInStock = quantityInStock;
+        this.discountPrice = discountPrice;
     }
 
     // Get Method
@@ -62,5 +64,10 @@ public class CustomerCart {
     // Get Method
     public int getQuantityInStock() {
         return quantityInStock;
+    }
+    
+    // Get Method
+    public double getDiscountPrice() {
+        return discountPrice;
     }
 }

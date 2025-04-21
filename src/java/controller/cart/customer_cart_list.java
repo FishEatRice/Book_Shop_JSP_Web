@@ -52,6 +52,17 @@ public class customer_cart_list extends HttpServlet {
 
                 String base64Src = "data:" + imageType + ";base64," + imageData;
 
+                double discount_price = 0.0;
+
+                String CheckDiscountSQL = "SELECT DISCOUNT_PRICE FROM GALAXY.DISCOUNT WHERE PRODUCT_ID = ? AND DISCOUNT_SWITCH = 'true'";
+                PreparedStatement CheckDiscountSTML = conn.prepareStatement(CheckDiscountSQL);
+                CheckDiscountSTML.setString(1, rs.getString("PRODUCT_ID"));
+                ResultSet CheckDiscountRS = CheckDiscountSTML.executeQuery();
+
+                while (CheckDiscountRS.next()) {
+                    discount_price = CheckDiscountRS.getDouble("DISCOUNT_PRICE");
+                }
+
                 // Put inside Model
                 CustomerCart.add(new CustomerCart(
                         rs.getString("CART_ID"),
@@ -60,7 +71,8 @@ public class customer_cart_list extends HttpServlet {
                         rs.getDouble("PRODUCT_PRICE"),
                         base64Src,
                         rs.getInt("CART_QUANTITY"),
-                        rs.getInt("STOCK_QUANTITY")
+                        rs.getInt("STOCK_QUANTITY"),
+                        discount_price
                 ));
             }
 

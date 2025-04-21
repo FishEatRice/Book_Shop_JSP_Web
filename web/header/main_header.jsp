@@ -18,7 +18,7 @@
     }
     
     //Demo CheckAcc 
-    CheckAcc = "admin";
+    CheckAcc = "customer";
 %>
 
 <nav>

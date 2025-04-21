@@ -74,6 +74,17 @@ public class ConfirmPayment extends HttpServlet {
 
                     String base64Src = "data:" + imageType + ";base64," + imageData;
 
+                    double discount_price = 0.0;
+
+                    String CheckDiscountSQL = "SELECT DISCOUNT_PRICE FROM GALAXY.DISCOUNT WHERE PRODUCT_ID = ? AND DISCOUNT_SWITCH = 'true'";
+                    PreparedStatement CheckDiscountSTML = conn.prepareStatement(CheckDiscountSQL);
+                    CheckDiscountSTML.setString(1, rs.getString("PRODUCT_ID"));
+                    ResultSet CheckDiscountRS = CheckDiscountSTML.executeQuery();
+
+                    while (CheckDiscountRS.next()) {
+                        discount_price = CheckDiscountRS.getDouble("DISCOUNT_PRICE");
+                    }
+
                     CustomerCart cart = new CustomerCart(
                             rs.getString("CART_ID"),
                             rs.getString("PRODUCT_ID"),
@@ -81,10 +92,16 @@ public class ConfirmPayment extends HttpServlet {
                             rs.getDouble("PRODUCT_PRICE"),
                             base64Src,
                             rs.getInt("CART_QUANTITY"),
-                            rs.getInt("STOCK_QUANTITY")
+                            rs.getInt("STOCK_QUANTITY"),
+                            discount_price
                     );
 
-                    subtotal += cart.getProductPrice() * cart.getQuantityInCart();
+                    if (cart.getDiscountPrice() <= 0.0) {
+                        subtotal += cart.getProductPrice() * cart.getQuantityInCart();
+                    } else {
+                        subtotal += cart.getDiscountPrice() * cart.getQuantityInCart();
+                    }
+
                     selectedItems.add(cart);
                 }
 

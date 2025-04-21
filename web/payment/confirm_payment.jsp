@@ -28,9 +28,36 @@
                         <img src="${item.productPic}" width="100" />
                     </td>
                     <td>${item.productName}</td>
-                    <td>RM <fmt:formatNumber value="${item.productPrice}" type="number" minFractionDigits="2"/></td>
+                    <!-- Display Got Discount Or Not -->
+                    <td>
+                        <c:choose>
+                            <c:when test="${item.discountPrice > 0}">
+                                <del style="color: gray;">
+                                    RM <fmt:formatNumber value="${item.productPrice}" type="number" minFractionDigits="2" />
+                                </del><br />
+                                <strong style="color: red;">
+                                    RM <fmt:formatNumber value="${item.discountPrice}" type="number" minFractionDigits="2" />
+                                </strong>
+                            </c:when>
+                            <c:otherwise>
+                                RM <fmt:formatNumber value="${item.productPrice}" type="number" minFractionDigits="2" />
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+
                     <td>${item.quantityInCart}</td>
-                    <td>RM <fmt:formatNumber value="${item.productPrice * item.quantityInCart}" type="number" minFractionDigits="2"/></td>
+                    <!-- Taking Discount Price, if yes -->
+                    <td>
+                        <c:choose>
+                            <c:when test="${item.discountPrice > 0}">
+                                <fmt:formatNumber value="${item.discountPrice * item.quantityInCart}" type="number" minFractionDigits="2" />
+                            </c:when>
+                            <c:otherwise>
+                                <fmt:formatNumber value="${item.productPrice * item.quantityInCart}" type="number" minFractionDigits="2" />
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+
                 </tr>
             </c:forEach>
             <tr>
