@@ -128,7 +128,7 @@ public class productCreate extends HttpServlet {
                         tx.rollback();
                     }
                     session.setAttribute("error", "Failed to add product. Please try again.");
-                    response.sendRedirect(request.getContextPath() + "/web/product/addProduct.jsp");
+                    response.sendRedirect(request.getContextPath() + "/web/product/product.jsp");
                 } finally {
                     em.close();
                 }
