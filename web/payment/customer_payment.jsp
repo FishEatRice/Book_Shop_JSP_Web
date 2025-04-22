@@ -35,14 +35,14 @@
 
             <%
                 List<PaymentSummary> summaries = (List<PaymentSummary>) request.getAttribute("paymentSummaries");
-                if (summaries != null) {
+                if (summaries != null && !summaries.isEmpty()) {
                     for (PaymentSummary p : summaries) {
             %>
             <tr>
                 <td><%= p.getMainPaymentId() %></td>
                 <td><%= DateTimeFormat.format(p.getPayDatetime()) %></td>
                 <td><%= p.getPayTypeId() %></td>
-                <td><%= p.getTotalItems() %></td>
+                <td><%= p.getTotalItems() - 1 %> </td>
                 <td>RM <%= String.format("%.2f", p.getTotalAmount()) %></td>
                 <td>
                     <a href="payment_details.jsp?mainPaymentId=<%= p.getMainPaymentId() %>">View Details</a>

@@ -80,6 +80,7 @@
                 </table>
 
                 <br>
+                <button type="button" onclick="document.getElementById('selectAll').click()">Select All</button>
                 <button type="button" onclick="PaySelected()">Pay Selected</button>
             </c:when>
 

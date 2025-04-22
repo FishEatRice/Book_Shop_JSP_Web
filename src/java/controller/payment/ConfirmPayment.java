@@ -133,6 +133,7 @@ public class ConfirmPayment extends HttpServlet {
             }
             fee_rs.close();
             fee_ps.close();
+
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();

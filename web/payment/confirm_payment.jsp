@@ -13,6 +13,12 @@
         <a href="/galaxy_bookshelf/web/customer/list_cart.jsp" >Back to Cart</a>
 
         <h2>Confirm Your Items</h2>
+        
+        <p>ON YUEN SHERN</p>
+        <p>25, ELITIS PINGGIRAN ANCALA, 47000 SUNGAI BULOH, SELANGOR</p>
+        <a href="url">Edit Address</a>
+        
+        <br><br>
 
         <table border="1">
             <tr>
