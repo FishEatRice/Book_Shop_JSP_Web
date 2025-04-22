@@ -1,5 +1,7 @@
 package model.payment;
 
+import java.sql.*;
+
 public class PaymentDetail {
 
     private String paymentId;
@@ -121,20 +123,39 @@ public class PaymentDetail {
         this.productId = productId;
     }
 
-    public String getShippingStatusString() {
-        switch (shippingStatus) {
-            case 1:
-                return "Packaging";
-            case 2:
-                return "Shipping";
-            case 3:
-                return "Delivery";
-            case 4:
-                return "Success";
-            case 5:
-                return "Refund";
-            default:
-                return "Unknown";
+    public String getShippingStatusName() {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db_galaxy_bookshelf", "GALAXY", "GALAXY");
+            String sql = "SELECT * FROM GALAXY.SHIPPING_STATUS WHERE SHIPPING_STATUS_ID = ?";
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, shippingStatus);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getString("SHIPPING_STATUS_NAME");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return "Unknown";
+    }
+
+    public String getPayTypeName() {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db_galaxy_bookshelf", "GALAXY", "GALAXY");
+            String sql = "SELECT * FROM GALAXY.PAY_TYPE WHERE PAY_TYPE_ID = ?";
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, payTypeId);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getString("PAY_NAME");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "Unknown";
     }
 }

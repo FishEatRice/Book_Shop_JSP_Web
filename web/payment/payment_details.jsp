@@ -1,19 +1,16 @@
 <%@ page import="model.payment.PaymentDetail" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 
 <%
-    SimpleDateFormat DateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     List<PaymentDetail> paymentList = (List<PaymentDetail>) request.getAttribute("paymentList");
     String shippingStatus = "";
     String payType = "";
     if (paymentList != null && !paymentList.isEmpty()) {
         for (PaymentDetail temp : paymentList) {
             if (!"Shipping Fee".equalsIgnoreCase(temp.getProductName())) {
-                shippingStatus = temp.getShippingStatusString();
-                payType = temp.getPayTypeId();
+                shippingStatus = temp.getShippingStatusName();
+                payType = temp.getPayTypeName();
                 break;
             }
         }
@@ -53,7 +50,7 @@
                 <td><%= p.getProductName() %></td>
                 <td>RM <%= String.format("%.2f", p.getPayPrice()) %></td>
                 <td><%= p.getQuantity() %></td>
-                <td><%= p.getPayDatetime() %></td>
+                <td><%= p.getPayDatetime().substring(0, 19) %></td>
             </tr>
             <%
                     }
