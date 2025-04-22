@@ -82,6 +82,14 @@
         <servlet-name>DeleteDiscount</servlet-name>
         <servlet-class>controller.discount.DeleteDiscount</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PaymentSummary</servlet-name>
+        <servlet-class>controller.payment.PaymentDisplayProcess</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DisplayPaymentDetails</servlet-name>
+        <servlet-class>controller.payment.DisplayPaymentDetails</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>genreListing</servlet-name>
         <url-pattern>/web/genre/list_genre.jsp</url-pattern>
@@ -157,6 +165,14 @@
     <servlet-mapping>
         <servlet-name>DeleteDiscount</servlet-name>
         <url-pattern>/DeleteDiscount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentSummary</servlet-name>
+        <url-pattern>/web/payment/payment_list.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DisplayPaymentDetails</servlet-name>
+        <url-pattern>/web/payment/payment_details.jsp</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

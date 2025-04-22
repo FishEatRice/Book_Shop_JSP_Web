@@ -42,7 +42,7 @@
         <!-- Customer -->
         <li><a href="/galaxy_bookshelf/web/customer/list_cart.jsp">Cart</a></li>
 
-        <li><a href="/galaxy_bookshelf/">Purchase</a></li>
+        <li><a href="/galaxy_bookshelf/web/payment/payment_list.jsp">Purchase</a></li>
 
         <% } else if ("admin".equals(CheckAcc)) { %>
 
