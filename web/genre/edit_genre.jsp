@@ -34,7 +34,7 @@
         <br><br>
 
         <label for="genre_name">Genre Name:</label>
-        <input type="text" id="genre_name" name="genre_name" value="<%= genre_data.getGenreName() %>" required>
+        <input type="text" id="genre_name" name="genre_name" value="<%= genre_data.getGenreName() %>">
         <br><br>
         
         <input type="submit" value="Update">

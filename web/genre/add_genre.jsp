@@ -25,7 +25,7 @@
 
         <form action="<%= request.getContextPath() %>/web/genre/add_genre.jsp" method="post">
             <label for="genre_name">Genre Name:</label>
-            <input type="text" id="genre_name" name="genre_name" required>
+            <input type="text" id="genre_name" name="genre_name">
             <br><br>
             
             <input type="submit" value="Add Genre">          

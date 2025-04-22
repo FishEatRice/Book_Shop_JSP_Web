@@ -6,6 +6,8 @@ package controller.genre;
 
 import jakarta.persistence.*;
 import java.io.IOException;
+import java.util.List;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,7 +47,7 @@ public class updateGenre extends HttpServlet {
                 if (newGenreName.isEmpty()) {
                     request.setAttribute("error", "Genre name cannot be empty.");
                     request.setAttribute("genreData", newGenreName); 
-                    request.getRequestDispatcher("/genre/add_genre.jsp").forward(request, response);
+                    request.getRequestDispatcher("/genre/edit_genre.jsp").forward(request, response);
                     return;
                 }
 
@@ -59,20 +61,14 @@ public class updateGenre extends HttpServlet {
                     return;
                 }
                 
-                // Check if the new genre name already exists in the database
-                Genre existingGenre = null;
-                try {
-                    existingGenre = em.createNamedQuery("Genre.findByGenreName", Genre.class)
-                                      .setParameter("genreName", newGenreName)
-                                      .getSingleResult();
-                } catch (NoResultException e) {
-                    e.printStackTrace(); 
-                }
-                
-                if (existingGenre != null) {
-                    request.setAttribute("error", "The genre name already exists.");
-                    request.setAttribute("genreData", currentGenre); 
-                    request.getRequestDispatcher("/genre/edit_genre.jsp").forward(request, response);
+                List<Genre> existingGenres = em.createNamedQuery("Genre.findByGenreName", Genre.class)
+                    .setParameter("genreName", newGenreName)
+                    .getResultList();
+            
+                if (!existingGenres.isEmpty()) {
+                    request.setAttribute("error", "The Genre already exists.");
+                    request.setAttribute("genreData", newGenreName); 
+                    request.getRequestDispatcher("/genre/list_genre.jsp").forward(request, response);
                     return;
                 }
                 

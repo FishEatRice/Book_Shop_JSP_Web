@@ -47,8 +47,7 @@ public class addGerne extends HttpServlet {
                 return;
             }
             
-            List<Genre> existingGenres = em.createNamedQuery(
-                    "Genre.findByGenreName", Genre.class)
+            List<Genre> existingGenres = em.createNamedQuery("Genre.findByGenreName", Genre.class)
                     .setParameter("genreName", genreName)
                     .getResultList();
             
