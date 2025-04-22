@@ -36,8 +36,10 @@ public class productEdit extends HttpServlet {
             throws ServletException, IOException {
         String productID = request.getParameter("id");
         EntityManager em = emf.createEntityManager();
+
         Product productData = em.find(Product.class, productID); // SELECT * FROM product WHERE product_id = ?
         List<Genre> genreList = em.createQuery("SELECT g FROM Genre g", Genre.class).getResultList(); // SELECT * FROM genre (List all the Genre)
+
         request.setAttribute("productData", productData);
         request.setAttribute("genreList", genreList);
         request.getRequestDispatcher("/product/editProduct.jsp").forward(request, response);
@@ -52,7 +54,6 @@ public class productEdit extends HttpServlet {
         HttpSession session = request.getSession();
 
         try {
-            // request.setCharacterEncoding("UTF-8");
 
             String productId = request.getParameter("productId").trim();
             String name = request.getParameter("productName").trim();
@@ -64,7 +65,7 @@ public class productEdit extends HttpServlet {
             // Input validation
             if (name.isEmpty() || description.isEmpty() || genreId == null || genreId.isEmpty() || priceStr == null || priceStr.isEmpty() || qtyStr == null || qtyStr.isEmpty()) {
                 session.setAttribute("error", "All fields are required.");
-                response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp?id=" + productId);
+                response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp");
                 return;
             }
 
@@ -73,7 +74,7 @@ public class productEdit extends HttpServlet {
 
             if (price.compareTo(BigDecimal.ZERO) <= 0 || quantity <= 0) {
                 session.setAttribute("error", "Price and quantity must be greater than 0.");
-                response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp?id=" + productId);
+                response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp");
                 return;
             }
 
@@ -89,7 +90,7 @@ public class productEdit extends HttpServlet {
             Genre genre = em.find(Genre.class, genreId);
             if (genre == null) {
                 session.setAttribute("error", "Invalid genre selected.");
-                response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp?id=" + productId);
+                response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp");
                 return;
             }
 
@@ -107,7 +108,7 @@ public class productEdit extends HttpServlet {
 
                 if (!"image/jpeg".equalsIgnoreCase(contentType) && !"image/jpg".equalsIgnoreCase(contentType)) {
                     session.setAttribute("error", "Only JPEG images are allowed.");
-                    response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp?id=" + productId);
+                    response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp");
                     return;
                 }
 

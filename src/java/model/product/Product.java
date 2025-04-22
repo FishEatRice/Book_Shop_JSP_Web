@@ -13,6 +13,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
@@ -21,17 +23,19 @@ import model.genre.Genre;
 
 /**
  *
- * @author ASUS
+ * @author JS
  */
 @Entity
 @Table(name = "PRODUCT")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
-    @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId"),
-    @NamedQuery(name = "Product.findByProductName", query = "SELECT p FROM Product p WHERE p.productName = :productName"),
+    @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE LOWER(p.productId) LIKE LOWER(:productId)"),
+    @NamedQuery(name = "Product.findByProductName", query = "SELECT p FROM Product p WHERE LOWER(p.productName) LIKE LOWER(:productName)"),
     @NamedQuery(name = "Product.findByProductPrice", query = "SELECT p FROM Product p WHERE p.productPrice = :productPrice"),
     @NamedQuery(name = "Product.findByQuantity", query = "SELECT p FROM Product p WHERE p.quantity = :quantity")})
+    @NamedNativeQueries({
+        @NamedNativeQuery(name = "Product.findAllByOrder", query = "SELECT * FROM Product ORDER BY CAST(SUBSTR(product_id, 2) AS INT) ", resultClass = Product.class), }) 
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;

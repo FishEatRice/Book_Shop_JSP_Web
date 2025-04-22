@@ -28,7 +28,7 @@ public class productListing extends HttpServlet {
             throws ServletException, IOException {
 
         EntityManager em = emf.createEntityManager();
-        List<Product> productData = em.createQuery("SELECT p FROM Product p", Product.class).getResultList();
+        List<Product> productData = em.createNamedQuery("Product.findAllByOrder", Product.class).getResultList();
 
         // Process the product images (base64 image strings) - Convert JSON to Image
         for (Product product : productData) {
