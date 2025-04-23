@@ -74,6 +74,11 @@
             %>
             <tr>
                 <td colspan="3"></td>
+                <td>Merchandise Subtotal</td>
+                <td>RM <%= String.format("%.2f", subtotal) %></td>
+            </tr>
+            <tr>
+                <td colspan="3"></td>
                 <td>Shipping Fee</td>
                 <td>RM <%= String.format("%.2f", shippingFee) %></td>
             </tr>
