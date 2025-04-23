@@ -28,7 +28,7 @@ public class PaymentDisplayProcess extends HttpServlet {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db_galaxy_bookshelf", "GALAXY", "GALAXY");
 
-            String sql = "SELECT SUBSTR(PAYMENT_ID, 1, LENGTH(PAYMENT_ID) - 2) AS MAIN_PAYMENT_ID, CUSTOMER_ID, PAY_DATETIME, PAY_TYPE_ID, SUM(PAY_PRICE) AS TOTAL_AMOUNT, COUNT(*) AS TOTAL_ITEMS FROM GALAXY.PAYMENT WHERE CUSTOMER_ID = ? GROUP BY SUBSTR(PAYMENT_ID, 1, LENGTH(PAYMENT_ID) - 2), CUSTOMER_ID, PAY_DATETIME, PAY_TYPE_ID ORDER BY PAY_DATETIME DESC";
+            String sql = "SELECT SUBSTR(PAYMENT_ID, 1, LENGTH(PAYMENT_ID) - 2) AS MAIN_PAYMENT_ID, CUSTOMER_ID, PAY_DATETIME, PAY_TYPE_ID,  SUM(PAY_PRICE * QUANTITY) AS TOTAL_AMOUNT, COUNT(*) AS TOTAL_ITEMS FROM GALAXY.PAYMENT WHERE CUSTOMER_ID = ? GROUP BY SUBSTR(PAYMENT_ID, 1, LENGTH(PAYMENT_ID) - 2), CUSTOMER_ID, PAY_DATETIME, PAY_TYPE_ID ORDER BY PAY_DATETIME DESC";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, customerId);

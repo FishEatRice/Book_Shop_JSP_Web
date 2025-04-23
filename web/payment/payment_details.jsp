@@ -6,11 +6,13 @@
     List<PaymentDetail> paymentList = (List<PaymentDetail>) request.getAttribute("paymentList");
     String shippingStatus = "";
     String payType = "";
+    String datetime = "";
     if (paymentList != null && !paymentList.isEmpty()) {
         for (PaymentDetail temp : paymentList) {
             if (!"Shipping Fee".equalsIgnoreCase(temp.getProductName())) {
                 shippingStatus = temp.getShippingStatusName();
                 payType = temp.getPayTypeName();
+                datetime = temp.getPayDatetime().substring(0, 19);
                 break;
             }
         }
@@ -33,39 +35,16 @@
 
         <p>Shipping status: <%= shippingStatus %></p>
         <p>Payment Method: <%= payType %></p>
-
-        <table border="1">
-            <tr>
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Date</th>
-            </tr>
-            <%
-                if (paymentList != null) {
-                    for (PaymentDetail p : paymentList) {
-                        if ("Shipping Fee".equalsIgnoreCase(p.getProductName())) continue;
-            %>
-            <tr>
-                <td><%= p.getProductName() %></td>
-                <td>RM <%= String.format("%.2f", p.getPayPrice()) %></td>
-                <td><%= p.getQuantity() %></td>
-                <td><%= p.getPayDatetime().substring(0, 19) %></td>
-            </tr>
-            <%
-                    }
-                }
-            %>
-        </table>
-
-        <br><br>
+        <p>Payment Datetime: <%= datetime %></p>
 
         <h2>Order Summary</h2>
         <table border="1">
             <tr>
                 <th>No.</th>
-                <th>Item</th>
-                <th>Price</th>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
             </tr>
             <%
                 int no = 1;
@@ -77,12 +56,14 @@
                         if ("Shipping Fee".equalsIgnoreCase(p.getProductName())) {
                             shippingFee = p.getPayPrice();
                         } else {
-                            subtotal += p.getPayPrice();
+                            subtotal += p.getPayPrice() * p.getQuantity();
             %>
             <tr>
                 <td><%= no++ %></td>
                 <td><%= p.getProductName() %></td>
                 <td>RM <%= String.format("%.2f", p.getPayPrice()) %></td>
+                <td><%= p.getQuantity() %></td>
+                <td>RM <%= String.format("%.2f", p.getPayPrice() * p.getQuantity()) %></td>
             </tr>
             <%
                         }
@@ -92,11 +73,13 @@
                 double total = subtotal + shippingFee;
             %>
             <tr>
-                <td colspan="2">Shipping Fee</td>
+                <td colspan="3"></td>
+                <td>Shipping Fee</td>
                 <td>RM <%= String.format("%.2f", shippingFee) %></td>
             </tr>
             <tr>
-                <td colspan="2"><strong>Total</strong></td>
+                <td colspan="3"></td>
+                <td>Total</td>
                 <td><strong>RM <%= String.format("%.2f", total) %></strong></td>
             </tr>
         </table>
