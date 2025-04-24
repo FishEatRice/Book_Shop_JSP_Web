@@ -1,6 +1,7 @@
 <%@ page import="model.staff.Staff" %>
 <%@ page import="java.sql.*" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ include file="/header/main_header.jsp" %>
 <%
         request.setCharacterEncoding("UTF-8");
     String staffId = request.getParameter("staffId");
@@ -42,7 +43,7 @@ request.setAttribute("staff", staff);
         <h1>Edit Staff Information</h1>
 
         <div class="form-container">
-            <form action="../crudStaff" method="post">
+            <form action="/crudStaff" method="post">
                 <input type="hidden" name="action" value="edit" />
                 <input type="hidden" name="id" value="${staff.staffId}" />
 

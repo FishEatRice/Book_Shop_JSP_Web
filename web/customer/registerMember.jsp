@@ -3,7 +3,7 @@
     Created on : Apr 11, 2025, 8:03:37 AM
     Author     : yq
 --%>
-
+<%@ include file="/header/main_header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -29,7 +29,7 @@
 
 
         <h3>Register Now</h3>
-        <form method="post" action="../crudCustomer" onsubmit="return validatePassword(); ">
+        <form method="post" action="/crudCustomer" onsubmit="return validatePassword(); ">
                     
 
             <p><label>Name :</label>

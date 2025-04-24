@@ -33,7 +33,7 @@ public class crudStaff extends HttpServlet {
         String staffFirstName = request.getParameter("firstName");
         String staffLastName = request.getParameter("lastName");
         String staffPassword = "1234";
-        int staffPosition = 1;
+        int staffPosition = 0;
 
         Staff staff = new Staff();
 
@@ -115,7 +115,7 @@ public class crudStaff extends HttpServlet {
     public static java.util.ArrayList<Staff> getAllStaff() {
         java.util.ArrayList<Staff> list = new java.util.ArrayList<>();
 
-        String query = "SELECT * FROM GALAXY.STAFF";
+        String query = "SELECT * FROM GALAXY.STAFF WHERE POSITION = 0";
         try (Connection conn = DriverManager.getConnection(Host, User, password); PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {

@@ -8,7 +8,7 @@ if (staffId == null || !"admin".equals(role)) {
 session.setAttribute("userRole", "admin");
 %>
 
-
+<%@ include file="/header/main_header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,11 +17,11 @@ session.setAttribute("userRole", "admin");
         <title>JSP Page</title>
     </head>
     <body>
-        <a href="../header/SessionLogout.jsp">Logout</a>
+        <a href="/galaxy_bookshelf/header/SessionLogout.jsp">Logout</a>
 
         <h3>admin</h3>
         <h3>Welcome</h3>
-       <a href="../admin/crudStaff.jsp"> Staff Management</a>
-       <a href="../staff/customerManagementList.jsp"> Customer Management</a>
+       <a href="/galaxy_bookshelf/admin/crudStaff.jsp"> Staff Management</a>
+       <a href="/galaxy_bookshelf/staff/customerManagementList.jsp"> Customer Management</a>
     </body>
 </html>

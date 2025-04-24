@@ -3,7 +3,7 @@
     Created on : Apr 12, 2025, 12:46:58 AM
     Author     : yq
 --%>
-
+<%@ include file="/header/main_header.jsp" %>
 <%
 String staffId = (String) session.getAttribute("account_status");
 String role = (String) session.getAttribute("userRole");
@@ -27,8 +27,8 @@ session.setAttribute("userRole", "staff");
     <body>
         <p>Welcome, Staff ID: <%= staffId %></p>
         <h3>Welcome</h3>
-        <a href="../header/SessionLogout.jsp">Logout</a> <br>
-        <a href="../staff/customerManagementList.jsp"> Customer Management</a><br>
-        <a href="../staff/staffProfileDetails.jsp">Account Details</a><br>
+        <a href="/galaxy_bookshelf/header/SessionLogout.jsp">Logout</a> <br>
+        <a href="/galaxy_bookshelf/staff/customerManagementList.jsp"> Customer Management</a><br>
+        <a href="/galaxy_bookshelf/staff/staffProfileDetails.jsp">Account Details</a><br>
     </body>
 </html>

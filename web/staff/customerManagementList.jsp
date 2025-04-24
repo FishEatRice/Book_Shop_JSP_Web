@@ -4,7 +4,7 @@
     Author     : yq
 --%>
 <%@ page import="java.util.*, controller.customer.crudCustomer, controller.customer.crudCustomer.Customer" %>
-
+<%@ include file="/header/main_header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -61,7 +61,7 @@
                 <td><%= c.questionId %></td>
                 <td><%= c.questionAnswer %></td>
                 <td><%= c.request %></td>
-                <td><a href="../staff/editCustomer.jsp?id=<%= c.id %>">Edit</a></td>  <!--pass data-->
+                <td><a href="/galaxy_bookshelf/staff/editCustomer.jsp?id=<%= c.id %>">Edit</a></td>  <!--pass data-->
                 <td><a href="deleteCustomer.jsp?id=<%= c.id %>">Delete</a></td>
                 <td></td>
             </tr>

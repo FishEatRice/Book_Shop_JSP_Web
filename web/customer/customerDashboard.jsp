@@ -1,5 +1,6 @@
 <%@ page import="controller.customer.CustomerLoginFunction" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ include file="/header/main_header.jsp" %>
 <%
 String accountStatus = (String) session.getAttribute("account_status");
 String role = (String) session.getAttribute("userRole");
@@ -26,7 +27,7 @@ if (customerId == null || !"customer".equals(role)) {
     <body>
         <p>Welcome, customer ID: <%= customerId %></p>
         <h1>Hello World!</h1>
-        <a href="../header/SessionLogout.jsp">Logout</a> <br>
-        <a href="../customer/customerProfileDetails.jsp">MyProfile</a> <br>
+        <a href="/galaxy_bookshelf/header/SessionLogout.jsp">Logout</a> <br>
+        <a href="/galaxy_bookshelf/customer/customerProfileDetails.jsp">MyProfile</a> <br>
     </body>
 </html>

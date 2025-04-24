@@ -3,7 +3,7 @@
     Created on : Apr 11, 2025, 8:02:18 AM
     Author     : yq
 --%>
-
+<%@ include file="/header/main_header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
 // 获取 staffId 的值（需强制转换为 String）
@@ -30,7 +30,7 @@ if (CheckAcc != null) {
 </head>
 <body>
     <h2>Login</h2>
-    <form action="../CustomerLoginFunction" method="POST">
+    <form action="/CustomerLoginFunction" method="POST">
         <label for="customer_id">Member Email:</label>
         <input type="text" id="customer_email" name="customer_email" required/><br><br>
 
@@ -40,7 +40,7 @@ if (CheckAcc != null) {
         <button type="submit">Login</button>
     </form>
     <a href="#"> Forget Password</a> <br>
-    <a href="../customer/registerMember.jsp"> Register</a> <br>
+    <a href="/galaxy_bookshelf/customer/registerMember.jsp"> Register</a> <br>
 
 </body>
 </html>

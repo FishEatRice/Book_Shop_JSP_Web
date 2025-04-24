@@ -1,7 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.staff.Staff" %>
 <%@ page import="controller.admin.crudStaff" %>
-
+<%@ include file="/header/main_header.jsp" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -44,16 +44,21 @@
                 <td><%= s.getStaffPassword() %></td>
                 <td><%= s.getPosition() %></td>
                 <td>
-                    <form action="../admin/editStaff.jsp" method="post" style="display:inline;">
+                    <% if (!"A1".equals(s.getStaffId())) { %>
+                    <form action="/galaxy_bookshelf/admin/editStaff.jsp" method="post" style="display:inline;">
                         <input type="hidden" name="staffId" value="<%= s.getStaffId() %>" />
                         <input type="submit" value="Edit" />
                     </form>
-                    <form action="../crudStaff" method="post" style="display:inline;">
+                    <form action="/crudStaff" method="post" style="display:inline;">
                         <input type="hidden" name="action" value="delete" />
                         <input type="hidden" name="id" value="<%= s.getStaffId() %>" />
                         <input type="submit" value="Delete" onclick="return confirm('Are you sure to delete this staff?');" />
                     </form>
+                    <% } else { %>
+                    <span>Admin</span>
+                    <% } %>
                 </td>
+
 
 
 

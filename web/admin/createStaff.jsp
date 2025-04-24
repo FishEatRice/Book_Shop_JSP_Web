@@ -3,7 +3,7 @@
     Created on : Apr 11, 2025, 10:28:51 PM
     Author     : yq
 --%>
-
+<%@ include file="/header/main_header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,7 +15,7 @@
     <body>
 
         <h3>Create staff Now</h3>
-        <form method="post" action="../crudStaff">
+        <form method="post" action="/crudStaff">
              <input type="hidden" name="action" value="create"> 
 
 

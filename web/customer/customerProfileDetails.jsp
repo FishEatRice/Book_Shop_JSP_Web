@@ -1,5 +1,6 @@
 <%@ page import="java.sql.*, model.customer.Customer" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ include file="/header/main_header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +47,7 @@
     }
 %>
 <h2>My Profile</h2>
-<form action="../customerMyProfile" method="post">
+<form action="/customerMyProfile" method="post">
     <!-- 基本信息 -->
     <h3>My Profile Details</h3>
     <label>Customer ID:</label>

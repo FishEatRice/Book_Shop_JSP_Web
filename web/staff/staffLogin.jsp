@@ -4,7 +4,7 @@
     Author     : yq
 --%>
 
-
+<%@ include file="/header/main_header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
 String staffId = (String) session.getAttribute("account_status");
@@ -28,7 +28,7 @@ if (staffId != null) {
 
 
         <h2>Login</h2>
-        <form action="../AdminLoginFunction" method="POST">
+        <form action="/AdminLoginFunction" method="POST">
             <label for="staff_id">Staff ID:</label>
             <input type="text" id="staff_id" name="staff_id" required/><br><br>
 

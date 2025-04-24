@@ -3,7 +3,7 @@
     Created on : Apr 14, 2025, 7:09:50 AM
     Author     : yq
 --%>
-
+<%@ include file="/header/main_header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,7 +17,7 @@
     <h1>Edit Customer Information</h1>
 
     <div class="form-container">
-        <form action="crudCustomer" method="post">
+        <form action="/crudCustomer" method="post">
             <!-- 用于编辑客户的ID -->
             <input type="hidden" name="action" value="edit" />
             <input type="hidden" name="id" value="${customer.id}" />

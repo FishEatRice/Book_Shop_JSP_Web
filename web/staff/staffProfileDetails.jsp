@@ -1,4 +1,5 @@
 <%@ page import="model.staff.Staff" %>
+<%@ include file="/header/main_header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -41,7 +42,7 @@
         }
     }
 %>
-<form action="../updateMyProfile" method="post">
+<form action="/updateMyProfile" method="post">
     <input type="hidden" name="staffId" value="<%= staff.getStaffId() %>" />
     <%
     if (staff != null) {
