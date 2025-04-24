@@ -34,6 +34,21 @@ public class productDelete extends HttpServlet {
                     tx.begin(); 
 
                     String productId = request.getParameter("id");
+        
+                    String query1 = "UPDATE GALAXY.PAYMENT SET PRODUCT_ID = 'Deleted' WHERE PRODUCT_ID = ?";
+                    int updatedCount1 = em.createNativeQuery(query1)
+                        .setParameter(1, productId)
+                        .executeUpdate();
+
+                    String query2 = "DELETE FROM GALAXY.DISCOUNT WHERE PRODUCT_ID = ?";
+                    int updatedCount2 = em.createNativeQuery(query2)
+                        .setParameter(1, productId)
+                        .executeUpdate();
+
+                    String query3 = "DELETE FROM GALAXY.CART WHERE PRODUCT_ID = ?";
+                    int updatedCount3 = em.createNativeQuery(query3)
+                        .setParameter(1, productId)
+                        .executeUpdate();
 
                     Product product = em.find(Product.class, productId); // SELECT * FROM Product WHERE product_id = ?
                     em.remove(product); // DELETE FROM Product WHERE product_id = ?
