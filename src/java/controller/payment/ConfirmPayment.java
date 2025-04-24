@@ -25,6 +25,12 @@ public class ConfirmPayment extends HttpServlet {
 
         double shipping_fee = 0.0;
 
+        String full_name = "Not Yet Set";
+        
+        String phone_number = "Not Yet Set";
+        
+        String address = "Not Yet Set";
+
         String cartIdsParam = request.getParameter("cart_ids");
         if (cartIdsParam == null || cartIdsParam.isEmpty()) {
             response.sendRedirect("/galaxy_bookshelf/web/customer/list_cart.jsp");
@@ -134,6 +140,20 @@ public class ConfirmPayment extends HttpServlet {
             fee_rs.close();
             fee_ps.close();
 
+            //Payment Address
+            String AddressSQL = "SELECT C.CUSTOMER_FIRSTNAME, C.CUSTOMER_LASTNAME, C.CUSTOMER_CONTACTNO, C.CUSTOMER_ADDRESS_NO, C.CUSTOMER_ADDRESS_JALAN, C.CUSTOMER_ADDRESS_CITY, C.CUSTOMER_ADDRESS_CODE, S.STATE_NAME FROM GALAXY.CUSTOMER C JOIN GALAXY.SHIPPING_STATE S ON C.CUSTOMER_ADDRESS_STATE = S.STATE_ID WHERE CUSTOMER_ID = ?";
+            PreparedStatement address_stmt = conn.prepareStatement(AddressSQL);
+            address_stmt.setString(1, customer_id);
+            ResultSet address_rs = address_stmt.executeQuery();
+            while (address_rs.next()) {
+                full_name = address_rs.getString("CUSTOMER_FIRSTNAME") + " " + address_rs.getString("CUSTOMER_LASTNAME");
+                phone_number = address_rs.getString("CUSTOMER_CONTACTNO");
+                address = address_rs.getString("CUSTOMER_ADDRESS_NO") + ", " +  address_rs.getString("CUSTOMER_ADDRESS_JALAN") + "<br>" +  address_rs.getString("CUSTOMER_ADDRESS_CODE") + " " + address_rs.getString("CUSTOMER_ADDRESS_CITY") + "<br>" + address_rs.getString("STATE_NAME");
+            }
+
+            address_rs.close();
+            address_stmt.close();
+
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -148,6 +168,9 @@ public class ConfirmPayment extends HttpServlet {
         request.setAttribute("Total", total);
         request.setAttribute("CartIDs", cartIdsParam);
         request.setAttribute("PayTypes", payTypes);
+        request.setAttribute("FullName", full_name);
+        request.setAttribute("PhoneNumber", phone_number);
+        request.setAttribute("Address", address);
 
         // Forward to JSP
         request.getRequestDispatcher("/payment/confirm_payment.jsp").forward(request, response);
