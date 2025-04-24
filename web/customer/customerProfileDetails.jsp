@@ -47,7 +47,7 @@
     }
 %>
 <h2>My Profile</h2>
-<form action="/customerMyProfile" method="post">
+<form action="../customerMyProfile" method="post">
     <!-- 基本信息 -->
     <h3>My Profile Details</h3>
     <label>Customer ID:</label>

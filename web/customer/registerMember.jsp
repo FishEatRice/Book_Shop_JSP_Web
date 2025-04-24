@@ -29,7 +29,7 @@
 
 
         <h3>Register Now</h3>
-        <form method="post" action="/crudCustomer" onsubmit="return validatePassword(); ">
+        <form method="post" action="../crudCustomer" onsubmit="return validatePassword(); ">
                     
 
             <p><label>Name :</label>

@@ -17,7 +17,7 @@
     <h1>Edit Customer Information</h1>
 
     <div class="form-container">
-        <form action="/crudCustomer" method="post">
+        <form action="../crudCustomer" method="post">
             <!-- 用于编辑客户的ID -->
             <input type="hidden" name="action" value="edit" />
             <input type="hidden" name="id" value="${customer.id}" />

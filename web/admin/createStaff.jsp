@@ -15,7 +15,7 @@
     <body>
 
         <h3>Create staff Now</h3>
-        <form method="post" action="/crudStaff">
+        <form method="post" action="../crudStaff">
              <input type="hidden" name="action" value="create"> 
 
 

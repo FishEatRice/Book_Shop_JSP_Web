@@ -43,7 +43,7 @@ request.setAttribute("staff", staff);
         <h1>Edit Staff Information</h1>
 
         <div class="form-container">
-            <form action="/crudStaff" method="post">
+            <form action="../crudStaff" method="post">
                 <input type="hidden" name="action" value="edit" />
                 <input type="hidden" name="id" value="${staff.staffId}" />
 
