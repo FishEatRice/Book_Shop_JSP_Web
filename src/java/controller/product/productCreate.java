@@ -10,9 +10,8 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
+import java.util.Base64;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
@@ -62,7 +61,17 @@ public class productCreate extends HttpServlet {
                         response.sendRedirect(request.getContextPath() + "/web/product/addProduct.jsp");
                         return;
                     }
-        
+                    
+                    List<Product> existingProducts = em.createNamedQuery("Product.findByProductName", Product.class)
+                        .setParameter("productName", name)
+                        .getResultList();
+            
+                    if (!existingProducts.isEmpty()) {
+                        session.setAttribute("error", "Product name already exists. Please choose a different name.");
+                        response.sendRedirect(request.getContextPath() + "/web/product/addProduct.jsp");
+                        return; 
+                    }
+
                     BigDecimal price = new BigDecimal(priceStr);
                     int qty = Integer.parseInt(qtyStr);
         
