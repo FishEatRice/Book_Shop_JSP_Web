@@ -90,6 +90,14 @@
         <servlet-name>DisplayPaymentDetails</servlet-name>
         <servlet-class>controller.payment.DisplayPaymentDetails</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>add_edit_address</servlet-name>
+        <servlet-class>controller.payment.add_edit_address</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>address_process</servlet-name>
+        <servlet-class>controller.payment.address_process</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>genreListing</servlet-name>
         <url-pattern>/web/genre/list_genre.jsp</url-pattern>
@@ -173,6 +181,14 @@
     <servlet-mapping>
         <servlet-name>DisplayPaymentDetails</servlet-name>
         <url-pattern>/web/payment/payment_details.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>add_edit_address</servlet-name>
+        <url-pattern>/web/payment/add_edit_address.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>address_process</servlet-name>
+        <url-pattern>/address_process</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
