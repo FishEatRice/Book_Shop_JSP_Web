@@ -42,7 +42,7 @@
         }
     }
 %>
-<form action="/updateMyProfile" method="post">
+<form action="../updateMyProfile" method="post">
     <input type="hidden" name="staffId" value="<%= staff.getStaffId() %>" />
     <%
     if (staff != null) {
