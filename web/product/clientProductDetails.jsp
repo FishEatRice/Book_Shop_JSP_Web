@@ -105,11 +105,11 @@
     </head>
     <body>
         <div class="container">
-            <a href="products.jsp" class="back-link">← Back</a>
+            <a href="clientProductListing.jsp" class="back-link">← Back</a>
 
             <div class="product-section">
                 <!-- Left: Image -->
-                <div class="product-image">Product Image</div>
+                <div class="product-image"><img src="${productData.productPicture}" alt="Product Image" width="300" height="300"/></div>
 
                 <!-- Right: Info -->
                 <div class="product-info">
