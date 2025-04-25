@@ -34,6 +34,9 @@
 </style>
 
 <body>
+
+    <%@ include file="/header/main_header.jsp" %>
+
     <h1><%= heading %></h1>
 
     <%-- Display Success Message --%>

@@ -4,7 +4,6 @@
     Author     : Galaxy Brain
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@page import="model.product.Product"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -19,6 +18,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body>
+
+    <%@ include file="/header/main_header.jsp" %>
 
         <!-- Product Table -->
         <h1>Product Listing</h1>

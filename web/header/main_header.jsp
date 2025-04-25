@@ -57,7 +57,9 @@
         <!-- Staff / Admin -->
         <li><a href="/galaxy_bookshelf/">Shipping</a></li>
 
-        <li><a href="/galaxy_bookshelf/">Inventory</a></li>
+        <li><a href="/galaxy_bookshelf/web/product/product.jsp">Inventory</a></li>
+
+        <li><a href="/galaxy_bookshelf/web/genre/list_genre.jsp">Genre</a></li>
 
         <li><a href="/galaxy_bookshelf/">Review</a></li>
 
