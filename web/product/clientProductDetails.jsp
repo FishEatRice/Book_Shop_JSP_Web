@@ -1,0 +1,165 @@
+<%-- 
+    Document   : clientProductDetails
+    Created on : 25 Apr 2025, 18:18:18
+    Author     : JS
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.product.Product"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Product Detail</title>
+        <style>
+            .container {
+                width: 80%;
+                margin: auto;
+                font-family: sans-serif;
+            }
+
+            .back-link {
+                color: blue;
+                display: inline-block;
+                margin: 10px 0;
+                text-decoration: none;
+            }
+
+            .product-section {
+                display: flex;
+                gap: 30px;
+                align-items: flex-start;
+            }
+
+            .product-image {
+                border: 2px solid blue;
+                width: 300px;
+                height: 300px;
+                background-color: #eee;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+            }
+
+            .product-info {
+                flex: 1;
+            }
+
+            .product-name {
+                color: blue;
+                font-size: 1.5em;
+            }
+
+            .product-price {
+                font-size: 2em;
+                font-weight: bold;
+                color: orange;
+                margin: 10px 0;
+            }
+
+            .stock, .quantity-box {
+                margin: 10px 0;
+            }
+
+            .quantity-box {
+                display: flex;
+                gap: 5px;
+                align-items: center;
+            }
+
+            .quantity-box input {
+                width: 50px;
+                text-align: center;
+            }
+
+            .add-to-cart {
+                background-color: yellow;
+                border: 2px solid #aaa;
+                padding: 10px 25px;
+                margin-top: 10px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .details, .comment {
+                margin-top: 30px;
+                padding: 15px;
+            }
+
+            .details {
+                border: 2px solid purple;
+            }
+
+            .comment {
+                border: 2px solid orange;
+
+            }
+
+            input[type=number]::-webkit-inner-spin-button,
+            input[type=number]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <a href="products.jsp" class="back-link">← Back</a>
+
+            <div class="product-section">
+                <!-- Left: Image -->
+                <div class="product-image">Product Image</div>
+
+                <!-- Right: Info -->
+                <div class="product-info">
+                    <div class="product-name">${productData.productName}</div>
+                    <div class="product-price">${productData.productPrice}</div>
+
+                    <form method="post" action="add-to-cart">
+                        <input type="hidden" name="productId" value="1" />
+
+                        <div class="stock">Stock Quantity: <strong>${productData.quantity}</strong></div>
+
+                        <div class="quantity-box">
+                            Quantity:
+                            <button type="button" onclick="adjustQty(this)">-</button>
+                            <input type="number" name="quantity" id="qtyInput" value="1" min="1" />
+                            <button type="button" onclick="adjustQty(this)">+</button>
+                        </div>
+
+                        <button type="submit" class="add-to-cart">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="details">
+                <h3>Details</h3>
+                <p>
+                    ${productData.productInformation}
+                </p>
+            </div>
+
+            <div class="comment">
+                <h3>Comment</h3>
+                <p>No comments yet. Be the first to leave a review!</p>
+            </div>
+        </div>
+
+        <script>
+            function adjustQty(button) {
+                const input = document.getElementById('qtyInput');
+                let current = parseInt(input.value);
+
+                if (button.textContent === '-') {
+                    if (current > 1)
+                        current--;
+                } else {
+                    current++;
+                }
+
+                input.value = current;
+            }
+        </script>
+    </body>
+</html>

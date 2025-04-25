@@ -16,10 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.product.Product;
 
-/**
- *
- * @author ASUS
- */
+
 public class productDelete extends HttpServlet {
 
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("galaxy_bookshelfPU");

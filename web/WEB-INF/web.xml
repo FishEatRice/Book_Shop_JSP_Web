@@ -40,6 +40,18 @@
         <servlet-name>productEdit</servlet-name>
         <servlet-class>controller.product.productEdit</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>clientProductListing</servlet-name>
+        <servlet-class>controller.product.clientProductListing</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>clientProductSearch</servlet-name>
+        <servlet-class>controller.product.clientProductSearch</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>clientProductDetails</servlet-name>
+        <servlet-class>controller.product.clientProductDetails</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>genreListing</servlet-name>
         <url-pattern>/web/genre/list_genre.jsp</url-pattern>
@@ -159,6 +171,18 @@
     <servlet-mapping>
         <servlet-name>productEdit</servlet-name>
         <url-pattern>/web/product/editProduct.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>clientProductListing</servlet-name>
+        <url-pattern>/web/product/clientProductListing.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>clientProductSearch</servlet-name>
+        <url-pattern>/web/product/clientProductSearch.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>clientProductDetails</servlet-name>
+        <url-pattern>/web/product/clientProductDetails.jsp</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
