@@ -27,6 +27,8 @@
         <meta charset="UTF-8">
         <title>Galaxy | Payment Details</title>
         <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
+        <!-- Font Awesome CDN for icons -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     </head>
     <body>
         <%@ include file="/header/main_header.jsp" %>
@@ -48,6 +50,7 @@
                 <th>Product Name</th>
                 <th>Unit Price</th>
                 <th>Quantity</th>
+                <th>Action</th>
                 <th>Total</th>
             </tr>
             <%
@@ -67,6 +70,34 @@
                 <td><%= p.getProductName() %></td>
                 <td>RM <%= String.format("%.2f", p.getPayPrice()) %></td>
                 <td><%= p.getQuantity() %></td>
+                <td>
+                    <%
+                        String comment = p.getComment();
+                        Integer rating = p.getRatingStar();
+                        if (comment == null || comment.isEmpty()) {
+                            out.print("<a href='/galaxy_bookshelf/web/comment/comment.jsp?id=" + p.getPaymentId() + "'>Add Comment</a>");
+                        } else {
+                            // Display rating stars
+                            out.print("Rating: ");
+                            if (rating != null) {
+                                for (int i = 1; i <= 5; i++) {
+                                    if (i <= rating) {
+                                        out.print("<i class='fa-solid fa-star' style='color: orange;'></i>"); // Yellow filled star
+                                    } else {
+                                        out.print("<i class='fa-solid fa-star' style='color: gray;'></i>"); // Gray empty star
+                                    }
+                                }
+                            } 
+                            
+                            out.print("<br><br>");
+                            
+                            // Display comment
+                            out.print("Comment: ");
+                            out.print(comment);
+                            out.print("<a href='/galaxy_bookshelf/web/comment/comment.jsp?id=" + p.getPaymentId() + "'>Edit Comment</a>");
+                        }
+                    %>
+                </td>
                 <td>RM <%= String.format("%.2f", p.getPayPrice() * p.getQuantity()) %></td>
             </tr>
             <%
@@ -77,17 +108,17 @@
                 double total = subtotal + shippingFee;
             %>
             <tr>
-                <td colspan="3"></td>
+                <td colspan="4"></td>
                 <td>Merchandise Subtotal</td>
                 <td>RM <%= String.format("%.2f", subtotal) %></td>
             </tr>
             <tr>
-                <td colspan="3"></td>
+                <td colspan="4"></td>
                 <td>Shipping Fee</td>
                 <td>RM <%= String.format("%.2f", shippingFee) %></td>
             </tr>
             <tr>
-                <td colspan="3"></td>
+                <td colspan="4"></td>
                 <td>Total</td>
                 <td><strong>RM <%= String.format("%.2f", total) %></strong></td>
             </tr>
