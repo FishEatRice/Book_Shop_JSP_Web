@@ -17,6 +17,7 @@ public class PaymentDetail {
     private double payPrice;
     private String productName;
     private String productId;
+    private String address;
 
     // Getters and Setters
     public String getPaymentId() {
@@ -117,6 +118,14 @@ public class PaymentDetail {
 
     public String getProductId() {
         return productId;
+    }
+    
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public void setProductId(String productId) {

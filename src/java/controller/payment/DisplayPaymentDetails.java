@@ -47,6 +47,7 @@ public class DisplayPaymentDetails extends HttpServlet {
                 p.setPayPrice(rs.getDouble("PAY_PRICE"));
                 p.setProductName(rs.getString("PRODUCT_NAME"));
                 p.setProductId(rs.getString("PRODUCT_ID"));
+                p.setAddress(rs.getString("SHIPPING_ADDRESS"));
                 paymentList.add(p);
             }
         } catch (SQLException e) {

@@ -49,7 +49,7 @@
             <select id="addressState" name="addressState">
                 <c:forEach var="state" items="${shippingStates}">
                     <option value="${state.stateId}" ${state.stateId == PaymentAddress.addressState ? 'selected' : ''}>
-                        ${state.stateName}
+                        ${state.stateName} | RM ${state.fee}
                     </option>
                 </c:forEach>
             </select><br><br>

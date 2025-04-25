@@ -16,7 +16,7 @@
 
         <form action="/galaxy_bookshelf/web/payment/process.jsp" method="get">
 
-            <p>${FullName} | ${PhoneNumber}</p>
+            <p>${FullName} | (+60) ${PhoneNumber}</p>
             <p>${Address}</p>
             <a href="/galaxy_bookshelf/web/payment/add_edit_address.jsp">Edit Address</a>
 

@@ -7,12 +7,14 @@
     String shippingStatus = "";
     String payType = "";
     String datetime = "";
+    String address = "";
     if (paymentList != null && !paymentList.isEmpty()) {
         for (PaymentDetail temp : paymentList) {
             if (!"Shipping Fee".equalsIgnoreCase(temp.getProductName())) {
                 shippingStatus = temp.getShippingStatusName();
                 payType = temp.getPayTypeName();
                 datetime = temp.getPayDatetime().substring(0, 19);
+                address = temp.getAddress();
                 break;
             }
         }
@@ -36,6 +38,8 @@
         <p>Shipping status: <%= shippingStatus %></p>
         <p>Payment Method: <%= payType %></p>
         <p>Payment Datetime: <%= datetime %></p>
+        <h2>Address:</h2> 
+        <p><%= address %></p>
 
         <h2>Order Summary</h2>
         <table border="1">
