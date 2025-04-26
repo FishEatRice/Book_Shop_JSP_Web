@@ -31,6 +31,12 @@ public class clientProductDetails extends HttpServlet {
 
         Product productData = em.find(Product.class, productID); // SELECT * FROM product WHERE product_id = ?
 
+        if (productData == null) {
+            // Send 404 error
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return; 
+        }
+
         // Process the product images (base64 image strings) - Convert JSON to Image
         if (productData != null) {
             String picJson = productData.getProductPicture();
