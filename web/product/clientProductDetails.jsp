@@ -114,10 +114,12 @@
                 <!-- Right: Info -->
                 <div class="product-info">
                     <div class="product-name">${productData.productName}</div>
-                    <div class="product-price">${productData.productPrice}</div>
+                    <div class="product-price">RM ${productData.productPrice}</div>
 
                     <form method="post" action="add-to-cart">
                         <input type="hidden" name="productId" value="1" />
+
+                        <p>Genre: ${productData.genreId.genreName}</p>
 
                         <div class="stock">Stock Quantity: <strong>${productData.quantity}</strong></div>
 

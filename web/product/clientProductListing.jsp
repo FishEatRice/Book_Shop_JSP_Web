@@ -89,6 +89,7 @@
                             <img src="${product.productPicture}" alt="Product Image" />
                         </div>
                         <div class="product-name">${product.productName}</div>
+                        <div class="product-genre">${product.genreId.genreName}</div>
                         <div class="product-price">RM ${product.productPrice}</div>
                         <form method="get" action="${pageContext.request.contextPath}/web/product/clientProductDetails.jsp">
                             <input type="hidden" name="id" value="${product.productId}" />
