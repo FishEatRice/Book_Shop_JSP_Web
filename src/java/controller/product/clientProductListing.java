@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.product.Product;
+import model.genre.Genre;
 
 /**
  *
@@ -28,6 +29,7 @@ public class clientProductListing extends HttpServlet {
             throws ServletException, IOException {
 
         EntityManager em = emf.createEntityManager();
+        List<Genre> genreList = em.createQuery("SELECT g FROM Genre g", Genre.class).getResultList(); // SELECT * FROM genre (List all the Genre)
         List<Product> productData = em.createNamedQuery("Product.findAllByOrder", Product.class).getResultList();
 
         // Process the product images (base64 image strings) - Convert JSON to Image
@@ -56,6 +58,7 @@ public class clientProductListing extends HttpServlet {
 
         }
         request.setAttribute("productData", productData);
+        request.setAttribute("genreList", genreList); 
         request.getRequestDispatcher("/product/clientProductListing.jsp").forward(request, response);
     }
 }

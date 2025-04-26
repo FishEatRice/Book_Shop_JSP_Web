@@ -60,8 +60,8 @@ public class Product implements Serializable {
     private BigDecimal productPrice;
     @Column(name = "QUANTITY")
     private Integer quantity;
-    @JoinColumn(name = "GENRE_ID", referencedColumnName = "GENRE_ID")
     @ManyToOne(optional = false)
+    @JoinColumn(name = "GENRE_ID", referencedColumnName = "GENRE_ID")
     private Genre genreId;
 
     public Product() {

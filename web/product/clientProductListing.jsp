@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="model.product.Product"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -55,23 +57,32 @@
     </head>
     <body>
         <h1>Product Listing</h1>
+
         <div class="container">
             <div class="search-bar">
-                <form method="get" action="clientProductListing">
-                    <input type="text" name="query" placeholder="Search..." value="${param.query}" />
-                    <div class="filter">
-                        <select name="genre">
-                            <option value="all" ${param.genre == 'all' ? 'selected' : ''}>All Genres</option>
-                            <option value="Honor Story" ${param.genre == 'Honor Story' ? 'selected' : ''}>Honor Story</option>
-                            <option value="Love Story" ${param.genre == 'Love Story' ? 'selected' : ''}>Love Story</option>
-                        </select>
-                    </div>
+                <form method="get" action="<%= request.getContextPath() %>/web/product/clientProductSearch">
+                    <input type="text" name="query" value="<%= request.getParameter("query") == null ? "" : request.getParameter("query") %>" />
+
+            <div class="filter">
+                  <select name="genreId" id="genreId">
+                      <option value="">Select Genre</option>
+                      <c:forEach var="genre" items="${genreList}">
+                          <option value="${genre.genreId}" 
+                                  <c:if test="${genre.genreId == param.genreId}">selected</c:if>>
+                              ${genre.genreName}
+                          </option>
+                      </c:forEach>
+                  </select>
+            </div>
+                    
                     <button type="submit">Search</button>
                 </form>
             </div>
 
             <div class="product-grid">
-                <!-- Dynamically display products -->
+                
+            <!-- Dynamically display products -->
+            <c:if test="${not empty productData}">
                 <c:forEach var="product" items="${productData}">
                     <div class="product-card">
                         <div class="product-image">
@@ -81,10 +92,17 @@
                         <div class="product-price">RM ${product.productPrice}</div>
                         <form method="get" action="${pageContext.request.contextPath}/web/product/clientProductDetails.jsp">
                             <input type="hidden" name="id" value="${product.productId}" />
-                            <button class="check-button" type="submit">Check</button>
+                            <button class="check-button" type="submit">Check Details</button>
                         </form>
                     </div>
                 </c:forEach>
+            </c:if>
+
+            <!-- If product is empty or result not found -->
+            <c:if test="${empty productData}">
+                <p>No product found.</p>
+            </c:if>
+
             </div>
         </div>
     </body>
