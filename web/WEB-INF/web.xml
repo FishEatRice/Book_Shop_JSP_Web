@@ -106,6 +106,22 @@
         <servlet-name>submit_comment</servlet-name>
         <servlet-class>controller.comment.submit_comment</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>staff_reply</servlet-name>
+        <servlet-class>controller.comment.staff_reply</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>staff_reply_page</servlet-name>
+        <servlet-class>controller.comment.staff_reply_page</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitReplyProcess</servlet-name>
+        <servlet-class>controller.comment.SubmitReplyProcess</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>IgnoreReplyProcess</servlet-name>
+        <servlet-class>controller.comment.IgnoreReplyProcess</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>genreListing</servlet-name>
         <url-pattern>/web/genre/list_genre.jsp</url-pattern>
@@ -205,6 +221,22 @@
     <servlet-mapping>
         <servlet-name>submit_comment</servlet-name>
         <url-pattern>/submit_comment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>staff_reply</servlet-name>
+        <url-pattern>/web/staff/comment_list.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>staff_reply_page</servlet-name>
+        <url-pattern>/web/staff/staff_reply_page.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitReplyProcess</servlet-name>
+        <url-pattern>/SubmitReplyProcess</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IgnoreReplyProcess</servlet-name>
+        <url-pattern>/IgnoreReplyProcess</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

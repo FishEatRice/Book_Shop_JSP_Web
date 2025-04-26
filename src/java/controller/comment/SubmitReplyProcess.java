@@ -8,34 +8,27 @@ import java.io.IOException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.sql.*;
-import java.util.*;
 
 /**
  *
  * @author ON YUEN SHERN
  */
-public class submit_comment extends HttpServlet {
+public class SubmitReplyProcess extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        int ratingStar = Integer.parseInt(request.getParameter("ratingStar"));
-        String comment = request.getParameter("comment");
-        String paymentId = request.getParameter("paymentId");
-
-        // Make it stop before -
-        String mainPaymentId = paymentId.split("-")[0];
+        String replyMsg = request.getParameter("replyMsg");
+        String payment_id = request.getParameter("payment_id");
 
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db_galaxy_bookshelf", "GALAXY", "GALAXY");
 
-            String sql = "UPDATE GALAXY.PAYMENT SET RATING_STAR = ?, COMMENT = ?, STAFF_REPLY = ? WHERE PAYMENT_ID = ?";
+            String sql = "UPDATE GALAXY.PAYMENT SET STAFF_REPLY = ? WHERE PAYMENT_ID = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, ratingStar);
-            stmt.setString(2, comment);
-            stmt.setString(3, "not yet reply");
-            stmt.setString(4, paymentId);
+            stmt.setString(1, replyMsg);
+            stmt.setString(2, payment_id);
 
             stmt.executeUpdate();
 
@@ -43,6 +36,6 @@ public class submit_comment extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/galaxy_bookshelf/web/payment/payment_details.jsp?mainPaymentId=" + mainPaymentId);
+        response.sendRedirect("/galaxy_bookshelf/web/staff/comment_list.jsp");
     }
 }

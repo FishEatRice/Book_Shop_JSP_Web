@@ -14,13 +14,15 @@ public class Comment {
     private final String productName;
     private final int ratingStar;
     private final String comment;
+    private final String reply;
 
     // Constructor
-    public Comment(String paymentId, String productName, int ratingStar, String comment) {
+    public Comment(String paymentId, String productName, int ratingStar, String comment, String reply) {
         this.paymentId = paymentId;
         this.productName = productName;
         this.ratingStar = ratingStar;
         this.comment = comment;
+        this.reply = reply;
     }
 
     // Getters
@@ -38,5 +40,9 @@ public class Comment {
 
     public String getComment() {
         return comment;
+    }
+
+    public String getReply() {
+        return reply;
     }
 }

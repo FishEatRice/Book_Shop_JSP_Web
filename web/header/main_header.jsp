@@ -18,7 +18,7 @@
     }
     
     //Demo CheckAcc 
-    CheckAcc = "customer";
+    CheckAcc = "staff";
 %>
 
 <nav>
@@ -44,7 +44,7 @@
 
         <li><a href="/galaxy_bookshelf/web/product/product.jsp">Product Manager</a></li>
 
-        <li><a href="/galaxy_bookshelf/">Comments Manager</a></li>
+        <li><a href="/galaxy_bookshelf/web/staff/comment_list.jsp">Comments Manager</a></li>
 
         <li><a href="/galaxy_bookshelf/web/discount/discount_manager.jsp">Discount Manager</a></li>
 
