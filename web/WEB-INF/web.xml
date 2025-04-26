@@ -178,7 +178,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>clientProductSearch</servlet-name>
-        <url-pattern>/web/product/clientProductSearch.jsp</url-pattern>
+        <url-pattern>/web/product/clientProductSearch</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>clientProductDetails</servlet-name>
