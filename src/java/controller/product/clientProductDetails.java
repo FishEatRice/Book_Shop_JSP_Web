@@ -63,6 +63,7 @@ public class clientProductDetails extends HttpServlet {
 
         }
         request.setAttribute("productData", productData);
+       
         request.getRequestDispatcher("/product/clientProductDetails.jsp").forward(request, response);
     }
 }

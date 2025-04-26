@@ -126,7 +126,7 @@
                         <div class="quantity-box">
                             Quantity:
                             <button type="button" onclick="adjustQty(this)">-</button>
-                            <input type="number" name="quantity" id="qtyInput" value="1" min="1" />
+                            <input type="number" name="quantity" id="qtyInput" value="1" min="1" max="${productData.quantity}"/>
                             <button type="button" onclick="adjustQty(this)">+</button>
                         </div>
 
@@ -152,15 +152,19 @@
             function adjustQty(button) {
                 const input = document.getElementById('qtyInput');
                 let current = parseInt(input.value);
+                let min = parseInt(qtyInput.min);
+                let max = parseInt(qtyInput.max);
+
 
                 if (button.textContent === '-') {
-                    if (current > 1)
-                        current--;
+                    if (current > min) {
+                        input.value = current - 1;
+                    }
                 } else {
-                    current++;
+                    if (current < max) {
+                        input.value = current + 1;
+                    }
                 }
-
-                input.value = current;
             }
         </script>
     </body>
