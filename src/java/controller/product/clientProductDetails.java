@@ -8,6 +8,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,6 +64,23 @@ public class clientProductDetails extends HttpServlet {
 
                 String base64Src = "data:" + imageType + ";base64," + imageData;
                 productData.setProductPicture(base64Src);
+            }
+
+            try {
+                Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db_galaxy_bookshelf", "GALAXY", "GALAXY");
+                String discount_query = "SELECT DISCOUNT_PRICE FROM GALAXY.DISCOUNT WHERE PRODUCT_ID = ? AND DISCOUNT_SWITCH = 'true'";
+                PreparedStatement stmt = conn.prepareStatement(discount_query);
+                stmt.setString(1, productID);
+                ResultSet rs = stmt.executeQuery();
+
+                double discountPrice = 0.0;
+                if (rs.next()) {
+                    discountPrice = rs.getDouble("DISCOUNT_PRICE");
+                }
+                
+                productData.setDiscountPrice(discountPrice);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
 
         }

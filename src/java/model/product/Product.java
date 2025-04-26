@@ -18,6 +18,7 @@ import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import model.genre.Genre;
 
@@ -64,6 +65,9 @@ public class Product implements Serializable {
     @JoinColumn(name = "GENRE_ID", referencedColumnName = "GENRE_ID")
     private Genre genreId;
 
+    @Transient
+    private double discountPrice;
+
     public Product() {
     }
 
@@ -71,12 +75,13 @@ public class Product implements Serializable {
         this.productId = productId;
     }
 
-    public Product(String productId, String productName, String productInformation, String productPicture, BigDecimal productPrice) {
+    public Product(String productId, String productName, String productInformation, String productPicture, BigDecimal productPrice, double discountPrice) {
         this.productId = productId;
         this.productName = productName;
         this.productInformation = productInformation;
         this.productPicture = productPicture;
         this.productPrice = productPrice;
+        this.discountPrice = discountPrice;
     }
 
     public String getProductId() {
@@ -133,6 +138,14 @@ public class Product implements Serializable {
 
     public void setGenreId(Genre genreId) {
         this.genreId = genreId;
+    }
+
+    public double getDiscountPrice() {
+        return discountPrice;
+    }
+    
+    public void setDiscountPrice(double discountPrice) {
+        this.discountPrice = discountPrice;
     }
 
     @Override

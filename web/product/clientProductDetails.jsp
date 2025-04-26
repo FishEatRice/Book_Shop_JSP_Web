@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page import="model.product.Product"%>
 <!DOCTYPE html>
 <html>
@@ -114,7 +116,25 @@
                 <!-- Right: Info -->
                 <div class="product-info">
                     <div class="product-name">${productData.productName}</div>
-                    <div class="product-price">RM ${productData.productPrice}</div>
+
+                    <c:choose>
+                        <c:when test="${productData.discountPrice != 0.0}">
+                            <div class="product-price">
+                                <span style="color: red; font-weight: bold;">
+                                    RM <fmt:formatNumber value="${productData.discountPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
+                                </span>
+                                <span style="text-decoration: line-through; color: gray; font-size: 15px;">
+                                    RM <fmt:formatNumber value="${productData.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
+                                </span>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="product-price">
+                                RM <fmt:formatNumber value="${productData.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+
 
                     <form method="post" action="add-to-cart">
                         <input type="hidden" name="productId" value="1" />

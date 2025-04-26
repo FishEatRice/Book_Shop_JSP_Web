@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@page import="model.product.Product"%>
 
 <!DOCTYPE html>
@@ -74,7 +75,6 @@
                       </c:forEach>
                   </select>
             </div>
-                    
                     <button type="submit">Search</button>
                 </form>
             </div>
@@ -90,7 +90,23 @@
                         </div>
                         <div class="product-name">${product.productName}</div>
                         <div class="product-genre">${product.genreId.genreName}</div>
-                        <div class="product-price">RM ${product.productPrice}</div>
+                        <%-- <div class="product-price">RM ${product.productPrice}</div> --%>
+            
+                        <c:choose>
+                            <c:when test="${product.discountPrice != 0.0}">
+                                <span style="text-decoration: line-through; color: gray;">
+                                    RM <fmt:formatNumber value="${product.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
+                                </span>
+                                <br/>
+                                <span style="color: red; font-weight: bold;">
+                                    RM <fmt:formatNumber value="${product.discountPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
+                                </span>
+                            </c:when>
+                            <c:otherwise>
+                                RM <fmt:formatNumber value="${product.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
+                            </c:otherwise>
+                        </c:choose>
+
                         <form method="get" action="${pageContext.request.contextPath}/web/product/clientProductDetails.jsp">
                             <input type="hidden" name="id" value="${product.productId}" />
                             <button class="check-button" type="submit">Check Details</button>
