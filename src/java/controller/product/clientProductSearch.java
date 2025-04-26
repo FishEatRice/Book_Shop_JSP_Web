@@ -42,11 +42,6 @@ public class clientProductSearch extends HttpServlet {
                 if (query != null && !query.isEmpty() && genreId != null && !genreId.isEmpty()) {
                     // Search by Name and Genre
                     productData = em.createQuery(
-                        // "SELECT * FROM PRODUCT p JOIN GENRE g ON p.genre_id = g.genre_id WHERE LOWER(p.product_name) LIKE LOWER(?) AND LOWER(g.genre_id) LIKE LOWER(?)", Product.class)
-                        // .setParameter(1, "%" + query + "%")
-                        // .setParameter(2, "%" + genreId + "%")
-                        // .getResultList();
-                       
                         "SELECT p FROM Product p WHERE LOWER(p.productName) LIKE LOWER(:productName) AND LOWER(p.genreId.genreId) LIKE LOWER(:genreId)", Product.class)
                             .setParameter("productName", "%" + query + "%")
                             .setParameter("genreId", "%" + genreId + "%")
