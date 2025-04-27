@@ -8,6 +8,7 @@
     String payType = "";
     String datetime = "";
     String address = "";
+    boolean showReplyColumn = false; // Flag to check if the "Reply" column should be shown
 
     if (paymentList != null && !paymentList.isEmpty()) {
         for (PaymentDetail temp : paymentList) {
@@ -16,6 +17,13 @@
                 payType = temp.getPayTypeName();
                 datetime = temp.getPayDatetime().substring(0, 19);
                 address = temp.getAddress();
+                
+                // Check if any product has a valid reply
+                if (temp.getReply() != null && !temp.getReply().trim().isEmpty() && 
+                    !temp.getReply().equalsIgnoreCase("Ignore") && 
+                    !temp.getReply().equalsIgnoreCase("not yet reply")) {
+                    showReplyColumn = true;
+                }
                 break;
             }
         }
@@ -105,6 +113,14 @@
                 <th>Product Name</th>
                 <th>Rating</th>
                 <th>Comment</th>
+                <%-- Conditionally render the Reply column header --%>
+                <%
+                    if (showReplyColumn) {
+                %>
+                <th>Reply</th>
+                <%
+                    }
+                %>
                 <th>Action</th>
             </tr>
             <%
@@ -116,6 +132,12 @@
                     }
 
                     int ratingStar = p.getRatingStar();
+                    String reply = p.getReply(); // Get the reply
+
+                    // Check if there is a valid reply (not "Ignore" or "not yet reply")
+                    boolean hasValidReply = reply != null && !reply.trim().isEmpty() && 
+                                            !reply.equalsIgnoreCase("Ignore") && 
+                                            !reply.equalsIgnoreCase("not yet reply");
             %>
             <tr>
                 <td><%= no++ %></td>
@@ -125,45 +147,39 @@
                     if (ratingStar == 0) {
                 %>
                 <td colspan="3"><a href='/galaxy_bookshelf/web/comment/comment.jsp?id=<%= p.getPaymentId() %>'>Add Comment</a></td>
-
                 <%
                     } else {
-                %> <td> <%
-                        // Display rating stars
-                        for (int i = 1; i <= 5; i++) {
-                            if (i <= ratingStar) {
+                %>
+                <td>
+                    <%-- Display rating stars --%>
+                    <%
+                    for (int i = 1; i <= 5; i++) {
+                        if (i <= ratingStar) {
                     %>
                     <i class="fa-solid fa-star" style="color: orange;"></i>
                     <%
-                                } else {
+                        } else {
                     %>
                     <i class="fa-solid fa-star" style="color: gray;"></i>
                     <%
-                                }
-                            }
-                    %> </td> <%
                         }
-                    %>
-                    <%
-                        if (ratingStar > 0) {
-                    %>
-                <td>
-                    <%
-                        if (ratingStar > 0) {
-                    %>
-                    <%= p.getComment() %>
-                    <%
-                        }
+                    }
                     %>
                 </td>
+                <td><%= p.getComment() %></td>
+
+                <%-- Conditionally render the Reply column content --%>
                 <%
-                    }
+                    if (hasValidReply) {
+                %>
+                <td><%= p.getReply() %></td>
+                <%
+                    } 
                 %>
 
-                <%
-                    if (ratingStar > 0) {
-                %>
-                <td><a href='/galaxy_bookshelf/web/comment/comment.jsp?id=<%= p.getPaymentId() %>'>Edit Comment</a></td>
+                <td>
+                    <a href='/galaxy_bookshelf/web/comment/comment.jsp?id=<%= p.getPaymentId() %>'>Edit Comment</a>
+                </td>
                 <%
                     }
                 %>
