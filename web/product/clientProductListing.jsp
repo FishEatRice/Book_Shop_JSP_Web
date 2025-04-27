@@ -13,7 +13,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Product Listing</title>
+        <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
+        <title>Galaxy BookShelf | Product Listing</title>
 <!--        <style>
             .container {
                 display: flex;
@@ -57,6 +58,9 @@
         </style>-->
     </head>
     <body>
+
+        <%@ include file="/header/main_header.jsp" %>
+        
         <h1>Product Listing</h1>
 
         <div class="container">

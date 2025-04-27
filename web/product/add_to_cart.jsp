@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- Set Title Icon -->
         <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
-        <title>Galaxy | Demo Cart</title>
+        <title>Galaxy BookShelf | Demo Cart</title>
     </head>
     <body>
         <%@ include file="/header/main_header.jsp" %>

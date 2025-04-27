@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Add Product</title>
+    <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
+    <title>Galaxy BookShelf | Add Product </title>
 </head>
 
-<h1>Add Product</h1>
-
 <body>
+    <%@ include file="/header/main_header.jsp" %>
+
+    <h1>Add Product</h1>
+
     <%
       String err_msg = (String) session.getAttribute("error");
       if (err_msg != null) {

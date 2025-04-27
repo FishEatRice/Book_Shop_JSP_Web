@@ -12,7 +12,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Product Detail</title>
+        <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
+        <title>Galaxy BookShelf | Product Details</title>
         <style>
             .container {
                 width: 80%;
@@ -106,6 +107,9 @@
         </style>
     </head>
     <body>
+
+    <%@ include file="/header/main_header.jsp" %>
+
         <div class="container">
             <a href="clientProductListing.jsp" class="back-link">← Back</a>
 

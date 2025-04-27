@@ -12,10 +12,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
         <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
-        <title>Edit Product</title>
+        <title>Galaxy BookShelf | Edit Product</title>
     </head>
     <body>
+
+        <%@ include file="/header/main_header.jsp" %>
+
         <h1>Edit Product</h1>
 
             <%

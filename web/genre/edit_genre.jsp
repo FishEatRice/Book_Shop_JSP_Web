@@ -4,7 +4,7 @@
 <html>
 
 <%
-    String title = "Edit Genre | Galaxy BookShelf";
+    String title = "Galaxy BookShelf | Edit Product ";
     String heading = "Edit Genre";
 
     Genre genre_data = (Genre) request.getAttribute("genreData");
@@ -12,11 +12,15 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
 </head>
 
 <body>
+
+    <%@ include file="/header/main_header.jsp" %>
+
     <h1><%= heading %></h1>
 
     <%-- Display error Message --%>
