@@ -37,62 +37,52 @@ public class updateGenre extends HttpServlet {
                 EntityManager em = emf.createEntityManager();
                 EntityTransaction tx = em.getTransaction();
 
-            try {
-                String genreId = request.getParameter("genre_id");
-                String newGenreName = request.getParameter("genre_name").trim();
-
-                tx.begin();
-
-                //Validation
-                if (newGenreName.isEmpty()) {
-                    request.setAttribute("error", "Genre name cannot be empty.");
-                    request.setAttribute("genreData", newGenreName); 
-                    request.getRequestDispatcher("/genre/edit_genre.jsp").forward(request, response);
-                    return;
-                }
-
-                // Check if the admin update the same genre name
-                Genre currentGenre = em.find(Genre.class, genreId);
-
-                if (newGenreName.equalsIgnoreCase(currentGenre.getGenreName())) {
-                    request.setAttribute("error", "The name entered is the same as the current one.");
-                    request.setAttribute("genreData", currentGenre); 
-                    request.getRequestDispatcher("/genre/edit_genre.jsp").forward(request, response);
-                    return;
-                }
+                try {
+                    String genreId = request.getParameter("genre_id");
+                    String newGenreName = request.getParameter("genre_name").trim();
+                    tx.begin();
                 
-                List<Genre> existingGenres = em.createNamedQuery("Genre.findByGenreName", Genre.class)
-                    .setParameter("genreName", newGenreName)
-                    .getResultList();
-            
-                if (!existingGenres.isEmpty()) {
-                    request.setAttribute("error", "The Genre already exists.");
-                    request.setAttribute("genreData", newGenreName); 
-                    request.getRequestDispatcher("/genre/list_genre.jsp").forward(request, response);
-                    return;
-                }
+                    Genre currentGenre = em.find(Genre.class, genreId); //SELECT * FROM GENRE WHERE GENRE_ID = ?;
                 
-                // Update genre
-                currentGenre.setGenreName(newGenreName); //UPDATE genre SET genre_name = ? WHERE genre_id = ?
-                em.merge(currentGenre); // This line should now work properly
-                tx.commit();
+                    if (newGenreName.equalsIgnoreCase(currentGenre.getGenreName())) {
+                        request.setAttribute("error", "The name entered is the same as the current one.");
+                        request.setAttribute("genreData", currentGenre);
+                        request.getRequestDispatcher("/genre/edit_genre.jsp").forward(request, response);
+                        return;
+                    }
+                
+                    List<Genre> existingGenres = em.createNamedQuery("Genre.findByGenreName", Genre.class)
+                        .setParameter("genreName", newGenreName)
+                        .getResultList();
+                
+                    if (!existingGenres.isEmpty()) {
+                        request.setAttribute("error", "The genre already exists.");
+                        currentGenre.setGenreName(newGenreName);
+                        request.setAttribute("genreData", currentGenre);
+                        request.getRequestDispatcher("/genre/edit_genre.jsp").forward(request, response);
+                        return;
+                    }
+                
+                    currentGenre.setGenreName(newGenreName); //UPDATE genre SET genre_name = ? WHERE genre_id = ?
+                    em.merge(currentGenre);
+                    tx.commit();
+                
+                    HttpSession session = request.getSession();
+                    session.setAttribute("success", "Genre updated successfully.");
+                    response.sendRedirect(request.getContextPath() + "/web/genre/list_genre.jsp");
+                
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (tx != null && tx.isActive()) {
+                        tx.rollback();
+                    }
+                
+                    HttpSession session = request.getSession();
+                    session.setAttribute("error", "Genre edit failed, try again later.");
+                    response.sendRedirect(request.getContextPath() + "/web/genre/list_genre.jsp");
 
-                HttpSession session = request.getSession();
-                session.setAttribute("success", "Genre updated successfully.");
-                response.sendRedirect(request.getContextPath() + "/web/genre/list_genre.jsp");
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                if (tx != null && tx.isActive()) {
-                    tx.rollback();
+                } finally {
+                    em.close();
                 }
-
-                HttpSession session = request.getSession();
-                session.setAttribute("error", "Genre edit failed, try again later.");
-                response.sendRedirect(request.getContextPath() + "/web/genre/list_genre.jsp");
-
-            } finally {
-                em.close();
-            }
     }
 }
