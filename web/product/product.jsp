@@ -168,7 +168,7 @@
     <%-- If product is empty or result not found --%>
     <c:if test="${empty productData}">
         <tr>
-            <td colspan="9">No products found.</td>
+            <td colspan="10">No products found.</td>
         </tr>
     </c:if>
     
