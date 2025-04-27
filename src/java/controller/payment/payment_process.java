@@ -15,7 +15,6 @@ public class payment_process extends HttpServlet {
         String[] cartIds = request.getParameter("cart_ids").split(",");
         String payType = Optional.ofNullable(request.getParameter("payType")).orElse("CARD");
         String customer_id = "C1"; // Demo only
-        int shippingStatus = 1;
 
         String full_shippping_address = "";
 
@@ -78,7 +77,7 @@ public class payment_process extends HttpServlet {
                 address_stmt.close();
 
                 // Insert payment record
-                PreparedStatement payStmt = conn.prepareStatement("INSERT INTO galaxy.payment (payment_id, customer_id, product_id, product_name, quantity, pay_datetime, pay_type_id, shipping_status, pay_price, Shipping_address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                PreparedStatement payStmt = conn.prepareStatement("INSERT INTO galaxy.payment (payment_id, customer_id, product_id, product_name, quantity, pay_datetime, pay_type_id, pay_price, Shipping_address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 payStmt.setString(1, payment_id);
                 payStmt.setString(2, customer_id);
                 payStmt.setString(3, product_id);
@@ -86,13 +85,12 @@ public class payment_process extends HttpServlet {
                 payStmt.setInt(5, cart_quantity);
                 payStmt.setTimestamp(6, Timestamp.valueOf(now));
                 payStmt.setString(7, payType.toUpperCase());
-                payStmt.setInt(8, shippingStatus);
                 if (discount_price <= 0.0) {
-                    payStmt.setDouble(9, price);
+                    payStmt.setDouble(8, price);
                 } else {
-                    payStmt.setDouble(9, discount_price);
+                    payStmt.setDouble(8, discount_price);
                 }
-                payStmt.setString(10, full_shippping_address);
+                payStmt.setString(9, full_shippping_address);
 
                 payStmt.executeUpdate();
                 payStmt.close();
@@ -121,7 +119,7 @@ public class payment_process extends HttpServlet {
                 double shippingFee = fee_rs.getDouble("FEE");
                 String payment_id = basePaymentId + "-" + rowCount;
 
-                PreparedStatement shipInsert = conn.prepareStatement("INSERT INTO galaxy.payment (payment_id, customer_id, product_id, product_name, quantity, pay_datetime, pay_type_id, shipping_status, pay_price, shipping_address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                PreparedStatement shipInsert = conn.prepareStatement("INSERT INTO galaxy.payment (payment_id, customer_id, product_id, product_name, quantity, pay_datetime, pay_type_id, pay_price, shipping_address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 shipInsert.setString(1, payment_id);
                 shipInsert.setString(2, customer_id);
                 shipInsert.setString(3, "Fee");
@@ -129,9 +127,8 @@ public class payment_process extends HttpServlet {
                 shipInsert.setInt(5, 1);
                 shipInsert.setTimestamp(6, Timestamp.valueOf(now));
                 shipInsert.setString(7, payType.toUpperCase());
-                shipInsert.setInt(8, shippingStatus);
-                shipInsert.setDouble(9, shippingFee);
-                shipInsert.setString(10, full_shippping_address);
+                shipInsert.setDouble(8, shippingFee);
+                shipInsert.setString(9, full_shippping_address);
                 shipInsert.executeUpdate();
                 shipInsert.close();
             }

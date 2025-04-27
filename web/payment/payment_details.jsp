@@ -4,7 +4,6 @@
 
 <%
     List<PaymentDetail> paymentList = (List<PaymentDetail>) request.getAttribute("paymentList");
-    String shippingStatus = "";
     String payType = "";
     String datetime = "";
     String address = "";
@@ -13,7 +12,6 @@
     if (paymentList != null && !paymentList.isEmpty()) {
         for (PaymentDetail temp : paymentList) {
             if (!"Shipping Fee".equalsIgnoreCase(temp.getProductName())) {
-                shippingStatus = temp.getShippingStatusName();
                 payType = temp.getPayTypeName();
                 datetime = temp.getPayDatetime().substring(0, 19);
                 address = temp.getAddress();
@@ -46,7 +44,6 @@
 
         <h1>Payment Details</h1>
 
-        <p>Shipping status: <%= shippingStatus %></p>
         <p>Payment Method: <%= payType %></p>
         <p>Payment Datetime: <%= datetime %></p>
         <h2>Address:</h2> 
@@ -146,7 +143,7 @@
                 <%
                     if (ratingStar == 0) {
                 %>
-                <td colspan="3"><a href='/galaxy_bookshelf/web/comment/comment.jsp?id=<%= p.getPaymentId() %>'>Add Comment</a></td>
+                <td colspan="4"><a href='/galaxy_bookshelf/web/comment/comment.jsp?id=<%= p.getPaymentId() %>'>Add Comment</a></td>
                 <%
                     } else {
                 %>

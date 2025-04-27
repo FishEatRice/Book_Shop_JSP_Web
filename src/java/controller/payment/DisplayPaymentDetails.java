@@ -41,9 +41,6 @@ public class DisplayPaymentDetails extends HttpServlet {
                 p.setPayTypeId(rs.getString("PAY_TYPE_ID"));
                 p.setRatingStar(rs.getInt("RATING_STAR"));
                 p.setComment(rs.getString("COMMENT"));
-                p.setShippingStatus(rs.getInt("SHIPPING_STATUS"));
-                p.setShipDatetime(rs.getString("SHIP_DATETIME"));
-                p.setStaffId(rs.getString("STAFF_ID"));
                 p.setPayPrice(rs.getDouble("PAY_PRICE"));
                 p.setProductName(rs.getString("PRODUCT_NAME"));
                 p.setProductId(rs.getString("PRODUCT_ID"));

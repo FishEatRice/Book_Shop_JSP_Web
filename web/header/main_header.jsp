@@ -40,8 +40,6 @@
         <% if ("admin".equals(CheckAcc) || "staff".equals(CheckAcc)) { %>
 
         <!-- Staff / Admin -->
-        <li><a href="/galaxy_bookshelf/">Shipping Manager</a></li>
-
         <li><a href="/galaxy_bookshelf/web/product/product.jsp">Product Manager</a></li>
 
         <li><a href="/galaxy_bookshelf/web/staff/comment_list.jsp">Comments Manager</a></li>
