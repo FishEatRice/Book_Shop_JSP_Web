@@ -5,29 +5,34 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.sql.*;
 import java.util.*;
+import java.util.stream.Collectors;
 import model.report.report_display;
 
 /**
  *
  * @author ON YUEN SHERN
  */
-public class report_main_show extends HttpServlet {
+public class report_top10_show extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            // Establish the database connection
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db_galaxy_bookshelf", "GALAXY", "GALAXY");
 
             conn.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED); // To avoid locking
 
+            // SQL query to fetch product data
             String sql = "SELECT * FROM GALAXY.PAYMENT ORDER BY PRODUCT_NAME ASC";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
+            // Map to store product data
             Map<String, report_display> ReportData = new HashMap<>();
 
+            // Process each record in the result set
             while (rs.next()) {
                 String product_name = rs.getString("product_name");
                 int quantity = rs.getInt("quantity");
@@ -54,11 +59,22 @@ public class report_main_show extends HttpServlet {
             stmt.close();
             conn.close();
 
-            // Set the product report map as a request attribute
-            request.setAttribute("ReportData", ReportData);
+            // Sort the ReportData by quantity in descending order
+            List<Map.Entry<String, report_display>> sortedList = ReportData.entrySet().stream()
+                    .sorted((entry1, entry2) -> Integer.compare(entry2.getValue().getQuantity(), entry1.getValue().getQuantity()))
+                    .collect(Collectors.toList());
 
-            // Forward to the JSP page
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/report/report_main.jsp");
+            // Convert the sorted list back into a LinkedHashMap to maintain the sorted order
+            Map<String, report_display> sortedReportData = new LinkedHashMap<>();
+            for (Map.Entry<String, report_display> entry : sortedList) {
+                sortedReportData.put(entry.getKey(), entry.getValue());
+            }
+
+            // Set the sorted report data as a request attribute
+            request.setAttribute("ReportData", sortedReportData);
+
+            // Forward the request to the JSP page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/report/report_top10.jsp");
             dispatcher.forward(request, response);
 
         } catch (Exception e) {

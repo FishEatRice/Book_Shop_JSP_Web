@@ -123,8 +123,12 @@
         <servlet-class>controller.comment.IgnoreReplyProcess</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>report_main_show</servlet-name>
-        <servlet-class>controller.report.report_main_show</servlet-class>
+        <servlet-name>report_top10_show</servlet-name>
+        <servlet-class>controller.report.report_top10_show</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sales_records</servlet-name>
+        <servlet-class>controller.report.sales_records</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>genreListing</servlet-name>
@@ -243,8 +247,12 @@
         <url-pattern>/IgnoreReplyProcess</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>report_main_show</servlet-name>
-        <url-pattern>/web/report/main_report.jsp</url-pattern>
+        <servlet-name>report_top10_show</servlet-name>
+        <url-pattern>/web/report/report_top10.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sales_records</servlet-name>
+        <url-pattern>/web/report/sales_records.jsp</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

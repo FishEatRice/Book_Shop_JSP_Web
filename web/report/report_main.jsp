@@ -1,6 +1,5 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,26 +11,20 @@
     <body>
         <%@ include file="/header/main_header.jsp" %>
 
-        <h1>Product Sales Report</h1>
+        <h2>Report Main Page</h2>
 
-        <table border=""1>
-            <thead>
-                <tr>
-                    <th>Product Name</th>
-                    <th>Quantity Sold</th>
-                    <th>Total Sales</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Iterate through the ReportData map -->
-                <c:forEach var="entry" items="${ReportData}">
-                    <tr>
-                        <td>${entry.value.productName}</td>
-                        <td>${entry.value.quantity}</td>
-                        <td>RM <fmt:formatNumber value="${entry.value.sale}" type="number" minFractionDigits="2" /></td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+        <a href="/galaxy_bookshelf/web/report/sales_records.jsp?type=daily">Sales Records - Daily</a>
+
+        <br>
+
+        <a href="/galaxy_bookshelf/web/report/sales_records.jsp?type=monthly">Sales Records - Monthly</a>
+
+        <br>
+
+        <a href="/galaxy_bookshelf/web/report/sales_records.jsp?type=yearly">Sales Records - Yearly</a>
+
+        <br>
+
+        <a href="/galaxy_bookshelf/web/report/report_top10.jsp">Top 10 Products of the Year</a>
     </body>
 </html>

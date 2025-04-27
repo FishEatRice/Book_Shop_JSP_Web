@@ -46,7 +46,7 @@
 
         <li><a href="/galaxy_bookshelf/web/discount/discount_manager.jsp">Discount Manager</a></li>
 
-        <li><a href="/galaxy_bookshelf/web/report/main_report.jsp">Report Manager</a></li>
+        <li><a href="/galaxy_bookshelf/report/report_main.jsp">Report Manager</a></li>
 
         <% } %>
 
