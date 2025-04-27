@@ -27,9 +27,18 @@
 
         <h2>Comments List</h2>
 
+        <form method="get" action="/galaxy_bookshelf/web/staff/comment_list.jsp">
+            <input type="text" name="search" placeholder="Search by Product Name" required>
+            <button type="submit">Search</button>
+        </form>
+
+        <br>
+
         <a href="/galaxy_bookshelf/web/staff/comment_list.jsp">All</a> | 
         <a href="/galaxy_bookshelf/web/staff/comment_list.jsp?sort=not+yet+reply">Not Yet Reply</a> | 
         <a href="/galaxy_bookshelf/web/staff/comment_list.jsp?sort=ignore">Ignore</a>
+
+        <br><br>
 
         <table border="1">
             <tr>
@@ -68,7 +77,7 @@
                 <td>
                     <a href="/galaxy_bookshelf/web/staff/staff_reply_page.jsp?paymentId=<%= c.getPaymentId() %>">Edit Comment</a>
                     <% if (c.getReply() == null || !"ignore".equalsIgnoreCase(c.getReply().trim())) { %>
-                    | <a href="/galaxy_bookshelf/IgnoreReplyProcess?payment_id=<%= c.getPaymentId() %>">Ignore</a>
+                    | <a href="/galaxy_bookshelf/IgnoreReplyProcess?payment_id=<%= c.getPaymentId() %>" onclick="return confirm('Are you sure you want to ignore this comment?\nThe old reply will be deleted.');">Ignore</a>
                     <% } %>
 
                 </td>

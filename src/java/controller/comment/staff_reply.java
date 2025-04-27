@@ -22,9 +22,18 @@ public class staff_reply extends HttpServlet {
 
         List<Comment> comments = new ArrayList<>();
 
+        String Type = "";
+
         String sort = request.getParameter("sort");
         if (sort == null || sort.trim().isEmpty()) {
-            sort = "%%";
+            sort = request.getParameter("search");
+            if (sort == null || sort.trim().isEmpty()) {
+                sort = "%%";
+                Type = "";
+            } else {
+                sort = "%" + sort + "%";
+                Type = "Search";
+            }
         }
 
         try {
@@ -36,6 +45,10 @@ public class staff_reply extends HttpServlet {
                 sql = "SELECT * FROM GALAXY.PAYMENT WHERE CAST(STAFF_REPLY AS VARCHAR(1000)) != 'no comment' AND CAST(STAFF_REPLY AS VARCHAR(1000)) LIKE ?";
             } else {
                 sql = "SELECT * FROM GALAXY.PAYMENT WHERE CAST(STAFF_REPLY AS VARCHAR(1000)) != 'no comment' AND CAST(STAFF_REPLY AS VARCHAR(1000)) != 'ignore' AND CAST(STAFF_REPLY AS VARCHAR(1000)) LIKE ?";
+            }
+
+            if (Type.equals("Search")) {
+                sql = "SELECT * FROM GALAXY.PAYMENT WHERE PRODUCT_NAME LIKE ?";
             }
 
             PreparedStatement stmt = conn.prepareStatement(sql);

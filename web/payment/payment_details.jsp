@@ -8,6 +8,7 @@
     String payType = "";
     String datetime = "";
     String address = "";
+
     if (paymentList != null && !paymentList.isEmpty()) {
         for (PaymentDetail temp : paymentList) {
             if (!"Shipping Fee".equalsIgnoreCase(temp.getProductName())) {
@@ -50,7 +51,6 @@
                 <th>Product Name</th>
                 <th>Unit Price</th>
                 <th>Quantity</th>
-                <th>Action</th>
                 <th>Total</th>
             </tr>
             <%
@@ -70,34 +70,6 @@
                 <td><%= p.getProductName() %></td>
                 <td>RM <%= String.format("%.2f", p.getPayPrice()) %></td>
                 <td><%= p.getQuantity() %></td>
-                <td>
-                    <%
-                        String comment = p.getComment();
-                        Integer rating = p.getRatingStar();
-                        if (comment == null || comment.isEmpty()) {
-                            out.print("<a href='/galaxy_bookshelf/web/comment/comment.jsp?id=" + p.getPaymentId() + "'>Add Comment</a>");
-                        } else {
-                            // Display rating stars
-                            out.print("Rating: ");
-                            if (rating != null) {
-                                for (int i = 1; i <= 5; i++) {
-                                    if (i <= rating) {
-                                        out.print("<i class='fa-solid fa-star' style='color: orange;'></i>"); // Yellow filled star
-                                    } else {
-                                        out.print("<i class='fa-solid fa-star' style='color: gray;'></i>"); // Gray empty star
-                                    }
-                                }
-                            } 
-                            
-                            out.print("<br><br>");
-                            
-                            // Display comment
-                            out.print("Comment: ");
-                            out.print(comment);
-                            out.print("<a href='/galaxy_bookshelf/web/comment/comment.jsp?id=" + p.getPaymentId() + "'>Edit Comment</a>");
-                        }
-                    %>
-                </td>
                 <td>RM <%= String.format("%.2f", p.getPayPrice() * p.getQuantity()) %></td>
             </tr>
             <%
@@ -108,20 +80,97 @@
                 double total = subtotal + shippingFee;
             %>
             <tr>
-                <td colspan="4"></td>
+                <td colspan="3"></td>
                 <td>Merchandise Subtotal</td>
                 <td>RM <%= String.format("%.2f", subtotal) %></td>
             </tr>
             <tr>
-                <td colspan="4"></td>
+                <td colspan="3"></td>
                 <td>Shipping Fee</td>
                 <td>RM <%= String.format("%.2f", shippingFee) %></td>
             </tr>
             <tr>
-                <td colspan="4"></td>
+                <td colspan="3"></td>
                 <td>Total</td>
                 <td><strong>RM <%= String.format("%.2f", total) %></strong></td>
             </tr>
+        </table>
+
+        <!-- Comment Section -->
+        <h2>Comments</h2>
+
+        <table border="1">
+            <tr>
+                <th>No</th>
+                <th>Product Name</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Action</th>
+            </tr>
+            <%
+                no = 1;
+                for (PaymentDetail p : paymentList) {
+                    // Skip Shipping Fee rows
+                    if ("Shipping Fee".equalsIgnoreCase(p.getProductName())) {
+                        continue;
+                    }
+
+                    int ratingStar = p.getRatingStar();
+            %>
+            <tr>
+                <td><%= no++ %></td>
+                <td><%= p.getProductName() %></td>
+
+                <%
+                    if (ratingStar == 0) {
+                %>
+                <td colspan="3"><a href='/galaxy_bookshelf/web/comment/comment.jsp?id=<%= p.getPaymentId() %>'>Add Comment</a></td>
+
+                <%
+                    } else {
+                %> <td> <%
+                        // Display rating stars
+                        for (int i = 1; i <= 5; i++) {
+                            if (i <= ratingStar) {
+                    %>
+                    <i class="fa-solid fa-star" style="color: orange;"></i>
+                    <%
+                                } else {
+                    %>
+                    <i class="fa-solid fa-star" style="color: gray;"></i>
+                    <%
+                                }
+                            }
+                    %> </td> <%
+                        }
+                    %>
+                    <%
+                        if (ratingStar > 0) {
+                    %>
+                <td>
+                    <%
+                        if (ratingStar > 0) {
+                    %>
+                    <%= p.getComment() %>
+                    <%
+                        }
+                    %>
+                </td>
+                <%
+                    }
+                %>
+
+                <%
+                    if (ratingStar > 0) {
+                %>
+                <td><a href='/galaxy_bookshelf/web/comment/comment.jsp?id=<%= p.getPaymentId() %>'>Edit Comment</a></td>
+                <%
+                    }
+                %>
+            </tr>
+            <%
+                }
+            %>
         </table>
     </body>
 </html>

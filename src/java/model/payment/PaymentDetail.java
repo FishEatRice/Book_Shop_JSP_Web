@@ -18,6 +18,7 @@ public class PaymentDetail {
     private String productName;
     private String productId;
     private String address;
+    private String reply;
 
     // Getters and Setters
     public String getPaymentId() {
@@ -130,6 +131,14 @@ public class PaymentDetail {
 
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+
+    public String getReply() {
+        return reply;
+    }
+
+    public void setReply(String reply) {
+        this.reply = reply;
     }
 
     public String getShippingStatusName() {
