@@ -16,8 +16,8 @@ public class customer_cart_list extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        // Get Customer_ID 
-        String Customer_ID = "C1";
+        HttpSession session = request.getSession();
+        String Customer_ID = (String) session.getAttribute("customer_id");
 
         List<CustomerCart> CustomerCart = new ArrayList<>();
 

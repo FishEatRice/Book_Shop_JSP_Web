@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
-    String CheckAcc = (String) session.getAttribute("account_status");
+    String CheckAcc = (String) session.getAttribute("userRole");
     if (CheckAcc == null) {
         CheckAcc = "guest";
         
@@ -18,7 +18,7 @@
     }
     
     //Demo CheckAcc 
-    CheckAcc = "staff";
+    //CheckAcc = "staff";
 %>
 
 <nav>
@@ -31,9 +31,9 @@
         <% if ("guest".equals(CheckAcc)) { %>
 
         <!-- Not Yet Login -->
-        <li><a href="/galaxy_bookshelf/">Login</a></li>
+        <li><a href="/galaxy_bookshelf/guard/loginChoose.jsp">Login</a></li>
 
-        <li><a href="/galaxy_bookshelf/">Register</a></li>
+        <li><a href="/galaxy_bookshelf/customer/registerMember.jsp">Register</a></li>
 
         <% } else { %>
 
@@ -68,7 +68,7 @@
         <!-- Already Login -->
         <li><a href="/galaxy_bookshelf/">Account</a></li>
 
-        <li><a href="/galaxy_bookshelf/">Logout</a></li>
+        <li><a href="/galaxy_bookshelf/guard/SessionLogout.jsp">Logout</a></li>
 
         <% } %>
 

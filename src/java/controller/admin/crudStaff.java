@@ -62,7 +62,7 @@ public class crudStaff extends HttpServlet {
         }
 
         if (success) {
-            response.sendRedirect("/galaxy_bookshelf/admin/succesStaff.jsp"); 
+            response.sendRedirect("/galaxy_bookshelf/admin/controlStaff.jsp"); 
         } else {
             request.setAttribute("failedStaff", staff);
             request.getRequestDispatcher("/admin/failStaff.jsp").forward(request, response); //  forward transport data
@@ -79,14 +79,14 @@ public class crudStaff extends HttpServlet {
 
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(queryID);
-            String newStaffId = "s1";
+            String newStaffId = "S1";
 
             if (rs.next()) {
                 String maxId = rs.getString(1); // c1,c2,c3....
-                if (maxId != null && maxId.startsWith("s")) {
+                if (maxId != null && maxId.startsWith("S")) {
                     // plus 1
                     int currentId = Integer.parseInt(maxId.substring(1)); //number
-                    newStaffId = "s" + (currentId + 1); //new id plus 1
+                    newStaffId = "S" + (currentId + 1); //new id plus 1
                 }
             }
             staff.setStaffId(newStaffId);

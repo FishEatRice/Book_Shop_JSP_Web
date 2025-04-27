@@ -21,7 +21,8 @@ public class add_edit_address extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String customer_id = "C1";
+        HttpSession session = request.getSession();
+        String customer_id = (String) session.getAttribute("customer_id");
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db_galaxy_bookshelf", "GALAXY", "GALAXY");

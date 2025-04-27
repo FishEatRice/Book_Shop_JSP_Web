@@ -17,7 +17,8 @@ public class address_process extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String customer_id = "C1"; // Hardcoded for now; adjust if needed
+        HttpSession session = request.getSession();
+        String customer_id = (String) session.getAttribute("customer_id");
 
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");

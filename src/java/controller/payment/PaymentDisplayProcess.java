@@ -13,7 +13,8 @@ public class PaymentDisplayProcess extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String customerId = "C1"; // You can change this based on session or input
+        HttpSession session = request.getSession();
+        String customerId = (String) session.getAttribute("customer_id");
         Map<String, PaymentSummary> summaryMap = new LinkedHashMap<>();
 
         try {

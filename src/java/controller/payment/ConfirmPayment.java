@@ -21,7 +21,8 @@ public class ConfirmPayment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String customer_id = "C1";
+        HttpSession session = request.getSession();
+        String customer_id = (String) session.getAttribute("customer_id");
 
         double shipping_fee = 0.0;
 

@@ -29,8 +29,8 @@
 
 
         <h3>Register Now</h3>
-        <form method="post" action="../crudCustomer" onsubmit="return validatePassword(); ">
-                     <input type="hidden" name="action" value="create" />
+        <form method="post" action="../crudCustomer" onsubmit="return validatePassword();">
+            <input type="hidden" name="action" value="create" />
 
             <p><label>Name :</label>
                 <input type="text" name="name" size="40" /></p>
@@ -43,7 +43,6 @@
 
             <p><input type="submit" value="Submit" />
                 <input type="reset" value="Reset" /></p>
-            a
         </form>
 
     </body>

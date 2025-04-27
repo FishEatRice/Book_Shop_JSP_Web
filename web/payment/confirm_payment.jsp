@@ -14,7 +14,13 @@
 
         <h2>Confirm Your Items</h2>
 
+        <%
+               String Customer_id = (String) session.getAttribute("customer_id");
+        %>
+
         <form action="/galaxy_bookshelf/web/payment/process.jsp" method="get">
+
+            <input type="hidden" name="customer_id" value="<%= Customer_id %>">
 
             <p>${FullName} | (+60) ${PhoneNumber}</p>
             <p>${Address}</p>

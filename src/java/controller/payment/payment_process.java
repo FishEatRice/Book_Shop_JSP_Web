@@ -14,7 +14,8 @@ public class payment_process extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String[] cartIds = request.getParameter("cart_ids").split(",");
         String payType = Optional.ofNullable(request.getParameter("payType")).orElse("CARD");
-        String customer_id = "C1"; // Demo only
+        HttpSession session = request.getSession();
+        String customer_id = (String) session.getAttribute("customer_id");
 
         String full_shippping_address = "";
 
@@ -143,7 +144,6 @@ public class payment_process extends HttpServlet {
         }
 
         // Direct go, user cannot go back
-        request.getSession().invalidate();
         response.sendRedirect("/galaxy_bookshelf/payment/payment_success.jsp");
     }
 }

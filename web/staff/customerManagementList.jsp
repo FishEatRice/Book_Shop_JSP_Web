@@ -35,7 +35,6 @@
                 <th>CUSTOMER_ADDRESS_CODE</th>
                 <th>CUSTOMER_QUESTION_ID</th>
                 <th>CUSTOMER_QUESTION_ANSWER</th> 
-                <th>CUSTOMER_REQUEST</th>
                 <th>ACTION</th> >
             </tr>
             <%
@@ -62,10 +61,8 @@
                 <td><%= c.getCustomerAddressState() %></td>
                 <td><%= c.getCustomerAddressCity() %></td>
                 <td><%= c.getCustomerAddressCode() %></td>
-
                 <td><%= c.getCustomerQuestionId() %></td>
                 <td><%= c.getCustomerQuestionAnswer() %></td>
-                <td><%= c.getCustomerRequest() %></td>
                 
                 <td>
                     <form action="/galaxy_bookshelf/staff/editCustomer.jsp" method="post" style="display:inline;">

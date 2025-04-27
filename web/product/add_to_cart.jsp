@@ -20,7 +20,6 @@
         <%@ include file="/cart/cart_responds.jsp" %>
 
         <h1>Add To Cart Demo</h1>
-        <!-- C1 = customer -->
         <form method="post" action="<%= request.getContextPath() %>/add_to_cart_process" >
 
             <p>，

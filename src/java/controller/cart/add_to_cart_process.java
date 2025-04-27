@@ -22,8 +22,8 @@ public class add_to_cart_process extends HttpServlet {
         String product_id = request.getParameter("product_id");
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        // Demo
-        String customer_id = "C1";
+        HttpSession session = request.getSession();
+        String customer_id = (String) session.getAttribute("customer_id");
 
         // Message
         String cartResponds = "Failed";
@@ -36,7 +36,6 @@ public class add_to_cart_process extends HttpServlet {
             cartResponds = "new_cart";
         }
 
-        HttpSession session = request.getSession();
         session.setAttribute("cartResponds", cartResponds);
 
         String referer = request.getHeader("Referer");

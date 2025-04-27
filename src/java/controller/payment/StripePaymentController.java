@@ -35,7 +35,11 @@ public class StripePaymentController extends HttpServlet {
 
         String[] cartIds = cartIdsParam.split(",");
 
-        String customer_id = "C1"; // DEMO
+        String customer_id = request.getParameter("customer_id");
+        if (customer_id == null || customer_id.trim().isEmpty()) {
+            response.sendRedirect("/galaxy_bookshelf/payment/payment_error.jsp?reason=MissingID");
+            return;
+        }
 
         List<SessionCreateParams.LineItem> lineItems;
         lineItems = new ArrayList<>();

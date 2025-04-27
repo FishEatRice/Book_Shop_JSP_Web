@@ -12,9 +12,15 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <a href="/galaxy_bookshelf/admin/createStaff.jsp"> Create Staff</a> <br>
+        <form method="post" action="../crudStaff">
+            <input type="hidden" name="action" value="create"> 
+            <input type="hidden" name="firstName" value="New" />
+            <input type="hidden" name="lastName" value="Staff" />
+            <input type="submit" value="Create New Staff" />
+        </form>
+        <br>
         <a href="/galaxy_bookshelf/admin/controlStaff.jsp"> Control staff</a><br>
         <a href="/galaxy_bookshelf/admin/adminDashboard.jsp">back to admin Dashboard</a>
-        
+
     </body>
 </html>
