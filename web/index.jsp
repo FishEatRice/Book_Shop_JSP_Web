@@ -9,9 +9,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <!-- Set Title Icon -->
+        <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
+
+        <title>Galaxy | Main</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <%@ include file="/header/main_header.jsp" %>
     </body>
 </html>
