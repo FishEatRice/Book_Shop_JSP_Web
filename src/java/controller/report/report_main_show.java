@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller.report;
 
 import java.io.IOException;
@@ -37,17 +33,19 @@ public class report_main_show extends HttpServlet {
                 int quantity = rs.getInt("quantity");
                 double price = rs.getDouble("pay_price");
 
-                // Check if the product is already in the map
-                report_display existingReport = ReportData.get(product_name);
+                if (!product_name.equals("Shipping Fee")) {
+                    // Check if the product is already in the map
+                    report_display existingReport = ReportData.get(product_name);
 
-                if (existingReport == null) {
-                    // First time encountering this product, create a new report_display object
-                    report_display newReport = new report_display(product_name, quantity, price * quantity);
-                    ReportData.put(product_name, newReport);
-                } else {
-                    // Product already encountered, update its quantity and sales
-                    existingReport.setQuantity(existingReport.getQuantity() + quantity);
-                    existingReport.setSale(existingReport.getSale() + (price * quantity));
+                    if (existingReport == null) {
+                        // First time encountering this product, create a new report_display object
+                        report_display newReport = new report_display(product_name, quantity, price * quantity);
+                        ReportData.put(product_name, newReport);
+                    } else {
+                        // Product already encountered, update its quantity and sales
+                        existingReport.setQuantity(existingReport.getQuantity() + quantity);
+                        existingReport.setSale(existingReport.getSale() + (price * quantity));
+                    }
                 }
             }
 
