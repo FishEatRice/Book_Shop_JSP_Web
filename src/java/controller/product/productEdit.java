@@ -65,7 +65,7 @@ public class productEdit extends HttpServlet {
             // Input validation
             if (name.isEmpty() || description.isEmpty() || genreId == null || genreId.isEmpty() || priceStr == null || priceStr.isEmpty() || qtyStr == null || qtyStr.isEmpty()) {
                 session.setAttribute("error", "All fields are required.");
-                response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp");
+                response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp?id=" + productId);
                 return;
             }
 
@@ -74,25 +74,24 @@ public class productEdit extends HttpServlet {
 
             if (price.compareTo(BigDecimal.ZERO) <= 0 || quantity <= 0) {
                 session.setAttribute("error", "Price and quantity must be greater than 0.");
-                response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp");
+                response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp?id=" + productId);
                 return;
             }
 
             tx.begin();
 
             Product product = em.find(Product.class, productId);
-            if (product == null) {
-                session.setAttribute("error", "Product not found.");
-                response.sendRedirect(request.getContextPath() + "/web/product/product.jsp");
-                return;
+            List<Product> existingProducts = em.createNamedQuery("Product.findByProductName", Product.class)
+                        .setParameter("productName", name)
+                        .getResultList();
+            
+            if (!existingProducts.isEmpty()) {
+                session.setAttribute("error", "Product name already exists. Please choose a different name.");
+                response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp?id=" + productId);
+                return; 
             }
 
             Genre genre = em.find(Genre.class, genreId);
-            if (genre == null) {
-                session.setAttribute("error", "Invalid genre selected.");
-                response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp");
-                return;
-            }
 
             // Update product details
             product.setProductName(name);
