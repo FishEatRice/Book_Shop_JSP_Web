@@ -6,13 +6,13 @@ String accountStatus = (String) session.getAttribute("account_status");
 String role = (String) session.getAttribute("userRole");
 String customerId = (String) session.getAttribute("customer_id");
 
-// 检查是否其他身份已登录
+//session
 if (accountStatus != null && !"customer".equals(role)) {
     response.sendRedirect(request.getContextPath() + "/index.jsp");
     return;
 }
 
-// 检查是否 customer 已登录
+// 
 if (customerId == null || !"customer".equals(role)) {
     response.sendRedirect(request.getContextPath() + "/customer/customerLogin.jsp");
     return;

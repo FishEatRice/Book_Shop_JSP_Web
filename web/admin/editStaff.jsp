@@ -43,24 +43,25 @@ request.setAttribute("staff", staff);
         <h1>Edit Staff Information</h1>
 
         <div class="form-container">
-            <form action="../crudStaff" method="post">
+            <form action="../AdminUpdateStaff" method="post">
                 <input type="hidden" name="action" value="edit" />
-                <input type="hidden" name="id" value="${staff.staffId}" />
+                <input type="hidden" name="staffId" value="${staff.staffId}" />
 
                 <label for="id">STAFF_ID:</label>
-                <input type="text" id="id" name="id" value="${staff.staffId}" readonly />
+                <input type="text" id="staffId" name="id" value="${staff.staffId}" readonly />
 
                 <br><br><label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" value="${staff.firstName}" required />
+                <input type="text" id="firstName" name="staffFirstName" value="${staff.firstName}" required />
+
 
                 <br><br><label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName" value="${staff.lastName}" required />
+                <input type="text" id="lastName" name="staffLastName" value="${staff.lastName}" required />
 
                 <br><br><label for="password">Password:</label>
-                <input type="password" id="password" name="password" value="${staff.staffPassword}" required />
+                <input type="password" id="passsword" name="staffPassword" value="${staff.staffPassword}" required />
 
                 <br><br><label for="position">Position:</label>
-                <input type="text" id="position" name="position" value="${staff.position}" required />
+                <input type="number" id="position" name="position" value="${staff.position}" required />
 
                 <br><br><input type="submit" value="Save Changes" />
             </form>

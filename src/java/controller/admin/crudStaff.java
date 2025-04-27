@@ -53,9 +53,7 @@ public class crudStaff extends HttpServlet {
             case "create":
                 success = CreateStaff(staff);
                 break;
-            case "edit":
-                success = updateStaff(staff);
-                break;
+
             case "delete":
                 success = deleteStaff(staff);
                 break;
@@ -64,10 +62,10 @@ public class crudStaff extends HttpServlet {
         }
 
         if (success) {
-            response.sendRedirect("/galaxy_bookshelf/admin/succesStaff.jsp"); // 注册成功
+            response.sendRedirect("/galaxy_bookshelf/admin/succesStaff.jsp"); 
         } else {
             request.setAttribute("failedStaff", staff);
-            request.getRequestDispatcher("/admin/failStaff.jsp").forward(request, response); // 使用 forward 传数据
+            request.getRequestDispatcher("/admin/failStaff.jsp").forward(request, response); //  forward transport data
         }
 
     }
@@ -84,11 +82,11 @@ public class crudStaff extends HttpServlet {
             String newStaffId = "s1";
 
             if (rs.next()) {
-                String maxId = rs.getString(1); // 例如：c1, c2, c3
+                String maxId = rs.getString(1); // c1,c2,c3....
                 if (maxId != null && maxId.startsWith("s")) {
-                    // 提取数字部分，并增加 1
-                    int currentId = Integer.parseInt(maxId.substring(1)); // 获取数字部分：1, 2, 3
-                    newStaffId = "s" + (currentId + 1); // 生成新 ID：c2, c3, c4
+                    // plus 1
+                    int currentId = Integer.parseInt(maxId.substring(1)); //number
+                    newStaffId = "s" + (currentId + 1); //new id plus 1
                 }
             }
             staff.setStaffId(newStaffId);
@@ -100,7 +98,7 @@ public class crudStaff extends HttpServlet {
             sstmt.setString(4, staff.getStaffPassword());
             sstmt.setInt(5, staff.getPosition());
 
-            int rowsAffected = sstmt.executeUpdate(); // 执行插入操作
+            int rowsAffected = sstmt.executeUpdate(); 
             System.out.println("Attempting to insert staff with ID: " + staff.getStaffId());
 
             return rowsAffected > 0;
@@ -134,22 +132,6 @@ public class crudStaff extends HttpServlet {
         return list;
     }
 
-    private boolean updateStaff(Staff staff) {
-        String query = "UPDATE GALAXY.STAFF SET STAFF_FIRSTNAME = ?, STAFF_LASTNAME = ?, STAFF_PASSWORD = ?, POSITION = ? WHERE STAFF_ID = ?";
-        try (Connection conn = DriverManager.getConnection(Host, User, password)) {
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, staff.getFirstName());
-            stmt.setString(2, staff.getLastName());
-            stmt.setString(3, staff.getStaffPassword());
-            stmt.setInt(4, staff.getPosition());
-            stmt.setString(5, staff.getStaffId());  // 使用已有的staffId进行更新
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     private boolean deleteStaff(Staff staff) {
         String query = "DELETE FROM GALAXY.STAFF WHERE STAFF_ID = ?";

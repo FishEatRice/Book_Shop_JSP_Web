@@ -21,49 +21,50 @@ public class CustomerLoginFunction extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
 
-        // 从表单获取参数
+   
         String email = request.getParameter("customer_email");
         String pwd = request.getParameter("customer_password");
 
+      
+        HttpSession session = request.getSession();
 
- HttpSession session = request.getSession();
-
-        // 如果之前已经登录为 staff 或 admin，就不允许登录 customer
+  
         String existingStatus = (String) session.getAttribute("account_status");
         String existingRole = (String) session.getAttribute("userRole");
 
         if (existingStatus != null && !"customer".equals(existingRole)) {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            response.sendRedirect(request.getContextPath() + "/index.jsp");  // 重定向到主页
             return;
         }
-        
-         Customer customer = getCustomerIfValid(email, pwd);
+
+
+        Customer customer = getCustomerIfValid(email, pwd);
         if (customer != null) {
-            session.setAttribute("account_status", email);
-            session.setAttribute("userRole", "customer");
-            session.setAttribute("customer_email", customer.getCustomerEmail());
+          
+            session.setAttribute("userRole", "customer");                  // ✅ 角色
+            session.setAttribute("account_status", customer.getCustomerEmail()); // ✅ 登录者身份
+            session.setAttribute("customer_email", customer.getCustomerEmail()); // 其他信息
             session.setAttribute("customer_id", customer.getCustomerId());
+
             response.sendRedirect(request.getContextPath() + "/customer/customerDashboard.jsp");
         } else {
+           
             response.sendRedirect(request.getContextPath() + "/customer/customerLoginError.jsp");
         }
     }
-
-
-       
     
 
     private Customer getCustomerIfValid(String email, String password) {
         String sql = "SELECT * FROM GALAXY.CUSTOMER WHERE CUSTOMER_EMAIL = ? AND CUSTOMER_PASSWORD = ?";
 
-        try (Connection conn = DriverManager.getConnection(Host, User, passwor);
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DriverManager.getConnection(Host, User, passwor); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, email);
             stmt.setString(2, password);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
+                    // 如果找到该客户，返回客户对象
                     Customer c = new Customer();
                     c.setCustomerId(rs.getString("CUSTOMER_ID"));
                     c.setCustomerEmail(rs.getString("CUSTOMER_EMAIL"));
@@ -75,5 +76,4 @@ public class CustomerLoginFunction extends HttpServlet {
         }
         return null;
     }
-
 }

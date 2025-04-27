@@ -1,9 +1,9 @@
 <%-- 
-    Document   : succesStaff
-    Created on : Apr 12, 2025, 12:03:12 AM
+    Document   : error_test
+    Created on : Apr 26, 2025, 6:13:57 PM
     Author     : yq
 --%>
-<%@ include file="/header/main_header.jsp" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>done succes Staff!</h1>
-        <a href="/galaxy_bookshelf/admin/adminDashboard.jsp">back to admin Dashboardd</a>
+        <h1>error!</h1>
+         <p><strong>Error Message:</strong> ${errorMessage}</p> <!-- 显示错误信息 -->
     </body>
 </html>

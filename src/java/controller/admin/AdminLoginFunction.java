@@ -1,9 +1,5 @@
 package controller.admin;
 
-/**
- *
- * @author yq
- */
 import model.staff.Staff;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -24,36 +20,37 @@ public class AdminLoginFunction extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
 
-// 假设验证通过后获取用户角色（示例代码）
-        String role = ""; // 或 "staff"
+        
+        String staffId = request.getParameter("staff_id");
+        String staffPassword = request.getParameter("staff_password");
+
+       
         HttpSession session = request.getSession();
-        session.setAttribute("userRole", role);
-        // Retrieve form parameters
+
+        
         Staff staff = new Staff();
+        staff.setStaffId(staffId);
+        staff.setStaffPassword(staffPassword);
 
-        // Debugging
-        staff.setStaffId(request.getParameter("staff_id"));
-        staff.setStaffPassword(request.getParameter("staff_password"));
+        // 验证登录
+        String role = isValidLogin(staff);
 
-        String checkAcc = isValidLogin(staff);
+        if (role != null) {
+           
+            session.setAttribute("userRole", role);              
+            session.setAttribute("account_status", staff.getStaffId()); 
 
-        // Validate login
-        if (checkAcc != null) {
-            session.setAttribute("account_status", staff.getStaffId()); // 存ID
-            session.setAttribute("userRole", checkAcc); // 存角色：admin 或 staff
-
-            if ("admin".equals(checkAcc)) {
+            if ("admin".equals(role)) {
                 response.sendRedirect("/galaxy_bookshelf/admin/adminDashboard.jsp");
             } else {
                 response.sendRedirect("/galaxy_bookshelf/staff/staffDashboard.jsp");
             }
         } else {
-            // Failed
+          
             response.sendRedirect("/galaxy_bookshelf/admin/loginError.jsp");
         }
-
     }
-
+       
     private String isValidLogin(Staff staff) {
         String query = "SELECT * FROM GALAXY.STAFF WHERE STAFF_ID = ? AND STAFF_PASSWORD = ?";
 
@@ -64,17 +61,18 @@ public class AdminLoginFunction extends HttpServlet {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    // Check if this is the admin account
-                    if ("A1".equals(staff.getStaffId())) { //a1 is admin id
+                    
+                    if ("A1".equals(staff.getStaffId())) {
                         return "admin";
                     } else {
-                        return "staff"; // it's a regular staff
+                        return "staff";  
                     }
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Database connection error: " + e.getMessage());
+            System.err.println("数据库连接错误: " + e.getMessage());
         }
-        return null; // No matching staff
+
+        return null; 
     }
 }

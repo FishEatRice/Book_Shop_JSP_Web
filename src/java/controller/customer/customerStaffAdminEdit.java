@@ -14,7 +14,9 @@ import java.sql.*;
  *
  * @author yq
  */
-public class customerMyProfile extends HttpServlet {
+
+//update customer (admin and staff)
+public class customerStaffAdminEdit extends HttpServlet {
 
     private static final String Host = "jdbc:derby://localhost:1527/db_galaxy_bookshelf";
     private static final String User = "GALAXY";
@@ -27,7 +29,7 @@ public class customerMyProfile extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 获取表单数据
+        // get form data
         String id = request.getParameter("customerId");
         String name = request.getParameter("customerName");
         String email = request.getParameter("customerEmail");
@@ -39,15 +41,15 @@ public class customerMyProfile extends HttpServlet {
         String addressCity = request.getParameter("customerAddressCity");
         String addressState = request.getParameter("customerAddressState");
         String addressCode = request.getParameter("customerAddressCode");
-        String questionId = request.getParameter("questionId");
-        String questionAnswer = request.getParameter("questionAnswer");
+        String questionId = request.getParameter("customerquestionId");
+        String questionAnswer = request.getParameter("customerquestionAnswer");
         String customerRequest = request.getParameter("customerRequest");
-        // 数据库更新语句
+        
         String updateSQL = "UPDATE GALAXY.CUSTOMER SET "
                 + "CUSTOMER_NAME = ?, CUSTOMER_EMAIL = ?, CUSTOMER_PASSWORD = ?, "
                 + "CUSTOMER_FIRSTNAME = ?, CUSTOMER_LASTNAME = ?, "
                 + "CUSTOMER_ADDRESS_NO = ?, CUSTOMER_ADDRESS_JALAN = ?, "
-                + "CUSTOMER_ADDRESS_CITY = ?, CUSTOMER_ADDRESS_STATE = ?, CUSTOMER_ADDRESS_CODE = ? "
+                + "CUSTOMER_ADDRESS_CITY = ?, CUSTOMER_ADDRESS_STATE = ?, CUSTOMER_ADDRESS_CODE = ? ,"
                 + "CUSTOMER_QUESTION_ID= ?, CUSTOMER_QUESTION_ANSWER=?, CUSTOMER_REQUEST =? WHERE CUSTOMER_ID = ?";
 
         try (Connection conn = DriverManager.getConnection(Host, User, passwor); PreparedStatement stmt = conn.prepareStatement(updateSQL)) {
@@ -65,15 +67,15 @@ public class customerMyProfile extends HttpServlet {
             stmt.setString(11, questionId);
             stmt.setString(12, questionAnswer);
             stmt.setString(13, customerRequest);
-            stmt.setString(11, id);
+            stmt.setString(14, id);
 
             int rows = stmt.executeUpdate();
 
             if (rows > 0) {
-                // 
-                response.sendRedirect("/galaxy_bookshelf/customer/customerDashboard.jsp");
+                
+                response.sendRedirect("/galaxy_bookshelf/staff/customerManagementList.jsp");
             } else {
-                // 
+                
                 response.getWriter().write("Update failed.");
             }
 

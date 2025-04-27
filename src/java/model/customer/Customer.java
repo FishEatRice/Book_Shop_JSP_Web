@@ -5,19 +5,28 @@ package model.customer;
  * @author yq
  */
 public class Customer {
+
     private String customerId;
     private String customerName;
     private String customerEmail;
     private String customerPassword;
     private String customerFirstName;
     private String customerLastName;
+    private String customerContactNo;
     private String customerAddressNo;
     private String customerAddressJalan;
     private String customerAddressState;
     private String customerAddressCity;
     private String customerAddressCode;
 
-    // Getter 和 Setter for customerId
+    private String customerQuestionId;
+    private String customerQuestionAnswer;
+    private int customerRequest;
+
+// Getter 和 Setter for customerId
+    
+     
+
     public String getCustomerId() {
         return customerId;
     }
@@ -114,5 +123,36 @@ public class Customer {
 
     public void setCustomerAddressCode(String customerAddressCode) {
         this.customerAddressCode = customerAddressCode;
+    }
+    public int getCustomerRequest() {
+        return customerRequest;
+    }
+
+    public void setCustomerRequest(int customerRequest) {
+        this.customerRequest = customerRequest;
+    }
+    
+     public String getCustomerQuestionAnswer() {
+        return customerQuestionAnswer;
+    }
+
+    public void setCustomerQuestionAnswer(String customerQuestionAnswer) {
+        this.customerQuestionAnswer = customerQuestionAnswer;
+    }
+    
+    public String getCustomerQuestionId() {
+        return customerQuestionId;
+    }
+
+    public void setCustomerQuestionId(String customerQuestionId) {
+        this.customerQuestionId = customerQuestionId;
+    }
+
+    public String getCustomerContactNo() {
+        return customerContactNo;
+    }
+
+    public void setCustomerContactNo(String customerContactNo) {
+        this.customerContactNo = customerContactNo;
     }
 }

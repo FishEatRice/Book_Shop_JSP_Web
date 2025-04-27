@@ -5,24 +5,30 @@
 --%>
 <%@ include file="/header/main_header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
 <%
-// 获取 staffId 的值（需强制转换为 String）
-String customer_email = (String) session.getAttribute("customer_email");
- System.out.println("customer_email = " + customer_email);
- session.setAttribute("user_type", "customer");
+    String role = (String) session.getAttribute("userRole");
 
-
-if (customer_email != null) {
-    // 先检查是否是管理员（假设 A1 是管理员标识）
-    response.sendRedirect("/galaxy_bookshelf/customer/customerDashboard.jsp");
-}
-
-String CheckAcc = (String) session.getAttribute("account_status");
-if (CheckAcc != null) {
-    // 先检查是否是管理员（假设 A1 是管理员标识）
-    response.sendRedirect("/galaxy_bookshelf/index.jsp");
-}
+    if (role != null) {
+        if ("customer".equals(role)) {
+            response.sendRedirect(request.getContextPath() + "/customer/customerDashboard.jsp");
+            return;
+        } else if ("staff".equals(role)) {
+            response.sendRedirect(request.getContextPath() + "/staff/staffDashboard.jsp");
+            return;
+        } else if ("admin".equals(role)) {
+            response.sendRedirect(request.getContextPath() + "/admin/adminDashboard.jsp");
+            return;
+        } else {
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            return;
+        }
+    }
 %>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>

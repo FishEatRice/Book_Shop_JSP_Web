@@ -78,6 +78,6 @@
             %>
 
         </table>
-
+ <a href="/galaxy_bookshelf/admin/crudStaff.jsp">Back to Previous Page</a>
     </body>
 </html>

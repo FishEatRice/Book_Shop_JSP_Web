@@ -6,17 +6,28 @@
 
 <%@ include file="/header/main_header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-String staffId = (String) session.getAttribute("account_status");
-if (staffId != null) {
-    if ("A1".equals(staffId)) {
-        response.sendRedirect(request.getContextPath() + "/admin/adminDashboard.jsp");
-    } else {
-        response.sendRedirect(request.getContextPath() + "/staff/staffDashboard.jsp");
-    }
-}
-%>
 
+
+
+<%
+    String role = (String) session.getAttribute("userRole");
+
+    if (role != null) {
+        if ("customer".equals(role)) {
+            response.sendRedirect(request.getContextPath() + "/customer/customerDashboard.jsp");
+            return;
+        } else if ("staff".equals(role)) {
+            response.sendRedirect(request.getContextPath() + "/staff/staffDashboard.jsp");
+            return;
+        } else if ("admin".equals(role)) {
+            response.sendRedirect(request.getContextPath() + "/admin/adminDashboard.jsp");
+            return;
+        } else {
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            return;
+        }
+    }
+%>
 
 
 <!DOCTYPE html>
@@ -28,7 +39,7 @@ if (staffId != null) {
 
 
         <h2>Login</h2>
-        <form action="/AdminLoginFunction" method="POST">
+        <form action="../AdminLoginFunction" method="POST">
             <label for="staff_id">Staff ID:</label>
             <input type="text" id="staff_id" name="staff_id" required/><br><br>
 

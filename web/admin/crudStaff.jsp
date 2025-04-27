@@ -13,6 +13,8 @@
     </head>
     <body>
         <a href="/galaxy_bookshelf/admin/createStaff.jsp"> Create Staff</a> <br>
-        <a href="/galaxy_bookshelf/admin/controlStaff.jsp"> Control staff</a>
+        <a href="/galaxy_bookshelf/admin/controlStaff.jsp"> Control staff</a><br>
+        <a href="/galaxy_bookshelf/admin/adminDashboard.jsp">back to admin Dashboard</a>
+        
     </body>
 </html>

@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="5.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd">
     <!-- Welcome File List -->
+    <servlet>
+        <servlet-name>customerStaffAdminEdit</servlet-name>
+        <servlet-class>controller.customer.customerStaffAdminEdit</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminUpdateStaff</servlet-name>
+        <servlet-class>controller.admin.AdminUpdateStaff</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>customerMyProfile</servlet-name>
         <url-pattern>/customerMyProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>customerStaffAdminEdit</servlet-name>
+        <url-pattern>/customerStaffAdminEdit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminUpdateStaff</servlet-name>
+        <url-pattern>/AdminUpdateStaff</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

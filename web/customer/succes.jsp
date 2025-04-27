@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>can World!</h1>
+        <h1>succes Work !</h1>
+        <a href="/galaxy_bookshelf/customer/customerDashboard.jsp">back to dashboard</a>
     </body>
 </html>

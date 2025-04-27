@@ -13,13 +13,13 @@
     </head>
     <body>
 <%
-    // 获取用户角色
+    // role
     String userRole = (String) session.getAttribute("userRole");
 
-    // 清除 Session 中所有资料
+    // 
     session.invalidate();
 
-    // 根据用户角色跳转到对应的 Login 页面
+    // what role jum where
     if ("admin".equals(userRole)) {
         response.sendRedirect(request.getContextPath() + "/staff/staffLogin.jsp");
     } else if ("staff".equals(userRole)) {
@@ -27,7 +27,7 @@
     } else if ("customer".equals(userRole)) {
         response.sendRedirect(request.getContextPath() + "/customer/customerLogin.jsp");
     } else {
-        // 如果什么都不是，就跳去首页或默认登录页
+        // 
         response.sendRedirect(request.getContextPath() + "/index.jsp");
     }
 %>
