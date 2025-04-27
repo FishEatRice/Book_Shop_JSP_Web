@@ -67,12 +67,33 @@
         <tr>
             <th>No.</th>
             <th>ID</th>
-            <th>Name</th>
+
+            <th>
+                <a href="?sortBy=productName&sortOrder=<%="productName".equals(request.getAttribute("sortBy")) && "asc".equals(request.getAttribute("sortOrder")) ? "desc" : "asc" %>">
+                    Name
+                <i class="<%="productName".equals(request.getAttribute("sortBy")) ? ("asc".equals(request.getAttribute("sortOrder")) ? "fa-solid fa-sort-up" : "fa-solid fa-sort-down") : "fa-solid fa-sort" %>"></i>
+                </a>
+            </th>
+            
             <th>Description</th>
             <th>Image</th>
-            <th>Genre</th>
+
+            <th>
+                <a href="?sortBy=genreId&sortOrder=<%= "genreId".equals(request.getAttribute("sortBy")) && "asc".equals(request.getAttribute("sortOrder")) ? "desc" : "asc" %>">
+                    Genre
+                <i class="<%="genreId".equals(request.getAttribute("sortBy")) ? ("asc".equals(request.getAttribute("sortOrder")) ? "fa-solid fa-sort-up" : "fa-solid fa-sort-down") : "fa-solid fa-sort" %>"></i>
+                </a>
+            </th>
+
             <th>Price</th>
-            <th>Quantity</th>
+
+            <th>
+                <a href="?sortBy=quantity&sortOrder=<%="quantity".equals(request.getAttribute("sortBy")) && "asc".equals(request.getAttribute("sortOrder")) ? "desc" : "asc" %>">
+                    Quantity
+                <i class="<%="quantity".equals(request.getAttribute("sortBy")) ? ("asc".equals(request.getAttribute("sortOrder")) ? "fa-solid fa-sort-up" : "fa-solid fa-sort-down") : "fa-solid fa-sort" %>"></i>
+                </a>   
+            </th>
+            
             <th>Status</th>
             <th colspan="2">Actions</th>  
         </tr>

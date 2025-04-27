@@ -28,7 +28,17 @@ public class productListing extends HttpServlet {
             throws ServletException, IOException {
 
         EntityManager em = emf.createEntityManager();
-        List<Product> productData = em.createNamedQuery("Product.findAllByOrder", Product.class).getResultList();
+
+        String sortBy = request.getParameter("sortBy"); // Column to sort by, e.g., "productName"
+        String sortOrder = request.getParameter("sortOrder"); // "asc", "desc"
+
+        String query = "SELECT p FROM Product p ORDER BY CAST(SUBSTRING(p.productId, 2) AS INT)"; // Default sort
+        
+        if (sortBy != null && !sortBy.isEmpty() && sortOrder != null && !sortOrder.isEmpty()) {
+            query = "SELECT p FROM Product p ORDER BY p." + sortBy + " " + sortOrder;
+        }
+
+        List<Product> productData = em.createQuery(query, Product.class).getResultList();
 
         // Process the product images (base64 image strings) - Convert JSON to Image
         for (Product product : productData) {
@@ -56,6 +66,8 @@ public class productListing extends HttpServlet {
 
         }
         request.setAttribute("productData", productData);
+        request.setAttribute("sortBy", sortBy); //use for sorting
+        request.setAttribute("sortOrder", sortOrder); //use for sorting
         request.getRequestDispatcher("/product/product.jsp").forward(request, response);
     }
 }
