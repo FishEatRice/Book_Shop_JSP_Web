@@ -12,7 +12,7 @@
     <body>
         <%@ include file="/header/main_header.jsp" %>
 
-                window.history.back();
+        <button onclick="window.history.back();">Back to Report Main Page</button>
 
         <h1>Top 10 Products of the Year</h1>
 
