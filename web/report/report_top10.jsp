@@ -12,7 +12,7 @@
     <body>
         <%@ include file="/header/main_header.jsp" %>
 
-        <button onclick="window.history.back();">Back to Report Main Page</button>
+        <a href="/galaxy_bookshelf/report/report_main.jsp">Back to Report Main Page</a>
 
         <h1>Top 10 Products of the Year</h1>
 
