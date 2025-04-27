@@ -1,7 +1,7 @@
 <%-- 
-    Document   : index
-    Created on : 11 Apr 2025, 10:20:03 PM
-    Author     : Galaxy Brain
+    Document   : error_test
+    Created on : Apr 26, 2025, 6:13:57 PM
+    Author     : yq
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>error!</h1>
+         <p><strong>Error Message:</strong> ${errorMessage}</p> <!-- 显示错误信息 -->
     </body>
 </html>
