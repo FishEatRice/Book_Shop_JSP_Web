@@ -4,7 +4,7 @@
 <html>
 
 <%
-    String title = "Galaxy BookShelf | Edit Product ";
+    String title = "Galaxy BookShelf | Edit Genre ";
     String heading = "Edit Genre";
 
     Genre genre_data = (Genre) request.getAttribute("genreData");

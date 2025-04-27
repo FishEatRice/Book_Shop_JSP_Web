@@ -3,7 +3,7 @@
 <html>
 
 <%
-    String title = "Galaxy BookShelf | Add Product ";
+    String title = "Galaxy BookShelf | Add Genre ";
     String heading = "Add Genre";
 %>
 
