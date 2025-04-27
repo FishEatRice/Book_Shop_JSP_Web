@@ -25,7 +25,7 @@
             <br>
             Have a wonderful day!
         </p>
-        <a href="#">Give us rating</a> | <a href="#">Check My Purchase</a>
+        <a href="#">Give us rating</a> | <a href="/galaxy_bookshelf/web/payment/payment_list.jsp">Check My Purchase</a>
 
 
     </body>

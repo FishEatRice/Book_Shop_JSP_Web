@@ -12,9 +12,11 @@
     <body>
         <%@ include file="/header/main_header.jsp" %>
 
-        <h2>Discount Product</h2>
-        
-        <a href="/galaxy_bookshelf/discount/add_new_discount.jsp">Create new discount</a>
+        <h2>Discount Manager</h2>
+
+        <a href="/galaxy_bookshelf/web/discount/add_discount_product.jsp">Create & Edit New Discount</a>
+
+        <br><br>
 
         <c:choose>
             <c:when test="${not empty Discount}">
@@ -34,9 +36,9 @@
                             <td>${item.productName}</td>
                             <td>RM <fmt:formatNumber value="${item.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" /></td>
                             <td>RM <fmt:formatNumber value="${item.discountPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" /></td>
-                            <td>${item.expiredDatetime}</td>
+                            <td><fmt:formatDate value="${item.expiredDatetime}" pattern="dd-MM-yyyy HH:mm:ss" /></td>
                             <td>
-                                <button type="button">
+                                <button type="button" onclick="DiscountSwitch('${item.discountId}')">
                                     <c:choose>
                                         <c:when test="${item.discountSwitch}">ON</c:when>
                                         <c:otherwise>OFF</c:otherwise>
@@ -44,8 +46,7 @@
                                 </button>
                             </td>
                             <td>
-                                <button type="button" onclick="#">Edit</button> | 
-                                <button type="button" onclick="#">Delete</button>
+                                <button type="button" onclick="DeleteDiscount('${item.discountId}')">Delete</button>
                             </td>
                         </tr>
                     </c:forEach>
@@ -57,5 +58,16 @@
             </c:otherwise>
         </c:choose>
 
+        <script>
+            function DiscountSwitch(discountId) {
+                window.location.href = '/galaxy_bookshelf/discountSwitch?discount_id=' + discountId;
+            }
+
+            function DeleteDiscount(discountId) {
+                if (confirm("Are you sure you want to delete this discount?")) {
+                    window.location.href = '/galaxy_bookshelf/DeleteDiscount?discount_id=' + discountId;
+                }
+            }
+        </script>
     </body>
 </html>

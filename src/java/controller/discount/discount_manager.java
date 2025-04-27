@@ -5,7 +5,7 @@ import jakarta.servlet.http.*;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
-import model.discount.discount;
+import model.discount.Discount;
 
 /**
  *
@@ -16,12 +16,12 @@ public class discount_manager extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<discount> DiscountList = new ArrayList<>();
+        List<Discount> DiscountList = new ArrayList<>();
 
         try {
             Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db_galaxy_bookshelf", "GALAXY", "GALAXY");
 
-            String sql = "SELECT D.DISCOUNT_ID, D.PRODUCT_ID, D.DISCOUNT_PRICE, D.DISCOUNT_EXPIRED, D.DISCOUNT_SWITCH, P.PRODUCT_NAME, P.PRODUCT_PRICE, P.PRODUCT_PICTURE FROM GALAXY.DISCOUNT D JOIN GALAXY.PRODUCT P ON D.PRODUCT_ID = P.PRODUCT_ID";
+            String sql = "SELECT D.DISCOUNT_ID, D.PRODUCT_ID, D.DISCOUNT_PRICE, D.DISCOUNT_EXPIRED, D.DISCOUNT_SWITCH, P.PRODUCT_NAME, P.PRODUCT_PRICE, P.PRODUCT_PICTURE FROM GALAXY.DISCOUNT D JOIN GALAXY.PRODUCT P ON D.PRODUCT_ID = P.PRODUCT_ID ORDER BY CAST(SUBSTR(D.PRODUCT_ID, 2) AS INT)";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
@@ -49,7 +49,7 @@ public class discount_manager extends HttpServlet {
                 String base64Src = "data:" + imageType + ";base64," + imageData;
 
                 // Add new object with full data
-                DiscountList.add(new discount(
+                DiscountList.add(new Discount(
                         rs.getString("DISCOUNT_ID"),
                         rs.getString("PRODUCT_ID"),
                         rs.getDouble("PRODUCT_PRICE"),

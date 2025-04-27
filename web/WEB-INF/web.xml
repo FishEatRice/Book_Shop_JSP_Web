@@ -28,29 +28,109 @@
         <servlet-name>productListing</servlet-name>
         <servlet-class>controller.product.productListing</servlet-class>
     </servlet>
+    <!-- Cart-related Servlets -->
     <servlet>
-        <servlet-name>productDelete</servlet-name>
-        <servlet-class>controller.product.productDelete</servlet-class>
+        <servlet-name>getProductMaxQuantity</servlet-name>
+        <servlet-class>controller.cart.getProductMaxQuantity</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>productSearch</servlet-name>
-        <servlet-class>controller.product.productSearch</servlet-class>
+        <servlet-name>add_to_cart_process</servlet-name>
+        <servlet-class>controller.cart.add_to_cart_process</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>productEdit</servlet-name>
-        <servlet-class>controller.product.productEdit</servlet-class>
+        <servlet-name>customer_cart_list</servlet-name>
+        <servlet-class>controller.cart.customer_cart_list</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>clientProductListing</servlet-name>
-        <servlet-class>controller.product.clientProductListing</servlet-class>
+        <servlet-name>delete_cart</servlet-name>
+        <servlet-class>controller.cart.delete_cart</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>clientProductSearch</servlet-name>
-        <servlet-class>controller.product.clientProductSearch</servlet-class>
+        <servlet-name>CartQuantityChangeProcess</servlet-name>
+        <servlet-class>controller.cart.CartQuantityChangeProcess</servlet-class>
+    </servlet>
+    <!-- Payment-related Servlets -->
+    <servlet>
+        <servlet-name>StripePaymentController</servlet-name>
+        <servlet-class>controller.payment.StripePaymentController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>clientProductDetails</servlet-name>
-        <servlet-class>controller.product.clientProductDetails</servlet-class>
+        <servlet-name>payment_process</servlet-name>
+        <servlet-class>controller.payment.payment_process</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConfirmPayment</servlet-name>
+        <servlet-class>controller.payment.ConfirmPayment</servlet-class>
+    </servlet>
+    <!-- Discount-related Servlets -->
+    <servlet>
+        <servlet-name>discount_manager</servlet-name>
+        <servlet-class>controller.discount.discount_manager</servlet-class>
+    </servlet>
+    <!-- Servlet Mappings -->
+    <servlet>
+        <servlet-name>add_new_discount_product</servlet-name>
+        <servlet-class>controller.discount.add_discount_product</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateDiscountProcess</servlet-name>
+        <servlet-class>controller.discount.CreateDiscountProcess</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>discountSwitch</servlet-name>
+        <servlet-class>controller.discount.discountSwitch</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteDiscount</servlet-name>
+        <servlet-class>controller.discount.DeleteDiscount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PaymentSummary</servlet-name>
+        <servlet-class>controller.payment.PaymentDisplayProcess</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DisplayPaymentDetails</servlet-name>
+        <servlet-class>controller.payment.DisplayPaymentDetails</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>add_edit_address</servlet-name>
+        <servlet-class>controller.payment.add_edit_address</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>address_process</servlet-name>
+        <servlet-class>controller.payment.address_process</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>comment</servlet-name>
+        <servlet-class>controller.comment.comment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>submit_comment</servlet-name>
+        <servlet-class>controller.comment.submit_comment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>staff_reply</servlet-name>
+        <servlet-class>controller.comment.staff_reply</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>staff_reply_page</servlet-name>
+        <servlet-class>controller.comment.staff_reply_page</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitReplyProcess</servlet-name>
+        <servlet-class>controller.comment.SubmitReplyProcess</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>IgnoreReplyProcess</servlet-name>
+        <servlet-class>controller.comment.IgnoreReplyProcess</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>report_top10_show</servlet-name>
+        <servlet-class>controller.report.report_top10_show</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sales_records</servlet-name>
+        <servlet-class>controller.report.sales_records</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>genreListing</servlet-name>
@@ -161,43 +241,70 @@
         <url-pattern>/web/discount/discount_manager.jsp</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>productDelete</servlet-name>
-        <url-pattern>/web/product/delete</url-pattern>
+        <servlet-name>add_new_discount_product</servlet-name>
+        <url-pattern>/web/discount/add_discount_product.jsp</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>productSearch</servlet-name>
-        <url-pattern>/web/product/search</url-pattern>
+        <servlet-name>CreateDiscountProcess</servlet-name>
+        <url-pattern>/CreateDiscountProcess</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>productEdit</servlet-name>
-        <url-pattern>/web/product/editProduct.jsp</url-pattern>
+        <servlet-name>discountSwitch</servlet-name>
+        <url-pattern>/discountSwitch</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>clientProductListing</servlet-name>
-        <url-pattern>/web/product/clientProductListing.jsp</url-pattern>
+        <servlet-name>DeleteDiscount</servlet-name>
+        <url-pattern>/DeleteDiscount</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>clientProductSearch</servlet-name>
-        <url-pattern>/web/product/clientProductSearch</url-pattern>
+        <servlet-name>PaymentSummary</servlet-name>
+        <url-pattern>/web/payment/payment_list.jsp</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>clientProductDetails</servlet-name>
-        <url-pattern>/web/product/clientProductDetails.jsp</url-pattern>
+        <servlet-name>DisplayPaymentDetails</servlet-name>
+        <url-pattern>/web/payment/payment_details.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>add_edit_address</servlet-name>
+        <url-pattern>/web/payment/add_edit_address.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>address_process</servlet-name>
+        <url-pattern>/address_process</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>comment</servlet-name>
+        <url-pattern>/web/comment/comment.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>submit_comment</servlet-name>
+        <url-pattern>/submit_comment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>staff_reply</servlet-name>
+        <url-pattern>/web/staff/comment_list.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>staff_reply_page</servlet-name>
+        <url-pattern>/web/staff/staff_reply_page.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitReplyProcess</servlet-name>
+        <url-pattern>/SubmitReplyProcess</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IgnoreReplyProcess</servlet-name>
+        <url-pattern>/IgnoreReplyProcess</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>report_top10_show</servlet-name>
+        <url-pattern>/web/report/report_top10.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sales_records</servlet-name>
+        <url-pattern>/web/report/sales_records.jsp</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    <!-- Will be uncomment later -->
-    <!-- <error-page>
-        <error-code>404</error-code>
-        <location>/error/404.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>401</error-code>
-        <location>/error/401.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>500</error-code>
-        <location>/error/500.jsp</location>
-    </error-page> -->
 </web-app>

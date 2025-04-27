@@ -2,38 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model.cart;
+package model.discount;
 
 /**
  *
  * @author ON YUEN SHERN
  */
-// Model only for customer view cart
-public class CustomerCart {
-
-    private final String cartId;
+public class NewDiscountDisplay {
+    
     private final String productId;
     private final String productName;
     private final String productPic;
     private final double productPrice;
-    private final int quantityInCart;
-    private final int quantityInStock;
-    private final double discountPrice;
+    private final boolean DiscountStatus;
+    private final double DiscountPrice;
 
-    public CustomerCart(String cartId, String productId, String productName, double productPrice, String productPic, int quantityInCart, int quantityInStock, double discountPrice) {
-        this.cartId = cartId;
+    public NewDiscountDisplay(String productId, String productName, double productPrice, String productPic, boolean DiscountStatus, double DiscountPrice) {
         this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productPic = productPic;
-        this.quantityInCart = quantityInCart;
-        this.quantityInStock = quantityInStock;
-        this.discountPrice = discountPrice;
-    }
-
-    // Get Method
-    public String getCartId() {
-        return cartId;
+        this.DiscountStatus = DiscountStatus;
+        this.DiscountPrice = DiscountPrice;
     }
 
     // Get Method
@@ -57,17 +47,13 @@ public class CustomerCart {
     }
 
     // Get Method
-    public int getQuantityInCart() {
-        return quantityInCart;
+    public boolean getDiscountStatus(){
+        return DiscountStatus;
     }
 
     // Get Method
-    public int getQuantityInStock() {
-        return quantityInStock;
-    }
-    
-    // Get Method
-    public double getDiscountPrice() {
-        return discountPrice;
+    public double getDiscountPrice(){
+        return DiscountPrice;
     }
 }
+

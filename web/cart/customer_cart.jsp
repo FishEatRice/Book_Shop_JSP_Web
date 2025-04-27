@@ -32,7 +32,25 @@
                             </td>
                             <td><img src="${item.productPic}" alt="${item.productName}" width="100" /></td>
                             <td>${item.productName}</td>
-                            <td>RM <fmt:formatNumber value="${item.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" /></td>
+
+                            <!-- If Having Discount -->
+                            <td>
+                                <c:choose>
+                                    <c:when test="${item.discountPrice != 0.0}">
+                                        <span style="text-decoration: line-through; color: gray;">
+                                            RM <fmt:formatNumber value="${item.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
+                                        </span>
+                                        <br/>
+                                        <span style="color: red; font-weight: bold;">
+                                            RM <fmt:formatNumber value="${item.discountPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
+                                        </span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        RM <fmt:formatNumber value="${item.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+
                             <td>
                                 Max Quantity Stock: ${item.quantityInStock}
                                 <br>
@@ -42,9 +60,18 @@
                                     <button type="submit">Update</button>
                                 </form>
                             </td>
+
                             <td>
-                                RM <fmt:formatNumber value="${item.productPrice * item.quantityInCart}" type="number" minFractionDigits="2" maxFractionDigits="2" />
+                                <c:choose>
+                                    <c:when test="${item.discountPrice > 0}">
+                                        <fmt:formatNumber value="${item.discountPrice * item.quantityInCart}" type="number" minFractionDigits="2" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <fmt:formatNumber value="${item.productPrice * item.quantityInCart}" type="number" minFractionDigits="2" />
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
+
                             <td>
                                 <button type="button" onclick="DeleteCart('${item.cartId}')">Delete</button>
                             </td>
@@ -53,6 +80,7 @@
                 </table>
 
                 <br>
+                <button type="button" onclick="document.getElementById('selectAll').click()">Select All</button>
                 <button type="button" onclick="PaySelected()">Pay Selected</button>
             </c:when>
 
