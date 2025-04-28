@@ -58,19 +58,16 @@
         <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 
         <script>
-            const quill = new Quill('#detailsEditor', {
+
+            var quill = new Quill('#detailsEditor', {
                 theme: 'snow'
             });
 
-            // Fill the editor if existing details are available
-            const existingDetails = `<c:out value="${details}" />`;
-            
+            quill.root.innerHTML = `<c:out value="${details}" escapeXml="false" />`;
 
-            // Copy Quill content to hidden input when form is submitted
-            const form = document.querySelector('form');
-            form.onsubmit = function () {
-                document.getElementById('details').value = quill.root.innerHTML;
-            };
+            document.querySelector("form").addEventListener("submit", function () {
+                document.getElementById("details").value = quill.root.innerHTML;
+            });
         </script>
 
     </body>
