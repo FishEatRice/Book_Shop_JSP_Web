@@ -108,7 +108,7 @@
     </head>
     <body>
 
-    <%@ include file="/header/main_header.jsp" %>
+        <%@ include file="/header/main_header.jsp" %>
 
         <div class="container">
             <a href="clientProductListing.jsp" class="back-link">← Back</a>
@@ -140,8 +140,8 @@
                     </c:choose>
 
 
-                    <form method="post" action="add-to-cart">
-                        <input type="hidden" name="productId" value="1" />
+                    <form method="post" action="<%= request.getContextPath() %>/add_to_cart_process">
+                        <input type="hidden" name="product_id" value="${productData.productId}" />
 
                         <p>Genre: ${productData.genreId.genreName}</p>
 

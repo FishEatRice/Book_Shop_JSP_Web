@@ -86,7 +86,7 @@
 
             <c:otherwise>
                 <p>Your cart is currently empty.</p>
-                <a href="/galaxy_bookshelf/web/product/add_to_cart.jsp">
+                <a href="/galaxy_bookshelf/web/product/clientProductListing.jsp">
                     <button>Browse Products</button>
                 </a>
             </c:otherwise>
