@@ -133,8 +133,6 @@ public class crudCustomer extends HttpServlet {
                 customer.setCustomerAddressCity(rs.getString("CUSTOMER_ADDRESS_CITY"));
                 customer.setCustomerAddressCode(rs.getString("CUSTOMER_ADDRESS_CODE"));
 
-                customer.setCustomerQuestionId(rs.getString("CUSTOMER_QUESTION_ID"));
-                customer.setCustomerQuestionAnswer(rs.getString("CUSTOMER_QUESTION_ANSWER"));
                 list.add(customer);
             }
 

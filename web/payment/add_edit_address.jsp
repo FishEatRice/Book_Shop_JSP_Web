@@ -20,33 +20,35 @@
         <a href="#" onclick="confirmBack(event);">Back without save</a>
 
         <h1>Customer Address Details</h1>
+        
+        <p>Please make sure your address is been key in and correct before you pay.</p>
 
         <form id="addressForm" action="/galaxy_bookshelf/address_process" method="POST">
             <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" name="firstName" value="${PaymentAddress.firstName}" /><br><br>
+            <input type="text" id="firstName" name="firstName" value="${PaymentAddress.firstName}" required/><br><br>
 
             <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" value="${PaymentAddress.lastName}" /><br><br>
+            <input type="text" id="lastName" name="lastName" value="${PaymentAddress.lastName}" required/><br><br>
 
             <label for="contactNo">Contact No:</label>
-            <input type="text" id="contactNo" name="contactNo" value="${PaymentAddress.contactNo}" /><br>
+            <input type="text" id="contactNo" name="contactNo" value="${PaymentAddress.contactNo}" required/><br>
 
             <h2>Address</h2>
 
             <label for="addressNo">Address No:</label>
-            <input type="text" id="addressNo" name="addressNo" value="${PaymentAddress.addressNo}" /><br><br>
+            <input type="text" id="addressNo" name="addressNo" value="${PaymentAddress.addressNo}" required/><br><br>
 
             <label for="addressJalan">Address Jalan:</label>
-            <input type="text" id="addressJalan" name="addressJalan" value="${PaymentAddress.addressJalan}" /><br><br>
+            <input type="text" id="addressJalan" name="addressJalan" value="${PaymentAddress.addressJalan}" required/><br><br>
 
             <label for="addressCity">City:</label>
-            <input type="text" id="addressCity" name="addressCity" value="${PaymentAddress.addressCity}" /><br><br>
+            <input type="text" id="addressCity" name="addressCity" value="${PaymentAddress.addressCity}" required/><br><br>
 
             <label for="addressCode">Postal Code:</label>
-            <input type="text" id="addressCode" name="addressCode" value="${PaymentAddress.addressCode}" /><br><br>
+            <input type="text" id="addressCode" name="addressCode" value="${PaymentAddress.addressCode}" required/><br><br>
 
             <label for="addressState">State:</label>
-            <select id="addressState" name="addressState">
+            <select id="addressState" name="addressState" required>
                 <c:forEach var="state" items="${shippingStates}">
                     <option value="${state.stateId}" ${state.stateId == PaymentAddress.addressState ? 'selected' : ''}>
                         ${state.stateName} | RM ${state.fee}

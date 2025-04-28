@@ -14,7 +14,6 @@ import java.sql.*;
  *
  * @author yq
  */
-
 //update customer (admin and staff)
 public class customerStaffAdminEdit extends HttpServlet {
 
@@ -40,17 +39,19 @@ public class customerStaffAdminEdit extends HttpServlet {
         String addressJalan = request.getParameter("customerAddressJalan");
         String addressCity = request.getParameter("customerAddressCity");
         String addressState = request.getParameter("customerAddressState");
+        if (addressState == null || addressState.trim().isEmpty()) {
+            addressState = null;
+        }
         String addressCode = request.getParameter("customerAddressCode");
-        String questionId = request.getParameter("customerquestionId");
-        String questionAnswer = request.getParameter("customerquestionAnswer");
-        String customerRequest = request.getParameter("customerRequest");
-        
+
+        System.out.println(addressState);
+
         String updateSQL = "UPDATE GALAXY.CUSTOMER SET "
                 + "CUSTOMER_NAME = ?, CUSTOMER_EMAIL = ?, CUSTOMER_PASSWORD = ?, "
                 + "CUSTOMER_FIRSTNAME = ?, CUSTOMER_LASTNAME = ?, "
                 + "CUSTOMER_ADDRESS_NO = ?, CUSTOMER_ADDRESS_JALAN = ?, "
-                + "CUSTOMER_ADDRESS_CITY = ?, CUSTOMER_ADDRESS_STATE = ?, CUSTOMER_ADDRESS_CODE = ? ,"
-                + "CUSTOMER_QUESTION_ID= ?, CUSTOMER_QUESTION_ANSWER=?, CUSTOMER_REQUEST =? WHERE CUSTOMER_ID = ?";
+                + "CUSTOMER_ADDRESS_CITY = ?, CUSTOMER_ADDRESS_STATE = ?, CUSTOMER_ADDRESS_CODE = ? "
+                + "WHERE CUSTOMER_ID = ?";
 
         try (Connection conn = DriverManager.getConnection(Host, User, passwor); PreparedStatement stmt = conn.prepareStatement(updateSQL)) {
 
@@ -64,18 +65,15 @@ public class customerStaffAdminEdit extends HttpServlet {
             stmt.setString(8, addressCity);
             stmt.setString(9, addressState);
             stmt.setString(10, addressCode);
-            stmt.setString(11, questionId);
-            stmt.setString(12, questionAnswer);
-            stmt.setString(13, customerRequest);
-            stmt.setString(14, id);
+            stmt.setString(11, id);
 
             int rows = stmt.executeUpdate();
 
             if (rows > 0) {
-                
+
                 response.sendRedirect("/galaxy_bookshelf/staff/customerManagementList.jsp");
             } else {
-                
+
                 response.getWriter().write("Update failed.");
             }
 

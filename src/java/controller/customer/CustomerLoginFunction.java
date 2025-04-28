@@ -46,7 +46,7 @@ public class CustomerLoginFunction extends HttpServlet {
             session.setAttribute("customer_email", customer.getCustomerEmail()); // 其他信息
             session.setAttribute("customer_id", customer.getCustomerId());
 
-            response.sendRedirect(request.getContextPath() + "/customer/customerDashboard.jsp");
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
         } else {
            
             response.sendRedirect(request.getContextPath() + "/customer/customerLoginError.jsp");

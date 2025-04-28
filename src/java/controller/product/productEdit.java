@@ -56,6 +56,7 @@ public class productEdit extends HttpServlet {
         try {
 
             String productId = request.getParameter("productId").trim();
+            String nameOri = request.getParameter("productNameOri").trim();
             String name = request.getParameter("productName").trim();
             String description = request.getParameter("productInformation").trim();
             String genreId = request.getParameter("genreId");
@@ -82,13 +83,15 @@ public class productEdit extends HttpServlet {
 
             Product product = em.find(Product.class, productId);
             List<Product> existingProducts = em.createNamedQuery("Product.findByProductName", Product.class)
-                        .setParameter("productName", name)
-                        .getResultList();
+                    .setParameter("productName", name)
+                    .getResultList();
             
-            if (!existingProducts.isEmpty()) {
-                session.setAttribute("error", "Product name already exists. Please choose a different name.");
-                response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp?id=" + productId);
-                return; 
+            if (!nameOri.equals(name)) {
+                if (!existingProducts.isEmpty()) {
+                    session.setAttribute("error", "Product name already exists. Please choose a different name.");
+                    response.sendRedirect(request.getContextPath() + "/web/product/editProduct.jsp?id=" + productId);
+                    return;
+                }
             }
 
             Genre genre = em.find(Genre.class, genreId);

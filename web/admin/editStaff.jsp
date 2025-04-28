@@ -42,6 +42,10 @@ request.setAttribute("staff", staff);
 
         <h1>Edit Staff Information</h1>
 
+        <a href="/galaxy_bookshelf/admin/controlStaff.jsp">Back to Staff List</a>
+        
+        <br><br>
+
         <div class="form-container">
             <form action="../AdminUpdateStaff" method="post">
                 <input type="hidden" name="action" value="edit" />
@@ -60,13 +64,8 @@ request.setAttribute("staff", staff);
                 <br><br><label for="password">Password:</label>
                 <input type="password" id="passsword" name="staffPassword" value="${staff.staffPassword}" required />
 
-                <br><br><label for="position">Position:</label>
-                <input type="number" id="position" name="position" value="${staff.position}" required />
-
                 <br><br><input type="submit" value="Save Changes" />
             </form>
-
-            <br><a href="/galaxy_bookshelf/admin/controlStaff.jsp">Back to Staff List</a>
         </div>
 
     </body>

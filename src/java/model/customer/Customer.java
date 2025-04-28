@@ -19,14 +19,7 @@ public class Customer {
     private String customerAddressCity;
     private String customerAddressCode;
 
-    private String customerQuestionId;
-    private String customerQuestionAnswer;
-    private int customerRequest;
-
 // Getter 和 Setter for customerId
-    
-     
-
     public String getCustomerId() {
         return customerId;
     }
@@ -124,29 +117,6 @@ public class Customer {
     public void setCustomerAddressCode(String customerAddressCode) {
         this.customerAddressCode = customerAddressCode;
     }
-    public int getCustomerRequest() {
-        return customerRequest;
-    }
-
-    public void setCustomerRequest(int customerRequest) {
-        this.customerRequest = customerRequest;
-    }
-    
-     public String getCustomerQuestionAnswer() {
-        return customerQuestionAnswer;
-    }
-
-    public void setCustomerQuestionAnswer(String customerQuestionAnswer) {
-        this.customerQuestionAnswer = customerQuestionAnswer;
-    }
-    
-    public String getCustomerQuestionId() {
-        return customerQuestionId;
-    }
-
-    public void setCustomerQuestionId(String customerQuestionId) {
-        this.customerQuestionId = customerQuestionId;
-    }
 
     public String getCustomerContactNo() {
         return customerContactNo;
@@ -154,5 +124,44 @@ public class Customer {
 
     public void setCustomerContactNo(String customerContactNo) {
         this.customerContactNo = customerContactNo;
+    }
+
+    public static String getStateName(String addressState) {
+        switch (addressState) {
+            case "ST1":
+                return "Selangor";
+            case "ST2":
+                return "Kuala Lumpur";
+            case "ST3":
+                return "Johor";
+            case "ST4":
+                return "Penang";
+            case "ST5":
+                return "Kedah";
+            case "ST6":
+                return "Perak";
+            case "ST7":
+                return "Melaka";
+            case "ST8":
+                return "Pahang";
+            case "ST9":
+                return "Negeri Sembilan";
+            case "ST10":
+                return "Putrajaya";
+            case "ST11":
+                return "Kelantan";
+            case "ST12":
+                return "Terengganu";
+            case "ST13":
+                return "Perlis";
+            case "ST14":
+                return "Sabah";
+            case "ST15":
+                return "Labuan";
+            case "ST16":
+                return "Sarawak";
+            default:
+                return "";
+        }
     }
 }

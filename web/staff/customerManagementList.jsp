@@ -18,24 +18,15 @@
     </head>
     <body>
         <h2>Management Customer List</h2>
+
         <table border="1">
             <tr>
                 <th>#</th>
-                <th>CUSTOMER_ID</th>
-                <th>CUSTOMER_NAME</th> 
-                <th>CUSTOMER_PASSWORD</th> 
-                <th>CUSTOMER_EMAIL</th>
-                <th>CUSTOMER_FIRSTNAME</th>
-                <th>CUSTOMER_LASTNAME</th>
-                <th>CUSTOMER_CONTACTNO</th>
-                <th>CUSTOMER__ADDRESS_NO</th>
-                <th>CUSTOMER_ADDRESS_JALAN</th> 
-                <th>CUSTOMER_ADDRESS_STATE</th> 
-                <th>CUSTOMER_ADDRESS_CITY</th>
-                <th>CUSTOMER_ADDRESS_CODE</th>
-                <th>CUSTOMER_QUESTION_ID</th>
-                <th>CUSTOMER_QUESTION_ANSWER</th> 
-                <th>ACTION</th> >
+                <th>CUSTOMER ID</th>
+                <th>CUSTOMER NAME</th> 
+                <th>CUSTOMER EMAIL</th>
+                <th>CUSTOMER CONTACT NO</th>
+                <th>ACTION</th>
             </tr>
             <%
                 try{
@@ -51,19 +42,9 @@
                 <td><%= count++ %></td>
                 <td><%= c.getCustomerId() %></td>
                 <td><%= c.getCustomerName() %></td>
-                <td><%= c.getCustomerPassword() %></td>
                 <td><%= c.getCustomerEmail() %></td>
-                <td><%= c.getCustomerFirstName() %></td>
-                <td><%= c.getCustomerLastName() %></td>
                 <td><%= c.getCustomerContactNo() %></td>
-                <td><%= c.getCustomerAddressNo() %></td>
-                <td><%= c.getCustomerAddressJalan() %></td>
-                <td><%= c.getCustomerAddressState() %></td>
-                <td><%= c.getCustomerAddressCity() %></td>
-                <td><%= c.getCustomerAddressCode() %></td>
-                <td><%= c.getCustomerQuestionId() %></td>
-                <td><%= c.getCustomerQuestionAnswer() %></td>
-                
+
                 <td>
                     <form action="/galaxy_bookshelf/staff/editCustomer.jsp" method="post" style="display:inline;">
                         <input type="hidden" name="customerId" value="<%= c.getCustomerId() %>" />
@@ -90,6 +71,5 @@
                      }
             %>
         </table>
-        <a href="javascript:history.back()">Back to Previous Page</a>
     </body>
 </html>

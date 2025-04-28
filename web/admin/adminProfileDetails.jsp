@@ -43,8 +43,8 @@
                 }
             }
         %>
-        <p>Name: <%= staff.getFirstName() %> <%= staff.getLastName() %></p>
-        <p>Position: Staff</p>
+        <p>Name: <%= staff.getCustomerFirstName() %> <%= staff.getCustomerLastName() %></p>
+        <p>Position: Admin</p>
 
         <%
             String message = (String) session.getAttribute("message");

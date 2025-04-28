@@ -28,16 +28,14 @@ public class AdminUpdateStaff extends HttpServlet {
         String firstName = request.getParameter("staffFirstName");
         String lastName = request.getParameter("staffLastName");
         String password = request.getParameter("staffPassword");
-        int position = Integer.parseInt(request.getParameter("position"));
 
-        String query = "UPDATE GALAXY.STAFF SET STAFF_FIRSTNAME = ?, STAFF_LASTNAME = ?, STAFF_PASSWORD = ?, POSITION = ? WHERE STAFF_ID = ?";
+        String query = "UPDATE GALAXY.STAFF SET STAFF_FIRSTNAME = ?, STAFF_LASTNAME = ?, STAFF_PASSWORD = ? WHERE STAFF_ID = ?";
 
         try (Connection conn = DriverManager.getConnection(Host, User, passwor); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, firstName);
             stmt.setString(2, lastName);
             stmt.setString(3, password);
-            stmt.setInt(4, position);
-            stmt.setString(5, id);
+            stmt.setString(4, id);
 
            
             int rowsUpdated = stmt.executeUpdate();

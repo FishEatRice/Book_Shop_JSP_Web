@@ -108,7 +108,7 @@
                     <td>
                         <form action="${pageContext.request.contextPath}/web/genre/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this genre?');">
                             <input type="hidden" name="id" value="${genre.genreId}">
-                                <a href="#" class="btn btn-alert-light" onclick="if(confirm('Are you sure you want to delete this genre?')) this.closest('form').submit();">
+                                <a href="#" class="btn btn-alert-light" onclick="if(confirm('Please remove all the product that having this genre type before delete the genre.\n\nAre you sure you want to delete this genre?')) this.closest('form').submit();">
                                     <i class="fas fa-trash-alt"></i> Delete
                                 </a>
                         </form>

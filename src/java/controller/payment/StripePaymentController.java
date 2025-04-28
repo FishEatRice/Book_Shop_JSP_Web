@@ -1,4 +1,3 @@
-// StripePaymentController.java (Multi-Item Stripe Payment with Debug and Error Recovery)
 package controller.payment;
 
 import com.stripe.Stripe;
@@ -41,8 +40,59 @@ public class StripePaymentController extends HttpServlet {
             return;
         }
 
-        List<SessionCreateParams.LineItem> lineItems;
-        lineItems = new ArrayList<>();
+        // ===== Address Checker (NEW) =====
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db_galaxy_bookshelf", "GALAXY", "GALAXY");
+
+            String addressQuery = "SELECT CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_CONTACTNO, " +
+                                   "CUSTOMER_ADDRESS_NO, CUSTOMER_ADDRESS_JALAN, CUSTOMER_ADDRESS_CITY, " +
+                                   "CUSTOMER_ADDRESS_CODE, CUSTOMER_ADDRESS_STATE " +
+                                   "FROM GALAXY.CUSTOMER WHERE CUSTOMER_ID = ?";
+            PreparedStatement addressPS = conn.prepareStatement(addressQuery);
+            addressPS.setString(1, customer_id);
+            ResultSet addressRS = addressPS.executeQuery();
+
+            if (addressRS.next()) {
+                String[] addressFields = {
+                    addressRS.getString("CUSTOMER_FIRSTNAME"),
+                    addressRS.getString("CUSTOMER_LASTNAME"),
+                    addressRS.getString("CUSTOMER_CONTACTNO"),
+                    addressRS.getString("CUSTOMER_ADDRESS_NO"),
+                    addressRS.getString("CUSTOMER_ADDRESS_JALAN"),
+                    addressRS.getString("CUSTOMER_ADDRESS_CITY"),
+                    addressRS.getString("CUSTOMER_ADDRESS_CODE"),
+                    addressRS.getString("CUSTOMER_ADDRESS_STATE")
+                };
+
+                for (String field : addressFields) {
+                    if (field == null || field.trim().isEmpty()) {
+                        addressRS.close();
+                        addressPS.close();
+                        conn.close();
+                        response.sendRedirect("/galaxy_bookshelf/web/payment/add_edit_address.jsp");
+                        return;
+                    }
+                }
+            } else {
+                addressRS.close();
+                addressPS.close();
+                conn.close();
+                response.sendRedirect("/galaxy_bookshelf/payment/payment_error.jsp?reason=CustomerNotFound");
+                return;
+            }
+
+            addressRS.close();
+            addressPS.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("/galaxy_bookshelf/payment/payment_error.jsp?reason=AddressCheckerException");
+            return;
+        }
+        // ===== End Address Checker =====
+
+        List<SessionCreateParams.LineItem> lineItems = new ArrayList<>();
         double totalShippingFee = 0.0;
         boolean hasProducts = false;
 
@@ -81,7 +131,6 @@ public class StripePaymentController extends HttpServlet {
                 long unitAmount;
 
                 if (discount_price > 0.0) {
-                    // Show Product Name - Original Price
                     displayName = name + " - RM" + String.format("%.2f", price);
                     unitAmount = Math.round(discount_price * 100);
                 } else {
@@ -117,7 +166,12 @@ public class StripePaymentController extends HttpServlet {
             }
 
             // Shipping fee
-            PreparedStatement fee_ps = conn.prepareStatement("SELECT FEE FROM GALAXY.SHIPPING_FEE SF JOIN GALAXY.SHIPPING_STATE SS ON SF.SHIPPING_ID = SS.SHIPPING_ID JOIN GALAXY.CUSTOMER CR ON SS.STATE_ID = CR.CUSTOMER_ADDRESS_STATE WHERE CR.CUSTOMER_ID = ?");
+            PreparedStatement fee_ps = conn.prepareStatement(
+                "SELECT FEE FROM GALAXY.SHIPPING_FEE SF " +
+                "JOIN GALAXY.SHIPPING_STATE SS ON SF.SHIPPING_ID = SS.SHIPPING_ID " +
+                "JOIN GALAXY.CUSTOMER CR ON SS.STATE_ID = CR.CUSTOMER_ADDRESS_STATE " +
+                "WHERE CR.CUSTOMER_ID = ?"
+            );
             fee_ps.setString(1, customer_id);
             ResultSet fee_rs = fee_ps.executeQuery();
             if (fee_rs.next()) {
@@ -189,11 +243,10 @@ public class StripePaymentController extends HttpServlet {
                     }
 
                     @Override
-                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                    }
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {}
 
-                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                    }
+                    @Override
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {}
                 }
             };
 
@@ -201,7 +254,6 @@ public class StripePaymentController extends HttpServlet {
             sc.init(null, trustAllCerts, new SecureRandom());
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
-            // Disable hostname verification too:
             HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
         } catch (Exception e) {
             e.printStackTrace();

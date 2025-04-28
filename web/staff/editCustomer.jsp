@@ -31,13 +31,7 @@
     customer.setCustomerAddressState(rs.getString("CUSTOMER_ADDRESS_STATE"));
     customer.setCustomerAddressCode(rs.getString("CUSTOMER_ADDRESS_CODE"));
     
-
-    customer.setCustomerQuestionId(rs.getString("CUSTOMER_QUESTION_ID"));
-    customer.setCustomerQuestionAnswer(rs.getString("CUSTOMER_QUESTION_ANSWER"));
-    customer.setCustomerRequest(rs.getInt("CUSTOMER_REQUEST"));
 }
-
-
         rs.close();
         stmt.close();
         conn.close();
@@ -57,6 +51,9 @@
     <body>
 
         <h1>Edit Customer Information</h1>
+        <a href="/galaxy_bookshelf/staff/customerManagementList.jsp">Back to Customer List</a>
+
+        <br><br>
 
         <div class="form-container">
             <form action="../customerStaffAdminEdit" method="post">
@@ -66,84 +63,49 @@
                 <label>Customer ID:</label>
                 <input type="text" name="customerId" value="<%= (customer.getCustomerId() != null && !"null".equals(customer.getCustomerId())) ? customer.getCustomerId() : "" %>" readonly /><br>
 
+                <br>
+
                 <!-- Username -->
                 <label>Username:</label>
-                <input type="text" name="customerName" value="<%= (customer.getCustomerName() != null && !"null".equals(customer.getCustomerName())) ? customer.getCustomerName() : "" %>" required placeholder="请输入用户名" /><br>
+                <input type="text" name="customerName" value="<%= (customer.getCustomerName() != null && !"null".equals(customer.getCustomerName())) ? customer.getCustomerName() : "" %>" required /><br>
+
+                <br>
 
                 <!-- First Name -->
                 <label>First Name:</label>
                 <input type="text" name="customerFirstName" value="<%= (customer.getCustomerFirstName() != null && !"null".equals(customer.getCustomerFirstName())) ? customer.getCustomerFirstName() : "" %>" /><br>
 
+                <br>
+
                 <!-- Last Name -->
                 <label>Last Name:</label>
                 <input type="text" name="customerLastName" value="<%= (customer.getCustomerLastName() != null && !"null".equals(customer.getCustomerLastName())) ? customer.getCustomerLastName() : "" %>" /><br>
+
+                <br>
 
                 <!-- Contact Number -->
                 <label>Contact No:</label>
                 <input type="text" name="customerContactNo" value="<%= (customer.getCustomerContactNo() != null && !"null".equals(customer.getCustomerContactNo())) ? customer.getCustomerContactNo() : "" %>" /><br>
 
+                <br>
+
                 <!-- Email -->
                 <label>Email:</label>
-                <input type="email" name="customerEmail" value="<%= (customer.getCustomerEmail() != null && !"null".equals(customer.getCustomerEmail())) ? customer.getCustomerEmail() : "" %>" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" /><br>
+                <input type="email" name="customerEmail" value="<%= (customer.getCustomerEmail() != null && !"null".equals(customer.getCustomerEmail())) ? customer.getCustomerEmail() : "" %>" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" readonly/><br>
 
-                <!-- Password -->
-                <label>Password:</label>
-                <input type="password" name="customerPassword" value="<%= (customer.getCustomerPassword() != null && !"null".equals(customer.getCustomerPassword())) ? customer.getCustomerPassword() : "" %>" autocomplete="new-password" /><br>
+                <input type="hidden" name="customerPassword" value="<%= (customer.getCustomerPassword() != null && !"null".equals(customer.getCustomerPassword())) ? customer.getCustomerPassword() : "" %>" autocomplete="new-password" />
+                <input type="hidden" name="customerAddressNo" value="<%= (customer.getCustomerAddressNo() != null && !"null".equals(customer.getCustomerAddressNo())) ? customer.getCustomerAddressNo() : "" %>" />
+                <input type="hidden" name="customerAddressJalan" value="<%= (customer.getCustomerAddressJalan() != null && !"null".equals(customer.getCustomerAddressJalan())) ? customer.getCustomerAddressJalan() : "" %>" />
+                <input type="hidden" name="customerAddressCity" value="<%= (customer.getCustomerAddressCity() != null && !"null".equals(customer.getCustomerAddressCity())) ? customer.getCustomerAddressCity() : "" %>" />
+                <input type="hidden" name="customerAddressState" value="<%= (customer.getCustomerAddressState() != null && !"null".equals(customer.getCustomerAddressState())) ? customer.getCustomerAddressState() : "" %>" />
+                <input type="hidden" name="customerAddressCode" value="<%= (customer.getCustomerAddressCode() != null && !"null".equals(customer.getCustomerAddressCode())) ? customer.getCustomerAddressCode() : "" %>" pattern="\d{5}" />
 
-                <!-- Address Section -->
-                <h3>Address</h3>
-                <label>Address No:</label>
-                <input type="text" name="customerAddressNo" value="<%= (customer.getCustomerAddressNo() != null && !"null".equals(customer.getCustomerAddressNo())) ? customer.getCustomerAddressNo() : "" %>" /><br>
-
-                <label>Street:</label>
-                <input type="text" name="customerAddressJalan" value="<%= (customer.getCustomerAddressJalan() != null && !"null".equals(customer.getCustomerAddressJalan())) ? customer.getCustomerAddressJalan() : "" %>" /><br>
-
-                <label>City:</label>
-                <input type="text" name="customerAddressCity" value="<%= (customer.getCustomerAddressCity() != null && !"null".equals(customer.getCustomerAddressCity())) ? customer.getCustomerAddressCity() : "" %>" /><br>
-
-                <label>State:</label>
-                <select name="customerAddressState" required>
-                    <option value="">-- Please select --</option>
-                    <option value="Selangor" <%= "Selangor".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Selangor | RM 5.00</option>
-                    <option value="Kuala Lumpur" <%= "Kuala Lumpur".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Kuala Lumpur | RM 5.00</option>
-                    <option value="Johor" <%= "Johor".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Johor | RM 5.00</option>
-                    <option value="Penang" <%= "Penang".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Penang | RM 5.00</option>
-                    <option value="Kedah" <%= "Kedah".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Kedah | RM 5.00</option>
-                    <option value="Perak" <%= "Perak".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Perak | RM 5.00</option>
-                    <option value="Melaka" <%= "Melaka".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Melaka | RM 5.00</option>
-                    <option value="Pahang" <%= "Pahang".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Pahang | RM 5.00</option>
-                    <option value="Negeri Sembilan" <%= "Negeri Sembilan".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Negeri Sembilan | RM 5.00</option>
-                    <option value="Putrajaya" <%= "Putrajaya".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Putrajaya | RM 5.00</option>
-                    <option value="Kelantan" <%= "Kelantan".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Kelantan | RM 5.00</option>
-                    <option value="Terengganu" <%= "Terengganu".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Terengganu | RM 5.00</option>
-                    <option value="Perlis" <%= "Perlis".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Perlis | RM 5.00</option>
-                    <option value="Sabah" <%= "Sabah".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Sabah | RM 7.00</option>
-                    <option value="Labuan" <%= "Labuan".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Labuan | RM 7.00</option>
-                    <option value="Sarawak" <%= "Sarawak".equals(customer.getCustomerAddressState()) ? "selected" : "" %>>Sarawak | RM 7.00</option>
-                </select><br>
-
-                <label>Postal Code:</label>
-                <input type="text" name="customerAddressCode" value="<%= (customer.getCustomerAddressCode() != null && !"null".equals(customer.getCustomerAddressCode())) ? customer.getCustomerAddressCode() : "" %>" pattern="\d{5}" /><br>
-
-                <!-- Security Question Section -->
-                <h3>Security Question</h3>
-
-
-                <label>Question ID:</label>
-                <input type="text" name="customerQuestionId" value="<%= (customer.getCustomerQuestionId() != null && !"null".equals(customer.getCustomerQuestionId())) ? customer.getCustomerQuestionId() : "" %>" /><br>
-
-                <label>Answer:</label>
-                <input type="text" name="customerQuestionAnswer" value="<%= (customer.getCustomerQuestionAnswer() != null && !"null".equals(customer.getCustomerQuestionAnswer())) ? customer.getCustomerQuestionAnswer() : "" %>" /><br>
-
-                <label>Request:</label>
-                <input type="number" name="customerRequest" value="${customer.customerRequest}">
-
+                <br>
 
                 <!-- Submit Button -->
                 <input type="submit" value="Update Information" />
             </form>
 
-            <br><a href="/galaxy_bookshelf/staff/customerManagementList.jsp">Back to Customer List</a>
         </div>
 
     </body>

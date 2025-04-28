@@ -12,13 +12,13 @@
 
     if (role != null) {
         if ("customer".equals(role)) {
-            response.sendRedirect(request.getContextPath() + "/customer/customerDashboard.jsp");
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
             return;
         } else if ("staff".equals(role)) {
-            response.sendRedirect(request.getContextPath() + "/staff/staffDashboard.jsp");
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
             return;
         } else if ("admin".equals(role)) {
-            response.sendRedirect(request.getContextPath() + "/admin/adminDashboard.jsp");
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
             return;
         } else {
             response.sendRedirect(request.getContextPath() + "/index.jsp");

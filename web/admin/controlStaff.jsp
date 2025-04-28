@@ -18,6 +18,12 @@
     </head>
     <body>
         <h2>Management Staff List</h2>
+        <form method="post" action="../crudStaff">
+            <input type="hidden" name="action" value="create"> 
+            <input type="hidden" name="firstName" value="New" />
+            <input type="hidden" name="lastName" value="Staff" />
+            <input type="submit" value="Create New Staff" />
+        </form>
         <table border="1">
             <tr>
                 <th>#</th>
@@ -25,7 +31,6 @@
                 <th>STAFF_FIRSTNAME</th>
                 <th>STAFF_LASTNAME</th>
                 <th>STAFF_PASSWORD</th>
-                <th>POSITION</th>
                 <th>Control</th>
             </tr>
 
@@ -42,7 +47,6 @@
                 <td><%= s.getFirstName() %></td>
                 <td><%= s.getLastName() %></td>
                 <td><%= s.getStaffPassword() %></td>
-                <td><%= s.getPosition() %></td>
                 <td>
                     <% if (!"A1".equals(s.getStaffId())) { %>
                     <form action="/galaxy_bookshelf/admin/editStaff.jsp" method="post" style="display:inline;">
@@ -67,7 +71,7 @@
              }
          } else {
             %>
-            <tr><td colspan="5">No staff found.</td></tr>
+            <tr><td colspan="6">No staff found.</td></tr>
             <%
                     }
                 } catch (Exception e) {
@@ -78,6 +82,5 @@
             %>
 
         </table>
- <a href="/galaxy_bookshelf/admin/crudStaff.jsp">Back to Previous Page</a>
     </body>
 </html>

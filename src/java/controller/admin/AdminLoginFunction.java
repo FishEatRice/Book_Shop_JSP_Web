@@ -41,9 +41,9 @@ public class AdminLoginFunction extends HttpServlet {
             session.setAttribute("account_status", staff.getStaffId()); 
 
             if ("admin".equals(role)) {
-                response.sendRedirect("/galaxy_bookshelf/admin/adminDashboard.jsp");
+                response.sendRedirect("/galaxy_bookshelf/index.jsp");
             } else {
-                response.sendRedirect("/galaxy_bookshelf/staff/staffDashboard.jsp");
+                response.sendRedirect("/galaxy_bookshelf/index.jsp");
             }
         } else {
           

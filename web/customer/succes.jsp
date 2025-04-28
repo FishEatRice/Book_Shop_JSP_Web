@@ -13,6 +13,5 @@
     </head>
     <body>
         <h1>succes Work !</h1>
-        <a href="/galaxy_bookshelf/customer/customerDashboard.jsp">back to dashboard</a>
     </body>
 </html>

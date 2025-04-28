@@ -42,6 +42,8 @@
         <!-- Staff / Admin -->
         <li><a href="/galaxy_bookshelf/web/product/product.jsp">Product Manager</a></li>
 
+        <li><a href="/galaxy_bookshelf/web/genre/list_genre.jsp">Genre Manager</a></li>
+
         <li><a href="/galaxy_bookshelf/web/staff/comment_list.jsp">Comments Manager</a></li>
 
         <li><a href="/galaxy_bookshelf/web/discount/discount_manager.jsp">Discount Manager</a></li>
@@ -57,17 +59,24 @@
 
         <li><a href="/galaxy_bookshelf/web/payment/payment_list.jsp">Purchase History</a></li>
 
+        <li><a href="/galaxy_bookshelf/customer/customerProfileDetails.jsp">Account</a></li>
+
         <% } else if ("admin".equals(CheckAcc)) { %>
 
         <!-- Admin -->
-        <li><a href="/galaxy_bookshelf/">Staff Management</a></li>
+        <li><a href="/galaxy_bookshelf/staff/customerManagementList.jsp">Customer Manager</a></li>
 
+        <li><a href="/galaxy_bookshelf/admin/controlStaff.jsp">Staff Manager</a></li>
+
+        <li><a href="/galaxy_bookshelf/admin/adminProfileDetails.jsp">Account</a></li>
+
+        <% } else if ("staff".equals(CheckAcc)) { %>
+
+        <li><a href="/galaxy_bookshelf/staff/staffProfileDetails.jsp">Account</a></li>
 
         <% } %>
 
         <!-- Already Login -->
-        <li><a href="/galaxy_bookshelf/">Account</a></li>
-
         <li><a href="/galaxy_bookshelf/guard/SessionLogout.jsp">Logout</a></li>
 
         <% } %>
