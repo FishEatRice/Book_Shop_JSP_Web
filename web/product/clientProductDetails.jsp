@@ -1,9 +1,3 @@
-<%-- 
-    Document   : clientProductDetails
-    Created on : 25 Apr 2025, 18:18:18
-    Author     : JS
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -11,29 +5,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
+        <meta charset="UTF-8">
         <title>Galaxy BookShelf | Product Details</title>
+
+        <!-- FontAwesome for Stars -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+        <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
+
         <style>
             .container {
                 width: 80%;
                 margin: auto;
                 font-family: sans-serif;
             }
-
             .back-link {
                 color: blue;
                 display: inline-block;
                 margin: 10px 0;
                 text-decoration: none;
             }
-
             .product-section {
                 display: flex;
                 gap: 30px;
                 align-items: flex-start;
             }
-
             .product-image {
                 border: 2px solid blue;
                 width: 300px;
@@ -44,38 +40,31 @@
                 justify-content: center;
                 font-weight: bold;
             }
-
             .product-info {
                 flex: 1;
             }
-
             .product-name {
                 color: blue;
                 font-size: 1.5em;
             }
-
             .product-price {
                 font-size: 2em;
                 font-weight: bold;
                 color: orange;
                 margin: 10px 0;
             }
-
             .stock, .quantity-box {
                 margin: 10px 0;
             }
-
             .quantity-box {
                 display: flex;
                 gap: 5px;
                 align-items: center;
             }
-
             .quantity-box input {
                 width: 50px;
                 text-align: center;
             }
-
             .add-to-cart {
                 background-color: yellow;
                 border: 2px solid #aaa;
@@ -84,25 +73,31 @@
                 font-weight: bold;
                 cursor: pointer;
             }
-
             .details, .comment {
                 margin-top: 30px;
                 padding: 15px;
             }
-
             .details {
                 border: 2px solid purple;
             }
-
             .comment {
                 border: 2px solid orange;
-
             }
-
-            input[type=number]::-webkit-inner-spin-button,
-            input[type=number]::-webkit-outer-spin-button {
+            input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
                 -webkit-appearance: none;
                 margin: 0;
+            }
+            .comment-item {
+                border-bottom: 1px solid #ccc;
+                padding: 10px 0;
+            }
+            .rating i {
+                margin-right: 2px;
+            }
+            .reply-text {
+                color: gray;
+                font-style: italic;
+                margin-top: 5px;
             }
         </style>
     </head>
@@ -114,10 +109,10 @@
             <a href="clientProductListing.jsp" class="back-link">← Back</a>
 
             <div class="product-section">
-                <!-- Left: Image -->
-                <div class="product-image"><img src="${productData.productPicture}" alt="Product Image" width="300" height="300"/></div>
+                <div class="product-image">
+                    <img src="${productData.productPicture}" alt="Product Image" width="300" height="300"/>
+                </div>
 
-                <!-- Right: Info -->
                 <div class="product-info">
                     <div class="product-name">${productData.productName}</div>
 
@@ -139,10 +134,8 @@
                         </c:otherwise>
                     </c:choose>
 
-
                     <form method="post" action="<%= request.getContextPath() %>/add_to_cart_process">
                         <input type="hidden" name="product_id" value="${productData.productId}" />
-
                         <p>Genre: ${productData.genreId.genreName}</p>
 
                         <div class="stock">Stock Quantity: <strong>${productData.quantity}</strong></div>
@@ -161,24 +154,56 @@
 
             <div class="details">
                 <h3>Details</h3>
-                <p>
-                    ${productData.productInformation}
-                </p>
+                <p>${productData.productInformation}</p>
             </div>
 
             <div class="comment">
-                <h3>Comment</h3>
-                <p>No comments yet. Be the first to leave a review!</p>
+                <h3>Comments</h3>
+
+                <c:choose>
+                    <c:when test="${not empty comments}">
+                        <c:forEach var="comment" items="${comments}">
+                            <div class="comment-item">
+                                <!-- Stars -->
+                                <div class="rating">
+                                    <c:forEach var="i" begin="1" end="5">
+                                        <c:choose>
+                                            <c:when test="${i <= comment.ratingStar}">
+                                                <i class="fa-solid fa-star" style="color: orange;"></i>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <i class="fa-solid fa-star" style="color: gray;"></i>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                    (${comment.ratingStar} Stars)
+                                </div>
+
+                                <div><strong>Comment:</strong> ${comment.comment}</div>
+
+                                <!-- Only show Admin Reply if reply is NOT 'ignore' -->
+                                <c:if test="${not empty comment.reply and comment.reply != 'ignore'}">
+                                    <div class="reply-text">Admin Reply: ${comment.reply}</div>
+                                </c:if>
+
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <p>No comments yet. Be the first to leave a review!</p>
+                    </c:otherwise>
+                </c:choose>
+
             </div>
+
         </div>
 
         <script>
             function adjustQty(button) {
                 const input = document.getElementById('qtyInput');
                 let current = parseInt(input.value);
-                let min = parseInt(qtyInput.min);
-                let max = parseInt(qtyInput.max);
-
+                let min = parseInt(input.min);
+                let max = parseInt(input.max);
 
                 if (button.textContent === '-') {
                     if (current > min) {
@@ -191,5 +216,6 @@
                 }
             }
         </script>
+
     </body>
 </html>
