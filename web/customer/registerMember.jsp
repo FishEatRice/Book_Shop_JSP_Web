@@ -29,6 +29,17 @@
 
 
         <h3>Register Now</h3>
+
+        <% 
+            String error = (String) session.getAttribute("error");
+            if (error != null) { 
+        %>
+        <p style="color:red;"><%= error %></p>
+        <% 
+            session.removeAttribute("error");  // 清除错误信息，只显示一次
+            } 
+        %>
+
         <form method="post" action="../crudCustomer" onsubmit="return validatePassword();">
             <input type="hidden" name="action" value="create" />
 

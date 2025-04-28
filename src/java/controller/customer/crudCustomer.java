@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.*;
 
 public class crudCustomer extends HttpServlet {
@@ -42,7 +43,7 @@ public class crudCustomer extends HttpServlet {
         }
 
         boolean success = false;
-
+        HttpSession session = request.getSession();
         switch (action) {
             case "create":
                 success = CreateCustomer(customer);
@@ -64,15 +65,17 @@ public class crudCustomer extends HttpServlet {
 
         if (success) {
             if (action.equals("create")) {
-                response.sendRedirect("/galaxy_bookshelf/customer/succes.jsp"); // customer的成功页面
+                response.sendRedirect("/galaxy_bookshelf/guard/loginChoose.jsp");
             } else if (action.equals("delete")) {
                 response.sendRedirect("/galaxy_bookshelf/staff/customerManagementList.jsp");
             }
         } else {
+
             if (action.equals("create")) {
-                response.sendRedirect("/galaxy_bookshelf/customer/error.jsp"); // customer的失败页面
+                session.setAttribute("error", "Email has been used, please use another email.");
+                response.sendRedirect("/galaxy_bookshelf/customer/registerMember.jsp");
             } else if (action.equals("delete")) {
-                response.sendRedirect("/galaxy_bookshelf/staff/error.jsp");
+                response.sendRedirect("/galaxy_bookshelf/staff/customerManagementList.jsp");
             }
         }
     }
