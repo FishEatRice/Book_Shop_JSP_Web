@@ -14,7 +14,7 @@
 
 <script>
     alert("Low in permission. You do not have access to this page.");
-        
+
     // Back To Index
     window.location.href = "/galaxy_bookshelf/index.jsp";
 </script>

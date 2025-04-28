@@ -23,13 +23,13 @@ public class ConfirmPayment extends HttpServlet {
 
         HttpSession session = request.getSession();
         String customer_id = (String) session.getAttribute("customer_id");
-
+        
         double shipping_fee = 0.0;
 
         String full_name = "Not Yet Set";
-        
+
         String phone_number = "Not Yet Set";
-        
+
         String address = "Not Yet Set";
 
         String cartIdsParam = request.getParameter("cart_ids");
@@ -149,7 +149,7 @@ public class ConfirmPayment extends HttpServlet {
             while (address_rs.next()) {
                 full_name = address_rs.getString("CUSTOMER_FIRSTNAME") + " " + address_rs.getString("CUSTOMER_LASTNAME");
                 phone_number = address_rs.getString("CUSTOMER_CONTACTNO");
-                address = address_rs.getString("CUSTOMER_ADDRESS_NO") + ", " +  address_rs.getString("CUSTOMER_ADDRESS_JALAN") + "<br>" +  address_rs.getString("CUSTOMER_ADDRESS_CODE") + " " + address_rs.getString("CUSTOMER_ADDRESS_CITY") + "<br>" + address_rs.getString("STATE_NAME");
+                address = address_rs.getString("CUSTOMER_ADDRESS_NO") + ", " + address_rs.getString("CUSTOMER_ADDRESS_JALAN") + "<br>" + address_rs.getString("CUSTOMER_ADDRESS_CODE") + " " + address_rs.getString("CUSTOMER_ADDRESS_CITY") + "<br>" + address_rs.getString("STATE_NAME");
             }
 
             address_rs.close();

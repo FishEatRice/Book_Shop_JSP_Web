@@ -43,7 +43,7 @@
                 }
             }
         %>
-        <p>Name: <%= staff.getCustomerFirstName() %> <%= staff.getCustomerLastName() %></p>
+        <p>Name: <%= staff.getFirstName() %> <%= staff.getLastName() %></p>
         <p>Position: Admin</p>
 
         <%

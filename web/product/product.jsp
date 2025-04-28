@@ -62,7 +62,7 @@
         <form action="<%= request.getContextPath() %>/web/product/search" method="get">
             <input type="text" name="query" placeholder="Product Name">
             <button type="submit"><i class="fa fa-search"></i> Search</button>
-            <input type="button" onclick="location.href='/galaxy_bookshelf/web/product/product.jsp';" value="Reset" />
+            <input type="button" onclick="location.href = '/galaxy_bookshelf/web/product/product.jsp';" value="Reset" />
         </form>
 
         <table border="1" cellpadding="5">
@@ -156,10 +156,22 @@
                         <td>
                             <form action="${pageContext.request.contextPath}/web/product/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">
                                 <input type="hidden" name="id" value="${product.productId}">
-                                <a href="#" class="btn btn-alert-light" onclick="if (confirm('Are you sure you want to delete this product?'))
-                                        this.closest('form').submit();">
+
+                                <a href="#" class="btn btn-alert-light" 
+                                   onclick="
+                                           var accountType = '${sessionScope.userRole}';
+                                           if (accountType.trim() !== 'admin') {
+                                               alert('Low permission. You cannot delete product.');
+                                           } else {
+                                               if (confirm('Are you sure you want to delete this product?')) {
+                                                   this.closest('form').submit();
+                                               }
+                                           }
+                                           return false;
+                                   ">
                                     <i class="fas fa-trash-alt"></i> Delete
                                 </a>
+
                             </form>
                         </td>
 

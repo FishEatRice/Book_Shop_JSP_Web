@@ -29,6 +29,14 @@ public class crudCustomer extends HttpServlet {
         String customerPassword = request.getParameter("password");
         int customerposition = 0;
 
+        String sessionOtp = "";
+        String userEnteredOtp = "";
+
+        if (action.equals("create")) {
+            sessionOtp = (String) request.getSession().getAttribute("otp");
+            userEnteredOtp = request.getParameter("otp");
+        }
+
         Customer customer = new Customer();
 
         customer.setCustomerName(customerName);
@@ -46,7 +54,7 @@ public class crudCustomer extends HttpServlet {
         HttpSession session = request.getSession();
         switch (action) {
             case "create":
-                success = CreateCustomer(customer);
+                success = CreateCustomer(customer, sessionOtp, userEnteredOtp);
                 break;
 
             case "list":
@@ -72,7 +80,7 @@ public class crudCustomer extends HttpServlet {
         } else {
 
             if (action.equals("create")) {
-                session.setAttribute("error", "Email has been used, please use another email.");
+                session.setAttribute("error", "Email has been used or the OTP is invalid.");
                 response.sendRedirect("/galaxy_bookshelf/customer/registerMember.jsp");
             } else if (action.equals("delete")) {
                 response.sendRedirect("/galaxy_bookshelf/staff/customerManagementList.jsp");
@@ -80,37 +88,41 @@ public class crudCustomer extends HttpServlet {
         }
     }
 
-    private boolean CreateCustomer(Customer customer) {
-        String queryID = "SELECT MAX(CUSTOMER_ID) FROM GALAXY.CUSTOMER";
-        String query = "INSERT INTO GALAXY.CUSTOMER (CUSTOMER_ID, CUSTOMER_NAME, CUSTOMER_PASSWORD, CUSTOMER_EMAIL) VALUES (?, ?, ?, ?)";
+    private boolean CreateCustomer(Customer customer, String EmailOTP, String KeyOTP) {
+        if (EmailOTP.equals(KeyOTP)) {
+            String queryID = "SELECT MAX(CUSTOMER_ID) FROM GALAXY.CUSTOMER";
+            String query = "INSERT INTO GALAXY.CUSTOMER (CUSTOMER_ID, CUSTOMER_NAME, CUSTOMER_PASSWORD, CUSTOMER_EMAIL) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(Host, User, passwor)) {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(queryID);
-            String newCustomerId = "C1";
+            try (Connection conn = DriverManager.getConnection(Host, User, passwor)) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(queryID);
+                String newCustomerId = "C1";
 
-            if (rs.next()) {
-                String maxId = rs.getString(1); // 
-                if (maxId != null && maxId.startsWith("C")) {
-                    int currentId = Integer.parseInt(maxId.substring(1)); // 
-                    newCustomerId = "C" + (currentId + 1); //
+                if (rs.next()) {
+                    String maxId = rs.getString(1); // 
+                    if (maxId != null && maxId.startsWith("C")) {
+                        int currentId = Integer.parseInt(maxId.substring(1)); // 
+                        newCustomerId = "C" + (currentId + 1); //
+                    }
                 }
+                customer.setCustomerId(newCustomerId);
+
+                // 
+                PreparedStatement sstmt = conn.prepareStatement(query);
+                sstmt.setString(1, customer.getCustomerId());
+                sstmt.setString(2, customer.getCustomerName());
+                sstmt.setString(3, customer.getCustomerPassword());
+                sstmt.setString(4, customer.getCustomerEmail());
+
+                int rowsAffected = sstmt.executeUpdate(); // 
+
+                System.out.println("Attempting to insert staff with ID: " + customer.getCustomerId());
+                return rowsAffected > 0;
+            } catch (SQLException e) {
+                System.err.println("Database connection error: " + e.getMessage());
+                return false;
             }
-            customer.setCustomerId(newCustomerId);
-
-            // 
-            PreparedStatement sstmt = conn.prepareStatement(query);
-            sstmt.setString(1, customer.getCustomerId());
-            sstmt.setString(2, customer.getCustomerName());
-            sstmt.setString(3, customer.getCustomerPassword());
-            sstmt.setString(4, customer.getCustomerEmail());
-
-            int rowsAffected = sstmt.executeUpdate(); // 
-
-            System.out.println("Attempting to insert staff with ID: " + customer.getCustomerId());
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            System.err.println("Database connection error: " + e.getMessage());
+        } else {
             return false;
         }
     }

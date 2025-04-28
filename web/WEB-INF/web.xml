@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
-<web-app xmlns:ns0="https://jakarta.ee/xml/ns/jakartaee" version="5.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="5.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:ns0="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd">
     <servlet>
         <servlet-name>customerStaffAdminEdit</servlet-name>
         <servlet-class>controller.customer.customerStaffAdminEdit</servlet-class>
@@ -7,6 +7,10 @@
     <servlet>
         <servlet-name>AdminUpdateStaff</servlet-name>
         <servlet-class>controller.admin.AdminUpdateStaff</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sendOTP</servlet-name>
+        <servlet-class>controller.otp.sendOTP</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>customerMyProfile</servlet-name>
@@ -20,10 +24,13 @@
         <servlet-name>AdminUpdateStaff</servlet-name>
         <url-pattern>/AdminUpdateStaff</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sendOTP</servlet-name>
+        <url-pattern>/sendOTP</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    
     <servlet>
         <servlet-name>AdminLoginFunction</servlet-name>
         <servlet-class>controller.admin.AdminLoginFunction</servlet-class>
@@ -88,12 +95,10 @@
         <servlet-name>searchGenre</servlet-name>
         <servlet-class>controller.genre.searchGenre</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>productListing</servlet-name>
         <servlet-class>controller.product.productListing</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>getProductMaxQuantity</servlet-name>
         <servlet-class>controller.cart.getProductMaxQuantity</servlet-class>
@@ -114,7 +119,6 @@
         <servlet-name>CartQuantityChangeProcess</servlet-name>
         <servlet-class>controller.cart.CartQuantityChangeProcess</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>StripePaymentController</servlet-name>
         <servlet-class>controller.payment.StripePaymentController</servlet-class>
@@ -127,12 +131,10 @@
         <servlet-name>ConfirmPayment</servlet-name>
         <servlet-class>controller.payment.ConfirmPayment</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>discount_manager</servlet-name>
         <servlet-class>controller.discount.discount_manager</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>add_new_discount_product</servlet-name>
         <servlet-class>controller.discount.add_discount_product</servlet-class>

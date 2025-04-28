@@ -5,23 +5,24 @@ import jakarta.servlet.http.*;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
-import model.discount.NewDiscountDisplay;
+import model.discount.Discount;
 
+/**
+ *
+ * @author ON YUEN SHERN
+ */
 public class discount_manager extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<NewDiscountDisplay> NewDiscountDisplay = new ArrayList<>();
+        List<Discount> DiscountList = new ArrayList<>();
 
         try {
-            Connection conn = DriverManager.getConnection(
-                    "jdbc:derby://localhost:1527/db_galaxy_bookshelf",
-                    "GALAXY",
-                    "GALAXY"
-            );
+            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db_galaxy_bookshelf", "GALAXY", "GALAXY");
 
-            String sql = "SELECT * FROM GALAXY.PRODUCT";
+            String sql = "SELECT D.DISCOUNT_ID, D.PRODUCT_ID, D.DISCOUNT_PRICE, D.DISCOUNT_EXPIRED, D.DISCOUNT_SWITCH, P.PRODUCT_NAME, P.PRODUCT_PRICE, P.PRODUCT_PICTURE, D.DISCOUNT_DETAILS FROM GALAXY.DISCOUNT D JOIN GALAXY.PRODUCT P ON D.PRODUCT_ID = P.PRODUCT_ID ORDER BY CAST(SUBSTR(D.PRODUCT_ID, 2) AS INT)";
+
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
@@ -30,60 +31,34 @@ public class discount_manager extends HttpServlet {
                 String imageData = "";
                 String imageType = "jpeg"; // default
 
-                // Manually parse JSON string for base64Image and fileType
+                // Simple JSON parsing
                 if (picJson != null && picJson.contains("base64Image")) {
-                    try {
-                        String base64Key = "\"base64Image\":\"";
-                        int base64Start = picJson.indexOf(base64Key);
-                        if (base64Start != -1) {
-                            base64Start += base64Key.length();
-                            int base64End = picJson.indexOf("\"", base64Start);
-                            if (base64End != -1) {
-                                imageData = picJson.substring(base64Start, base64End);
-                            }
-                        }
+                    int base64Start = picJson.indexOf("\"base64Image\":") + 15;
+                    int base64End = picJson.indexOf("\"", base64Start);
+                    if (base64Start > 14 && base64End > base64Start) {
+                        imageData = picJson.substring(base64Start, base64End);
+                    }
 
-                        String typeKey = "\"fileType\":\"";
-                        int typeStart = picJson.indexOf(typeKey);
-                        if (typeStart != -1) {
-                            typeStart += typeKey.length();
-                            int typeEnd = picJson.indexOf("\"", typeStart);
-                            if (typeEnd != -1) {
-                                imageType = picJson.substring(typeStart, typeEnd);
-                            }
-                        }
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
+                    int typeStart = picJson.indexOf("\"fileType\":") + 12;
+                    int typeEnd = picJson.indexOf("\"", typeStart);
+                    if (typeStart > 11 && typeEnd > typeStart) {
+                        imageType = picJson.substring(typeStart, typeEnd);
                     }
                 }
 
                 String base64Src = "data:" + imageType + ";base64," + imageData;
 
-                double discountPrice = 0.0;
-                String discountDetails = "";
-
-                // Check if Discount exists for this product
-                String checkDiscountSQL = "SELECT * FROM GALAXY.DISCOUNT WHERE PRODUCT_ID = ?";
-                PreparedStatement Discountstmt = conn.prepareStatement(checkDiscountSQL);
-                Discountstmt.setString(1, rs.getString("PRODUCT_ID"));
-                ResultSet Discountrs = Discountstmt.executeQuery();
-
-                boolean DiscountStatus = false;
-                if (Discountrs.next()) {
-                    DiscountStatus = true;
-                    discountPrice = Discountrs.getDouble("DISCOUNT_PRICE");
-                    discountDetails = Discountrs.getString("DISCOUNT_DETAILS"); // <-- Get from DISCOUNT table!
-                }
-
-                // Add the product to the list
-                NewDiscountDisplay.add(new NewDiscountDisplay(
+                // Add new object with full data
+                DiscountList.add(new Discount(
+                        rs.getString("DISCOUNT_ID"),
                         rs.getString("PRODUCT_ID"),
-                        rs.getString("PRODUCT_NAME"),
                         rs.getDouble("PRODUCT_PRICE"),
+                        rs.getDouble("DISCOUNT_PRICE"),
+                        rs.getTimestamp("DISCOUNT_EXPIRED"),
+                        rs.getBoolean("DISCOUNT_SWITCH"),
+                        rs.getString("PRODUCT_NAME"),
                         base64Src,
-                        DiscountStatus,
-                        discountPrice,
-                        discountDetails // <-- Now it's correct
+                        rs.getString("DISCOUNT_DETAILS")
                 ));
             }
 
@@ -91,9 +66,8 @@ public class discount_manager extends HttpServlet {
             e.printStackTrace();
         }
 
-        request.setAttribute("productDiscountInfoList", NewDiscountDisplay);
+        request.setAttribute("Discount", DiscountList);
 
-        // Forward to JSP
-        request.getRequestDispatcher("/discount/add_new_product_discount.jsp").forward(request, response);
+        request.getRequestDispatcher("/discount/discount_manager.jsp").forward(request, response);
     }
 }
