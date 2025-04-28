@@ -12,6 +12,10 @@
         <servlet-name>sendOTP</servlet-name>
         <servlet-class>controller.otp.sendOTP</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>reset_password</servlet-name>
+        <servlet-class>controller.customer.reset_password</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>customerMyProfile</servlet-name>
         <url-pattern>/customerMyProfile</url-pattern>
@@ -27,6 +31,10 @@
     <servlet-mapping>
         <servlet-name>sendOTP</servlet-name>
         <url-pattern>/sendOTP</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>reset_password</servlet-name>
+        <url-pattern>/reset_password</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
@@ -398,5 +406,4 @@
         <error-code>500</error-code>
         <location>/error/500.jsp</location>
     </error-page>
-
 </web-app>

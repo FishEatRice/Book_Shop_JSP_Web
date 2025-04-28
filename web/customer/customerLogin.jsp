@@ -45,7 +45,7 @@
 
         <button type="submit">Login</button>
     </form>
-    <a href="#"> Forget Password</a> <br>
+    <a href="/galaxy_bookshelf/customer/customerForgetPassword.jsp"> Forget Password</a> <br>
     <a href="/galaxy_bookshelf/customer/registerMember.jsp"> Register</a> <br>
 
 </body>

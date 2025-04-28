@@ -13,7 +13,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <a href="/galaxy_bookshelf/staff/staffLogin.jsp"><button type="button">Staff Login!</button></a> <br>
         <a href="/galaxy_bookshelf/customer/customerLogin.jsp"><button type="button">Member Login!</button></a>
+
+        <br>
+
+        <a href="/galaxy_bookshelf/staff/staffLogin.jsp"><button type="button">Staff Login!</button></a>
     </body>
 </html>
