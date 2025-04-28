@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     </head>
     <body>
+        <%@ include file="/header/main_header.jsp" %>
+
         <h1>Add New Product Discount</h1>
 
         <table border="1" cellpadding="5">
@@ -40,7 +42,7 @@
                             </c:if>
                         </td>
                         <td>
-                            <a href="/galaxy_bookshelf/discount/new_discount.jsp?id=${item.productId}&name=${item.productName}&price=${item.productPrice}&discount=${item.discountPrice}">
+                            <a href="/galaxy_bookshelf/discount/new_discount.jsp?id=${item.productId}&name=${item.productName}&price=${item.productPrice}&discount=${item.discountPrice}&details=${item.details}">
                                 Create & Edit Discount for this product
                             </a>
                         </td>

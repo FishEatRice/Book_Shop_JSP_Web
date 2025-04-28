@@ -26,6 +26,7 @@
                         <th>Original Price</th>
                         <th>Discount Price</th>
                         <th>Expired Date</th>
+                        <th>Details</th>
                         <th>Switch</th>
                         <th>Action</th>
                     </tr>
@@ -37,6 +38,7 @@
                             <td>RM <fmt:formatNumber value="${item.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" /></td>
                             <td>RM <fmt:formatNumber value="${item.discountPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" /></td>
                             <td><fmt:formatDate value="${item.expiredDatetime}" pattern="dd-MM-yyyy HH:mm:ss" /></td>
+                            <td>${item.details}</td>
                             <td>
                                 <button type="button" onclick="DiscountSwitch('${item.discountId}')">
                                     <c:choose>

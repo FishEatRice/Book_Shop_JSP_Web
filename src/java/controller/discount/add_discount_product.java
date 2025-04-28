@@ -58,6 +58,7 @@ public class add_discount_product extends HttpServlet {
                 String base64Src = "data:" + imageType + ";base64," + imageData;
 
                 double discountPrice = 0.0;
+                String discountDetails = "";
 
                 // Check if Discount exists for this product
                 String checkDiscountSQL = "SELECT * FROM GALAXY.DISCOUNT WHERE PRODUCT_ID = ?";
@@ -69,6 +70,7 @@ public class add_discount_product extends HttpServlet {
                 if (Discountrs.next()) {
                     DiscountStatus = true;
                     discountPrice = Discountrs.getDouble("DISCOUNT_PRICE");
+                    discountDetails = Discountrs.getString("DISCOUNT_DETAILS");
                 }
 
                 // Add the product to the list
@@ -78,7 +80,8 @@ public class add_discount_product extends HttpServlet {
                         rs.getDouble("PRODUCT_PRICE"),
                         base64Src,
                         DiscountStatus,
-                        discountPrice
+                        discountPrice,
+                        discountDetails
                 ));
             }
 

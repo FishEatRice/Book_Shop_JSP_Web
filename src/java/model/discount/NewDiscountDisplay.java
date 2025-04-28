@@ -16,14 +16,16 @@ public class NewDiscountDisplay {
     private final double productPrice;
     private final boolean DiscountStatus;
     private final double DiscountPrice;
+    private final String Details;
 
-    public NewDiscountDisplay(String productId, String productName, double productPrice, String productPic, boolean DiscountStatus, double DiscountPrice) {
+    public NewDiscountDisplay(String productId, String productName, double productPrice, String productPic, boolean DiscountStatus, double DiscountPrice, String Details) {
         this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productPic = productPic;
         this.DiscountStatus = DiscountStatus;
         this.DiscountPrice = DiscountPrice;
+        this.Details = Details;
     }
 
     // Get Method
@@ -34,6 +36,11 @@ public class NewDiscountDisplay {
     // Get Method
     public String getProductName() {
         return productName;
+    }
+    
+    // Get Method
+    public String getDetails() {
+        return Details;
     }
     
 // Get Method

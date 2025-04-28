@@ -8,12 +8,13 @@ public class Discount {
     private final String product_id;
     private final String productName;
     private final String productPic;
+    private final String Details;
     private final double productPrice;
     private final double discount_price;
     private final Timestamp expired_datetime;
     private final boolean discount_switch;
 
-    public Discount(String discount_id, String product_id, double productPrice, double discount_price, Timestamp expired_datetime, boolean discount_switch, String productName, String productPic) {
+    public Discount(String discount_id, String product_id, double productPrice, double discount_price, Timestamp expired_datetime, boolean discount_switch, String productName, String productPic, String Details) {
         this.discount_id = discount_id;
         this.product_id = product_id;
         this.productPrice = productPrice;
@@ -22,10 +23,15 @@ public class Discount {
         this.discount_switch = discount_switch;
         this.productName = productName;
         this.productPic = productPic;
+        this.Details = Details;
     }
 
     public String getDiscountId() {
         return discount_id;
+    }
+
+    public String getDetails() {
+        return Details;
     }
 
     public String getProductId() {
