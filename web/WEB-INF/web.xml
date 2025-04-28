@@ -16,6 +16,10 @@
         <servlet-name>reset_password</servlet-name>
         <servlet-class>controller.customer.reset_password</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>index_show</servlet-name>
+        <servlet-class>controller.index.index_show</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>customerMyProfile</servlet-name>
         <url-pattern>/customerMyProfile</url-pattern>
@@ -36,9 +40,10 @@
         <servlet-name>reset_password</servlet-name>
         <url-pattern>/reset_password</url-pattern>
     </servlet-mapping>
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>index_show</servlet-name>
+        <url-pattern>/web/index.jsp</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>AdminLoginFunction</servlet-name>
         <servlet-class>controller.admin.AdminLoginFunction</servlet-class>
@@ -332,7 +337,7 @@
         <url-pattern>/web/report/sales_records.jsp</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>web/index.jsp</welcome-file>
     </welcome-file-list>
     <servlet>
         <servlet-name>productCreate</servlet-name>

@@ -20,14 +20,11 @@ public class AdminLoginFunction extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
 
-        
         String staffId = request.getParameter("staff_id");
         String staffPassword = request.getParameter("staff_password");
 
-       
         HttpSession session = request.getSession();
 
-        
         Staff staff = new Staff();
         staff.setStaffId(staffId);
         staff.setStaffPassword(staffPassword);
@@ -36,21 +33,21 @@ public class AdminLoginFunction extends HttpServlet {
         String role = isValidLogin(staff);
 
         if (role != null) {
-           
-            session.setAttribute("userRole", role);              
-            session.setAttribute("account_status", staff.getStaffId()); 
+
+            session.setAttribute("userRole", role);
+            session.setAttribute("account_status", staff.getStaffId());
 
             if ("admin".equals(role)) {
-                response.sendRedirect("/galaxy_bookshelf/index.jsp");
+                response.sendRedirect("/galaxy_bookshelf/web/index.jsp");
             } else {
-                response.sendRedirect("/galaxy_bookshelf/index.jsp");
+                response.sendRedirect("/galaxy_bookshelf/web/index.jsp");
             }
         } else {
-          
+
             response.sendRedirect("/galaxy_bookshelf/admin/loginError.jsp");
         }
     }
-       
+
     private String isValidLogin(Staff staff) {
         String query = "SELECT * FROM GALAXY.STAFF WHERE STAFF_ID = ? AND STAFF_PASSWORD = ?";
 
@@ -61,11 +58,11 @@ public class AdminLoginFunction extends HttpServlet {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    
+
                     if ("A1".equals(staff.getStaffId())) {
                         return "admin";
                     } else {
-                        return "staff";  
+                        return "staff";
                     }
                 }
             }
@@ -73,6 +70,6 @@ public class AdminLoginFunction extends HttpServlet {
             System.err.println("数据库连接错误: " + e.getMessage());
         }
 
-        return null; 
+        return null;
     }
 }

@@ -28,7 +28,7 @@
         response.sendRedirect(request.getContextPath() + "/customer/customerLogin.jsp");
     } else {
         // 
-        response.sendRedirect(request.getContextPath() + "/index.jsp");
+        response.sendRedirect(request.getContextPath() + "/web/index.jsp");
     }
 %>
 

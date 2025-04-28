@@ -12,16 +12,16 @@
 
     if (role != null) {
         if ("customer".equals(role)) {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            response.sendRedirect(request.getContextPath() + "/web/index.jsp");
             return;
         } else if ("staff".equals(role)) {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            response.sendRedirect(request.getContextPath() + "/web/index.jsp");
             return;
         } else if ("admin".equals(role)) {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            response.sendRedirect(request.getContextPath() + "/web/index.jsp");
             return;
         } else {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            response.sendRedirect(request.getContextPath() + "/web/index.jsp");
             return;
         }
     }
