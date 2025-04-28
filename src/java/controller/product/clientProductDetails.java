@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import model.product.Product;
 import model.comment.Comment;
 
@@ -25,6 +26,10 @@ public class clientProductDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
         String productID = request.getParameter("id");
         EntityManager em = emf.createEntityManager();
@@ -61,7 +66,12 @@ public class clientProductDetails extends HttpServlet {
 
         // Load Discount Price
         try {
-            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db_galaxy_bookshelf", "GALAXY", "GALAXY");
+            Properties props = new Properties();
+            props.setProperty("user", "GALAXY");
+            props.setProperty("password", "GALAXY");
+
+            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db_galaxy_bookshelf", props);
+
             String discount_query = "SELECT DISCOUNT_PRICE FROM GALAXY.DISCOUNT WHERE PRODUCT_ID = ? AND DISCOUNT_SWITCH = 'true'";
             PreparedStatement stmt = conn.prepareStatement(discount_query);
             stmt.setString(1, productID);
@@ -101,6 +111,13 @@ public class clientProductDetails extends HttpServlet {
                 String productName = rs.getString("PRODUCT_NAME");
                 String commentText = rs.getString("COMMENT");
                 String reply = rs.getString("STAFF_REPLY");
+
+                if (commentText != null) {
+                    commentText = new String(commentText.getBytes("ISO-8859-1"), "UTF-8");
+                }
+                if (reply != null) {
+                    reply = new String(reply.getBytes("ISO-8859-1"), "UTF-8");
+                }
 
                 Comment comment = new Comment(paymentId, productName, ratingStar, commentText, reply);
                 comments.add(comment);
