@@ -9,5 +9,6 @@
         <h1>500 Internel Server Error</h1>
         <p>Oops! Looks like something went wrong</p>
         <p>If the problem persists, please contact the system administrator.</p>
+        <p>Please go <a href="<%= request.getContextPath() %>">Back to Main Page.</a></p>
     </body>
 </html>

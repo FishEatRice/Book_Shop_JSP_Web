@@ -10,7 +10,7 @@
 
         <h1>404 Not Found</h1>
         <p>Oops! Looks like this page doesn't exist.</p>
-        <p>Please go <a href="index.jsp">Back to Main Page.</a></p>
+        <p>Please go <a href="<%= request.getContextPath() %>">Back to Main Page.</a></p>
     
     </body>
 </html>
