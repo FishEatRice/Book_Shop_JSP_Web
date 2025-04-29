@@ -112,7 +112,7 @@
                    value="<%= (customer.getCustomerLastName() != null && !"null".equals(customer.getCustomerLastName())) ? customer.getCustomerLastName() : "" %>" required/>
 
             <br><br>
-            
+
             <label>Contact No:</label>
             <input type="text" name="contactNo" 
                    value="<%= (customer.getCustomerContactNo() != null && !"null".equals(customer.getCustomerContactNo())) ? customer.getCustomerContactNo() : "" %>" required/>

@@ -4,18 +4,134 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
         <title>Galaxy | Cart</title>
         <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
+        <style>
+
+            h2 {
+                text-align: center;
+                color: #2c3e50;
+                margin-bottom: 30px;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                background-color: #fff;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            th, td {
+                padding: 15px;
+                text-align: center;
+                border-bottom: 1px solid #ddd;
+                vertical-align: middle;
+            }
+
+            th {
+                background-color: #3498db;
+                color: white;
+            }
+
+            img {
+                width: 80px;
+                border-radius: 4px;
+            }
+
+            form {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+            }
+
+            input[type="number"] {
+                width: 60px;
+                padding: 5px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+            }
+
+            button {
+                padding: 8px 14px;
+                background-color: #3498db;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            button:hover {
+                background-color: #2980b9;
+            }
+
+            .price-old {
+                text-decoration: line-through;
+                color: gray;
+                font-size: 0.9em;
+            }
+
+            .price-new {
+                color: red;
+                font-weight: bold;
+            }
+
+            .action-buttons {
+                text-align: left;
+                margin-top: 20px;
+            }
+
+            .empty-cart {
+                text-align: center;
+                margin-top: 50px;
+            }
+
+            .empty-cart button {
+                margin-top: 15px;
+            }
+
+            @media screen and (max-width: 768px) {
+                table, thead, tbody, th, td, tr {
+                    display: block;
+                }
+
+                th {
+                    display: none;
+                }
+
+                td {
+                    padding: 10px;
+                    border: none;
+                    border-bottom: 1px solid #ccc;
+                    text-align: left;
+                }
+
+                td:before {
+                    content: attr(data-label);
+                    font-weight: bold;
+                    display: block;
+                    margin-bottom: 5px;
+                }
+            }
+        </style>
     </head>
     <body>
+        <c:if test="${not empty sessionScope.stockError}">
+            <script>
+                alert("${sessionScope.stockError}");
+            </script>
+            <c:remove var="stockError" scope="session" />
+        </c:if>
+            
         <%@ include file="/header/main_header.jsp" %>
 
         <h2>Cart List</h2>
 
         <c:choose>
             <c:when test="${not empty Cart_Item}">
-                <table border="1">
+                <table>
                     <tr>
                         <th><input type="checkbox" id="selectAll" onclick="SelectAllCart(this)" /></th>
                         <th colspan="2">Product</th>
@@ -30,20 +146,18 @@
                             <td>
                                 <input type="checkbox" name="selectedItems" value="${item.cartId}" class="itemCheckbox" />
                             </td>
-                            <td><img src="${item.productPic}" alt="${item.productName}" width="100" /></td>
+                            <td><img src="${item.productPic}" alt="${item.productName}" /></td>
                             <td>${item.productName}</td>
 
-                            <!-- If Having Discount -->
                             <td>
                                 <c:choose>
                                     <c:when test="${item.discountPrice != 0.0}">
-                                        <span style="text-decoration: line-through; color: gray;">
+                                        <div class="price-old">
                                             RM <fmt:formatNumber value="${item.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
-                                        </span>
-                                        <br/>
-                                        <span style="color: red; font-weight: bold;">
+                                        </div>
+                                        <div class="price-new">
                                             RM <fmt:formatNumber value="${item.discountPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
-                                        </span>
+                                        </div>
                                     </c:when>
                                     <c:otherwise>
                                         RM <fmt:formatNumber value="${item.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
@@ -52,9 +166,8 @@
                             </td>
 
                             <td>
-                                Max Quantity Stock: ${item.quantityInStock}
-                                <br>
-                                <form action="/galaxy_bookshelf/CartQuantityChangeProcess" method="get" style="display: flex; gap: 5px;">
+                                <small>Stock: ${item.quantityInStock}</small><br>
+                                <form action="/galaxy_bookshelf/CartQuantityChangeProcess" method="get">
                                     <input type="hidden" name="cart_id" value="${item.cartId}">
                                     <input type="number" name="quantity" value="${item.quantityInCart}" max="${item.quantityInStock}" min="1" required>
                                     <button type="submit">Update</button>
@@ -64,10 +177,10 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${item.discountPrice > 0}">
-                                        <fmt:formatNumber value="${item.discountPrice * item.quantityInCart}" type="number" minFractionDigits="2" />
+                                        RM <fmt:formatNumber value="${item.discountPrice * item.quantityInCart}" type="number" minFractionDigits="2" />
                                     </c:when>
                                     <c:otherwise>
-                                        <fmt:formatNumber value="${item.productPrice * item.quantityInCart}" type="number" minFractionDigits="2" />
+                                        RM <fmt:formatNumber value="${item.productPrice * item.quantityInCart}" type="number" minFractionDigits="2" />
                                     </c:otherwise>
                                 </c:choose>
                             </td>
@@ -79,16 +192,19 @@
                     </c:forEach>
                 </table>
 
-                <br>
-                <button type="button" onclick="document.getElementById('selectAll').click()">Select All</button>
-                <button type="button" onclick="PaySelected()">Pay Selected</button>
+                <div class="action-buttons">
+                    <button type="button" onclick="document.getElementById('selectAll').click()">Select All</button>
+                    <button type="button" onclick="PaySelected()">Pay Selected</button>
+                </div>
             </c:when>
 
             <c:otherwise>
-                <p>Your cart is currently empty.</p>
-                <a href="/galaxy_bookshelf/web/product/clientProductListing.jsp">
-                    <button>Browse Products</button>
-                </a>
+                <div class="empty-cart">
+                    <p>Your cart is currently empty.</p>
+                    <a href="/galaxy_bookshelf/web/product/clientProductListing.jsp">
+                        <button>Browse Products</button>
+                    </a>
+                </div>
             </c:otherwise>
         </c:choose>
 
@@ -114,22 +230,16 @@
                     return;
                 }
 
-                // Debugging: log to console
-                console.log("Selected cart IDs:", selected.join(','));
-
                 window.location.href = '/galaxy_bookshelf/web/payment/confirm_payment.jsp?cart_ids=' + encodeURIComponent(selected.join(','));
-
             }
 
-            // Sync Select All state
             document.addEventListener('DOMContentLoaded', () => {
                 const selectAllCheckbox = document.getElementById('selectAll');
                 const itemCheckboxes = document.querySelectorAll('.itemCheckbox');
 
                 itemCheckboxes.forEach(cb => {
                     cb.addEventListener('change', () => {
-                        const allChecked = Array.from(itemCheckboxes).every(box => box.checked);
-                        selectAllCheckbox.checked = allChecked;
+                        selectAllCheckbox.checked = Array.from(itemCheckboxes).every(box => box.checked);
                     });
                 });
             });

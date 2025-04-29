@@ -23,7 +23,7 @@ public class ConfirmPayment extends HttpServlet {
 
         HttpSession session = request.getSession();
         String customer_id = (String) session.getAttribute("customer_id");
-        
+
         double shipping_fee = 0.0;
 
         String full_name = "Not Yet Set";
@@ -90,6 +90,18 @@ public class ConfirmPayment extends HttpServlet {
 
                     while (CheckDiscountRS.next()) {
                         discount_price = CheckDiscountRS.getDouble("DISCOUNT_PRICE");
+                    }
+
+                    int cartQuantity = rs.getInt("CART_QUANTITY");
+                    int stockQuantity = rs.getInt("STOCK_QUANTITY");
+
+                    if (cartQuantity > stockQuantity) {
+                        session.setAttribute("stockError", "Some items in your cart are out of stock.");
+                        response.sendRedirect("/galaxy_bookshelf/web/customer/list_cart.jsp");
+                        rs.close();
+                        stmt.close();
+                        conn.close();
+                        return;
                     }
 
                     CustomerCart cart = new CustomerCart(
