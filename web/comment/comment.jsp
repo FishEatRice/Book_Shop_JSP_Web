@@ -29,7 +29,7 @@
                 margin-bottom: 20px;
             }
 
-            p {
+            .ProductName {
                 font-size: 16px;
                 color: #333;
                 margin-bottom: 20px;
@@ -53,6 +53,7 @@
             }
 
             #editor {
+                
                 height: 150px;
                 margin-bottom: 20px;
                 background-color: #fff;
@@ -108,7 +109,7 @@
                 if (comments != null && !comments.isEmpty()) {
                     Comment comment = comments.get(0);
             %>
-            <p><strong>Product Name:</strong> <%= comment.getProductName() %></p>
+            <p class="ProductName"><strong>Product Name:</strong> <%= comment.getProductName() %></p>
 
             <form action="/galaxy_bookshelf/submit_comment" method="post">
                 <div class="rating">
