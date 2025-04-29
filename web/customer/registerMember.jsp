@@ -10,17 +10,15 @@
     <head>
         <title>Register Member</title>
         <script type="text/javascript">
-            // JavaScript 函数，用来验证密码一致性
             function validatePassword() {
                 var password = document.getElementsByName("password")[0].value;
                 var confirmPassword = document.getElementsByName("confirmPassword")[0].value;
 
-                // 如果密码不一致
                 if (password !== confirmPassword) {
                     alert("Passwords do not match. Please try again.");
-                    return false;  // 阻止表单提交
+                    return false; 
                 }
-                return true;  // 密码一致，允许提交
+                return true;
             }
         </script>
     </head>
@@ -36,7 +34,7 @@
         %>
         <p style="color:red;"><%= error %></p>
         <% 
-            session.removeAttribute("error");  // 清除错误信息，只显示一次
+            session.removeAttribute("error");
             } 
         %>
 

@@ -33,7 +33,7 @@ public class CustomerLoginFunction extends HttpServlet {
         String existingRole = (String) session.getAttribute("userRole");
 
         if (existingStatus != null && !"customer".equals(existingRole)) {
-            response.sendRedirect(request.getContextPath() + "/web/index.jsp");  // 重定向到主页
+            response.sendRedirect(request.getContextPath() + "/web/index.jsp");
             return;
         }
 
@@ -41,9 +41,9 @@ public class CustomerLoginFunction extends HttpServlet {
         Customer customer = getCustomerIfValid(email, pwd);
         if (customer != null) {
           
-            session.setAttribute("userRole", "customer");                  // ✅ 角色
-            session.setAttribute("account_status", customer.getCustomerEmail()); // ✅ 登录者身份
-            session.setAttribute("customer_email", customer.getCustomerEmail()); // 其他信息
+            session.setAttribute("userRole", "customer");                
+            session.setAttribute("account_status", customer.getCustomerEmail()); 
+            session.setAttribute("customer_email", customer.getCustomerEmail()); 
             session.setAttribute("customer_id", customer.getCustomerId());
 
             response.sendRedirect(request.getContextPath() + "/web/index.jsp");
@@ -64,7 +64,6 @@ public class CustomerLoginFunction extends HttpServlet {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    // 如果找到该客户，返回客户对象
                     Customer c = new Customer();
                     c.setCustomerId(rs.getString("CUSTOMER_ID"));
                     c.setCustomerEmail(rs.getString("CUSTOMER_EMAIL"));

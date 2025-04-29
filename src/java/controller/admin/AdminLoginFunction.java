@@ -29,7 +29,6 @@ public class AdminLoginFunction extends HttpServlet {
         staff.setStaffId(staffId);
         staff.setStaffPassword(staffPassword);
 
-        // 验证登录
         String role = isValidLogin(staff);
 
         if (role != null) {
@@ -67,7 +66,7 @@ public class AdminLoginFunction extends HttpServlet {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("数据库连接错误: " + e.getMessage());
+            e.printStackTrace();
         }
 
         return null;

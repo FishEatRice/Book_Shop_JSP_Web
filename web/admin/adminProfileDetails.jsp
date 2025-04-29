@@ -1,13 +1,15 @@
 <%@ page import="model.staff.Staff" %>
-<%@ include file="/header/main_header.jsp" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Update My Profile</title>
+        <title>Galaxy | My Profile</title>
+        <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
     </head>
     <body>
+        <%@ include file="/header/main_header.jsp" %>
         <h1>My Profile Details</h1>
 
         <%@ page import="java.sql.*, model.staff.Staff" %>

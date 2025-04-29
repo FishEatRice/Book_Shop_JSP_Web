@@ -26,7 +26,7 @@
 <%
     } else {
 %>
-        <p>no staff data include。</p>
+        <p>no staff data include.</p>
 <%
     }
 %>

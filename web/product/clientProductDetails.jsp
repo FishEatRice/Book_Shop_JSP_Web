@@ -1,103 +1,172 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@page import="model.product.Product"%>
+<%@ page import="model.product.Product" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>Galaxy BookShelf | Product Details</title>
 
-        <!-- FontAwesome for Stars -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
         <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 
         <style>
+            body {
+                font-family: 'Segoe UI', sans-serif;
+                background-color: #f4f6f9;
+                margin: 0;
+                padding: 0;
+            }
+
             .container {
-                width: 80%;
+                max-width: 1000px;
                 margin: auto;
-                font-family: sans-serif;
+                padding: 40px 20px;
+                background-color: white;
+                border-radius: 12px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.05);
             }
+
             .back-link {
-                color: blue;
                 display: inline-block;
-                margin: 10px 0;
+                margin-bottom: 20px;
                 text-decoration: none;
-            }
-            .product-section {
-                display: flex;
-                gap: 30px;
-                align-items: flex-start;
-            }
-            .product-image {
-                border: 2px solid blue;
-                width: 300px;
-                height: 300px;
-                background-color: #eee;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                color: #3498db;
                 font-weight: bold;
             }
+
+            .product-section {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 40px;
+            }
+
+            .product-image img {
+                width: 300px;
+                height: 300px;
+                object-fit: cover;
+                border-radius: 10px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+
             .product-info {
                 flex: 1;
             }
+
             .product-name {
-                color: blue;
-                font-size: 1.5em;
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: #2c3e50;
             }
+
             .product-price {
-                font-size: 2em;
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+
+            .product-price span {
+                margin-right: 10px;
+            }
+
+            .product-price .original {
+                text-decoration: line-through;
+                color: gray;
+            }
+
+            .product-price .discount {
+                color: red;
                 font-weight: bold;
-                color: orange;
-                margin: 10px 0;
             }
-            .stock, .quantity-box {
-                margin: 10px 0;
+
+            .stock {
+                margin-bottom: 15px;
+                font-size: 16px;
             }
+
             .quantity-box {
+                margin-bottom: 20px;
                 display: flex;
-                gap: 5px;
                 align-items: center;
+                gap: 10px;
             }
-            .quantity-box input {
-                width: 50px;
-                text-align: center;
-            }
-            .add-to-cart {
-                background-color: yellow;
-                border: 2px solid #aaa;
-                padding: 10px 25px;
-                margin-top: 10px;
-                font-weight: bold;
+
+            .quantity-box button {
+                padding: 6px 12px;
+                font-size: 16px;
+                background-color: #ccc;
+                border: none;
+                border-radius: 6px;
                 cursor: pointer;
             }
+
+            .quantity-box input {
+                width: 60px;
+                padding: 6px;
+                text-align: center;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+            }
+
+            .add-to-cart {
+                padding: 10px 18px;
+                background-color: #27ae60;
+                color: white;
+                font-size: 16px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+
+            .add-to-cart:hover {
+                background-color: #219150;
+            }
+
             .details, .comment {
-                margin-top: 30px;
+                margin-top: 40px;
+            }
+
+            .details h3,
+            .comment h3 {
+                margin-bottom: 10px;
+                font-size: 20px;
+                color: #2c3e50;
+            }
+
+            .details p {
+                line-height: 1.6;
+                color: #555;
+            }
+
+            .comment-item {
+                background-color: #f9f9f9;
+                border-radius: 8px;
                 padding: 15px;
+                margin-bottom: 15px;
+                box-shadow: 0 1px 4px rgba(0,0,0,0.05);
             }
-            .details {
-                border: 2px solid purple;
+
+            .reply-text {
+                margin-top: 8px;
+                color: #555;
+                font-style: italic;
             }
-            .comment {
-                border: 2px solid orange;
+
+            p.no-comments {
+                font-style: italic;
+                color: #888;
             }
-            input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
                 -webkit-appearance: none;
                 margin: 0;
             }
-            .comment-item {
-                border-bottom: 1px solid #ccc;
-                padding: 10px 0;
-            }
-            .rating i {
-                margin-right: 2px;
-            }
-            .reply-text {
-                color: gray;
-                font-style: italic;
-                margin-top: 5px;
+
+            /* Firefox */
+            input[type=number] {
+                -moz-appearance: textfield;
             }
         </style>
     </head>
@@ -106,11 +175,11 @@
         <%@ include file="/header/main_header.jsp" %>
 
         <div class="container">
-            <a href="clientProductListing.jsp" class="back-link">← Back</a>
+            <a href="clientProductListing.jsp" class="back-link">← Back to Products</a>
 
             <div class="product-section">
                 <div class="product-image">
-                    <img src="${productData.productPicture}" alt="Product Image" width="300" height="300"/>
+                    <img src="${productData.productPicture}" alt="${productData.productName}" />
                 </div>
 
                 <div class="product-info">
@@ -119,31 +188,33 @@
                     <c:choose>
                         <c:when test="${productData.discountPrice != 0.0}">
                             <div class="product-price">
-                                <span style="color: red; font-weight: bold;">
+                                <span class="discount">
                                     RM <fmt:formatNumber value="${productData.discountPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
                                 </span>
-                                <span style="text-decoration: line-through; color: gray; font-size: 15px;">
+                                <span class="original">
                                     RM <fmt:formatNumber value="${productData.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
                                 </span>
                             </div>
                         </c:when>
                         <c:otherwise>
                             <div class="product-price">
-                                RM <fmt:formatNumber value="${productData.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
+                                <span class="discount">
+                                    RM <fmt:formatNumber value="${productData.productPrice}" type="number" minFractionDigits="2" maxFractionDigits="2" />
+                                </span>
                             </div>
                         </c:otherwise>
                     </c:choose>
 
                     <form method="post" action="<%= request.getContextPath() %>/add_to_cart_process">
                         <input type="hidden" name="product_id" value="${productData.productId}" />
-                        <p>Genre: ${productData.genreId.genreName}</p>
+                        <p>Genre: <strong>${productData.genreId.genreName}</strong></p>
 
                         <div class="stock">Stock Quantity: <strong>${productData.quantity}</strong></div>
 
                         <div class="quantity-box">
                             Quantity:
                             <button type="button" onclick="adjustQty(this)">-</button>
-                            <input type="number" name="quantity" id="qtyInput" value="1" min="1" max="${productData.quantity}"/>
+                            <input type="number" name="quantity" id="qtyInput" value="1" min="1" max="${productData.quantity}" />
                             <button type="button" onclick="adjustQty(this)">+</button>
                         </div>
 
@@ -164,7 +235,6 @@
                     <c:when test="${not empty comments}">
                         <c:forEach var="comment" items="${comments}">
                             <div class="comment-item">
-                                <!-- Stars -->
                                 <div class="rating">
                                     <c:forEach var="i" begin="1" end="5">
                                         <c:choose>
@@ -172,30 +242,26 @@
                                                 <i class="fa-solid fa-star" style="color: orange;"></i>
                                             </c:when>
                                             <c:otherwise>
-                                                <i class="fa-solid fa-star" style="color: gray;"></i>
+                                                <i class="fa-solid fa-star" style="color: #ccc;"></i>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:forEach>
                                     (${comment.ratingStar} Stars)
                                 </div>
-
-                                <div><strong>Comment:</strong> ${comment.comment}</div>
-
-                                <!-- Only show Admin Reply if reply is NOT 'ignore' -->
-                                <c:if test="${not empty comment.reply and comment.reply != 'ignore'}">
-                                    <div class="reply-text">Admin Reply: ${comment.reply}</div>
+                                <c:if test="${not empty comment.comment and comment.comment != '<p><br></p>'}">
+                                    <div>${comment.comment}</div>
                                 </c:if>
-
+                                <c:if test="${not empty comment.reply and comment.reply != 'ignore'}">
+                                    <div class="reply-text">${comment.reply} [Reply by Staff]</div>
+                                </c:if>
                             </div>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
-                        <p>No comments yet. Be the first to leave a review!</p>
+                        <p class="no-comments">No comments yet. Be the first to leave a review!</p>
                     </c:otherwise>
                 </c:choose>
-
             </div>
-
         </div>
 
         <script>
@@ -206,13 +272,11 @@
                 let max = parseInt(input.max);
 
                 if (button.textContent === '-') {
-                    if (current > min) {
+                    if (current > min)
                         input.value = current - 1;
-                    }
                 } else {
-                    if (current < max) {
+                    if (current < max)
                         input.value = current + 1;
-                    }
                 }
             }
         </script>

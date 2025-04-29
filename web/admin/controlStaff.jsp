@@ -1,22 +1,19 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.staff.Staff" %>
 <%@ page import="controller.admin.crudStaff" %>
-<%@ include file="/header/main_header.jsp" %>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>Management Staff List</title>
-        <style>
-            table, th, td {
-                border: 1px solid black;
-                padding: 5px;
-            }
-        </style>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Galaxy | Staff List</title>
+        <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
     </head>
     <body>
+        <%@ include file="/header/main_header.jsp" %>
+        
         <h2>Management Staff List</h2>
         <form method="post" action="../crudStaff">
             <input type="hidden" name="action" value="create"> 
