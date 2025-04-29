@@ -35,6 +35,7 @@
                         staff.setFirstName(rs.getString("STAFF_FIRSTNAME"));
                         staff.setLastName(rs.getString("STAFF_LASTNAME"));
                         staff.setStaffPassword(rs.getString("STAFF_PASSWORD"));
+                        staff.setPosition(rs.getInt("POSITION"));
                     }
 
                     rs.close();
