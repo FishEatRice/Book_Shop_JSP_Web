@@ -21,6 +21,115 @@
         <title>Galaxy | Comment</title>
         <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+        <style>
+            h2 {
+                text-align: center;
+                color: #34495e;
+                margin-bottom: 20px;
+            }
+
+            /* Search & Filters */
+            form {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            input[type="text"] {
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                width: 250px;
+            }
+
+            button {
+                padding: 8px 12px;
+                background-color: #2980b9;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #1f618d;
+            }
+
+            /* Filter Links */
+            .filter-btn {
+                text-decoration: none;
+                margin: 0 10px;
+                color: #2980b9;
+                font-weight: 500;
+            }
+
+            .filter-btn:hover {
+                text-decoration: underline;
+            }
+
+            /* Table */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                background-color: white;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            }
+
+            th, td {
+                border: 1px solid #ddd;
+                padding: 12px;
+                text-align: center;
+                vertical-align: top;
+            }
+
+            th {
+                background-color: #ecf0f1;
+                font-weight: 600;
+            }
+
+            td i.fa-star {
+                margin: 0 1px;
+            }
+
+            /* Actions */
+            td a {
+                color: #2980b9;
+                margin: 0 5px;
+            }
+
+            td a:hover {
+                color: #1a5276;
+            }
+
+            /* No comment row */
+            td[colspan="7"] {
+                font-style: italic;
+                color: #7f8c8d;
+                background-color: #f9f9f9;
+            }
+
+            /* Responsive */
+            @media (max-width: 768px) {
+                table, th, td {
+                    font-size: 13px;
+                }
+
+                form {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                input[type="text"] {
+                    width: 100%;
+                }
+
+                td, th {
+                    padding: 8px;
+                }
+            }
+        </style>
     </head>
     <body>
         <%@ include file="/header/main_header.jsp" %>
@@ -34,9 +143,9 @@
 
         <br>
 
-        <a href="/galaxy_bookshelf/web/staff/comment_list.jsp">All</a> | 
-        <a href="/galaxy_bookshelf/web/staff/comment_list.jsp?sort=not+yet+reply">Not Yet Reply</a> | 
-        <a href="/galaxy_bookshelf/web/staff/comment_list.jsp?sort=ignore">Ignore</a>
+        <a class="filter-btn" href="/galaxy_bookshelf/web/staff/comment_list.jsp">All</a> | 
+        <a class="filter-btn" href="/galaxy_bookshelf/web/staff/comment_list.jsp?sort=not+yet+reply">Not Yet Reply</a> | 
+        <a class="filter-btn" href="/galaxy_bookshelf/web/staff/comment_list.jsp?sort=ignore">Ignore</a>
 
         <br><br>
 

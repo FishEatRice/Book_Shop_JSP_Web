@@ -8,6 +8,101 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
         <title>Galaxy | Sales Records</title>
+
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f4f6f8;
+                margin: 0;
+                padding: 20px;
+                color: #333;
+            }
+
+            h2 {
+                text-align: center;
+                margin: 30px 0;
+                font-size: 26px;
+                color: #2c3e50;
+            }
+
+            form {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 15px;
+                margin-bottom: 30px;
+                flex-wrap: wrap;
+            }
+
+            form input[type="date"],
+            form input[type="month"],
+            form input[type="number"] {
+                padding: 8px 12px;
+                font-size: 16px;
+                border-radius: 6px;
+                border: 1px solid #ccc;
+            }
+
+            form button,
+            form input[type="submit"] {
+                padding: 8px 16px;
+                font-size: 16px;
+                background-color: #3498db;
+                color: #fff;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            form button:hover,
+            form input[type="submit"]:hover {
+                background-color: #2c80b4;
+            }
+
+            p {
+                text-align: center;
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            table {
+                width: 95%;
+                max-width: 1000px;
+                margin: 0 auto;
+                border-collapse: collapse;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+                background-color: #fff;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            th, td {
+                padding: 14px;
+                text-align: center;
+                border: 1px solid #ddd;
+            }
+
+            thead {
+                background-color: #2c3e50;
+                color: #fff;
+            }
+
+            tbody tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            tbody tr:hover {
+                background-color: #e8f6ff;
+            }
+
+            td[colspan="5"] {
+                font-style: italic;
+                color: #888;
+            }
+        </style>
+
+
     </head>
     <body>
         <%@ include file="/header/main_header.jsp" %>

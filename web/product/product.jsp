@@ -17,6 +17,144 @@
               integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
               crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
+
+        <style>
+            h1 {
+                color: #2c3e50;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+            /* Alert Styles */
+            .alert {
+                padding: 10px 20px;
+                margin-bottom: 20px;
+                border-radius: 6px;
+                width: fit-content;
+            }
+
+            .alert-success {
+                background-color: #e8f5e9;
+                border: 1px solid #2e7d32;
+                color: #2e7d32;
+            }
+
+            /* Button Styles */
+            .btn {
+                padding: 8px 14px;
+                margin-right: 5px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                text-decoration: none;
+                font-size: 14px;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .btn i {
+                margin-right: 4px;
+            }
+
+            .btn-primary-light {
+                background-color: #2980b9;
+                color: white;
+            }
+
+            .btn-success-light {
+                background-color: #27ae60;
+                color: white;
+            }
+
+            .btn-alert-light {
+                background-color: #c0392b;
+                color: white;
+            }
+
+            /* Search Form */
+            form {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            form input[type="text"] {
+                padding: 6px 10px;
+                font-size: 14px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            form button,
+            form input[type="button"] {
+                padding: 7px 12px;
+                background-color: #34495e;
+                color: white;
+                border: none;
+                border-radius: 4px;
+            }
+
+            /* Table Styles */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                background-color: white;
+                box-shadow: 0px 2px 10px rgba(0,0,0,0.05);
+            }
+
+            th, td {
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+                vertical-align: middle;
+            }
+
+            th {
+                background-color: #ecf0f1;
+                color: #2c3e50;
+            }
+
+            th a {
+                text-decoration: none;
+                color: inherit;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            th i {
+                font-size: 12px;
+            }
+
+            /* Product Image */
+            img {
+                border-radius: 5px;
+                object-fit: cover;
+            }
+
+            /* Status Icons */
+            td span i {
+                font-size: 18px;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+                form {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                table {
+                    font-size: 12px;
+                }
+
+                .btn {
+                    font-size: 12px;
+                }
+            }
+        </style>
     </head>
     <body>
 
@@ -58,6 +196,8 @@
 
         <a href="<%= request.getContextPath() %>/web/product/addProduct.jsp" class="btn btn-primary-light"><i class="fas fa-plus"></i> Add Product</a>
 
+        <br><br>
+        
         <!-- Search Form -->
         <form action="<%= request.getContextPath() %>/web/product/search" method="get">
             <input type="text" name="query" placeholder="Product Name">

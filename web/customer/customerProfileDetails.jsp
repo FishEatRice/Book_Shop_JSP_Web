@@ -7,6 +7,77 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Customer Profile</title>
+
+        <style>
+            h3 {
+                font-size: 24px;
+                color: #2c3e50;
+                margin-top: 40px;
+            }
+
+            h4 {
+                color: #555;
+                font-size: 16px;
+                margin: 15px 0;
+            }
+
+            form {
+                max-width: 700px;
+                margin: 0 auto;
+                padding: 30px;
+                background-color: #ffffff;
+                border-radius: 10px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            label {
+                font-weight: bold;
+                display: block;
+                margin-bottom: 6px;
+                margin-top: 20px;
+            }
+
+            input[type="text"],
+            input[type="password"],
+            select {
+                width: 100%;
+                padding: 10px 12px;
+                font-size: 15px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                box-sizing: border-box;
+            }
+
+            input[type="submit"] {
+                margin-top: 30px;
+                background-color: #2980b9;
+                color: white;
+                padding: 12px 20px;
+                font-size: 16px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #1c5980;
+            }
+            
+            .success {
+                color: green;
+            }
+
+            .error {
+                color: red;
+            }
+
+            select option {
+                padding: 4px;
+            }
+        </style>
+
+
     </head>
     <body>
         <%
@@ -75,7 +146,7 @@
 
             if (message != null) {
         %>
-        <p style="color: <%= "success".equals(messageType) ? "green" : "red" %>;">
+        <p class="<%= "success".equals(messageType) ? "success" : "error" %>">
             <strong><%= message %></strong>
         </p>
         <%

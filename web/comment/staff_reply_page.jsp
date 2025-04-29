@@ -19,6 +19,97 @@
         <!-- Include Quill stylesheet -->
         <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+        <style>
+            h3 {
+                margin-top: 20px;
+                color: #34495e;
+            }
+
+            p {
+                font-size: 16px;
+                margin: 10px 0;
+            }
+
+            p i.fa-star {
+                margin: 0 2px;
+            }
+
+            /* Buttons */
+            button {
+                padding: 8px 16px;
+                margin: 5px 10px 10px 0;
+                border: none;
+                border-radius: 5px;
+                background-color: #2980b9;
+                color: white;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background 0.3s ease;
+            }
+
+            button:hover {
+                background-color: #1f618d;
+            }
+
+            button[type="submit"] {
+                background-color: #27ae60;
+            }
+
+            button[type="submit"]:hover {
+                background-color: #1e8449;
+            }
+
+            /* Editor Styling */
+            #editor {
+                background: white;
+                border: 1px solid #ccc;
+                min-height: 200px;
+                padding: 10px;
+                border-radius: 5px;
+                margin-top: 10px;
+                max-width: 800px;
+            }
+
+            /* Form and Layout */
+            form {
+                margin-top: 20px;
+                max-width: 900px;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            }
+
+            input[type="hidden"] {
+                display: none;
+            }
+
+            /* Back Button */
+            button[onclick*="goBack"] {
+                background-color: #7f8c8d;
+            }
+
+            button[onclick*="goBack"]:hover {
+                background-color: #616a6b;
+            }
+
+            /* Responsive */
+            @media (max-width: 768px) {
+                body {
+                    margin: 15px;
+                }
+
+                form {
+                    padding: 15px;
+                }
+
+                #editor {
+                    max-width: 100%;
+                }
+            }
+        </style>
+
     </head>
     <body>
         <%@ include file="/header/main_header.jsp" %>

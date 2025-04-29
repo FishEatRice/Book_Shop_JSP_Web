@@ -10,9 +10,58 @@
         <meta charset="UTF-8">
         <title>Customer List</title>
         <style>
-            table, th, td {
-                border: 1px solid black;
-                padding: 5px;
+            /* Header */
+            h2 {
+                text-align: center;
+                color: #2c3e50;
+                margin-bottom: 20px;
+            }
+
+            /* Table Styling */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                background-color: #fff;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            th, td {
+                padding: 12px;
+                border: 1px solid #ccc;
+                text-align: center;
+            }
+
+            th {
+                background-color: #2c3e50;
+                color: #fff;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            /* Action Buttons */
+            input[type="submit"] {
+                background-color: #3498db;
+                border: none;
+                color: white;
+                padding: 6px 12px;
+                margin: 2px;
+                cursor: pointer;
+                font-size: 14px;
+                border-radius: 4px;
+                transition: background-color 0.3s ease;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #2980b9;
+            }
+
+            /* Confirmation & messages */
+            td[colspan="16"], td[colspan="5"] {
+                text-align: center;
+                font-style: italic;
+                color: #888;
             }
         </style>
     </head>

@@ -10,10 +10,71 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Galaxy | Staff List</title>
         <link rel="icon" type="image/x-icon" href="/galaxy_bookshelf/picture/web_logo.png" />
+
+        <style>
+            h2 {
+                text-align: center;
+                color: #2c3e50;
+                margin-bottom: 20px;
+            }
+
+            /* Table layout */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                background-color: #fff;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            th, td {
+                border: 1px solid #ccc;
+                padding: 12px;
+                text-align: center;
+            }
+
+            th {
+                background-color: #2c3e50;
+                color: white;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            /* Buttons */
+            input[type="submit"] {
+                background-color: #2980b9;
+                color: white;
+                padding: 6px 12px;
+                border: none;
+                border-radius: 4px;
+                margin: 2px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.3s ease;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #1f6391;
+            }
+
+            /* Special message for Admin */
+            span {
+                font-weight: bold;
+                color: #555;
+            }
+
+            /* Empty or error messages */
+            td[colspan="6"], td[colspan="5"] {
+                font-style: italic;
+                text-align: center;
+                color: #888;
+            }
+        </style>
     </head>
     <body>
         <%@ include file="/header/main_header.jsp" %>
-        
+
         <h2>Management Staff List</h2>
         <form method="post" action="../crudStaff">
             <input type="hidden" name="action" value="create"> 
